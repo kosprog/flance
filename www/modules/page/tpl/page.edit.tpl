@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>page page.edit.tpl start<br>
 		<div class="block">
 			<h2 class="page">{PAGEEDIT_PAGETITLE} #{PAGEEDIT_FORM_ID}</h2>
 			{FILE "{PHP.cfg.themes_dir}/{PHP.usr.theme}/warnings.tpl"}
@@ -116,5 +116,5 @@
 				</table>
 			</form>
 		</div>
-
+<br>page page.edit.tpl end<br>
 <!-- END: MAIN -->

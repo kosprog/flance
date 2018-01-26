@@ -1,6 +1,6 @@
 <!-- BEGIN: SEARCH -->
 	<!-- BEGIN: PTYPES -->
-	
+<br>projects projects.index.tpl start<br>	
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="{PTYPE_ALL_URL}">{PHP.L.All}</a></li>
 		<!-- BEGIN: PTYPES_ROWS -->
@@ -47,6 +47,8 @@
 <!-- END: SEARCH -->
 
 <!-- BEGIN: PROJECTS -->
+
+
 <div id="listprojects">
 	<!-- BEGIN: PRJ_ROWS -->
 	<div class="media<!-- IF {PRJ_ROW_ISBOLD} --> well prjbold<!-- ENDIF --><!-- IF {PRJ_ROW_ISTOP} --> well prjtop<!-- ENDIF -->">
@@ -54,6 +56,7 @@
 			<!-- IF {PRJ_ROW_COST} > 0 --><div class="pull-right">{PRJ_ROW_COST} {PHP.cfg.payments.valuta}</div><!-- ENDIF -->
 			<a href="{PRJ_ROW_URL}">{PRJ_ROW_SHORTTITLE}</a>
 		</h4>
+		
 		<p class="owner small">{PRJ_ROW_OWNER_AVATAR}</p>
 		<p class="owner small">{PRJ_ROW_OWNER_NAME} <span class="date">[{PRJ_ROW_DATE}]</span>   <span class="region">{PRJ_ROW_COUNTRY} {PRJ_ROW_REGION} {PRJ_ROW_CITY}</span>   {PRJ_ROW_EDIT_URL}</p>
 		<p class="text">{PRJ_ROW_SHORTTEXT}</p>
@@ -72,4 +75,5 @@
 	<!-- END: PRJ_ROWS -->
 </div>
 <div class="pagination"><ul>{PAGENAV_PAGES}</ul></div>
+<br>projects projects.index.tpl end<br>
 <!-- END: PROJECTS -->

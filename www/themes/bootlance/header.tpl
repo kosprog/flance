@@ -23,7 +23,7 @@
 </head>
 
 <body>
-
+<br>theme header start<br>
 	<!-- IF {PHP.usr.id} == 0 -->
 	<div id="AuthModal" class="modal hide fade">
 		<div class="modal-header">
@@ -187,5 +187,5 @@
 </div>
 
 <!-- ENDIF -->		
-
+<br>theme header end<br>
 <!-- END: HEADER -->

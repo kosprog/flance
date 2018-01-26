@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>search search.tpl start<br>
 		<div class="block">
 			<h2 class="stats">{PLUGIN_TITLE}</h2>
 				<div>
@@ -114,5 +114,5 @@
 <!-- END: RESULTS -->
 				<p class="paging">{PLUGIN_PAGEPREV}{PLUGIN_PAGENAV}{PLUGIN_PAGENEXT}</p>
 		</div>
-
+<br>search search.tpl end<br>
 <!-- END: MAIN -->

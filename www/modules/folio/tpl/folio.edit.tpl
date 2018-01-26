@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>projects folio.edit.tpl start<br>
 <div class="breadcrumb">{PHP.L.folio_edit_work_title}</div>
 <div class="customform">
 	{FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
@@ -56,5 +56,5 @@
 		</table>
 	</form>
 </div>
-
+<br>projects folio.edit.tpl end<br>
 <!-- END: MAIN -->

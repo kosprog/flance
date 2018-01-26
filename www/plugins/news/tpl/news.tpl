@@ -1,5 +1,5 @@
 <!-- BEGIN: NEWS -->
-
+<br>news news.tpl start<br>
 <!-- BEGIN: PAGE_ROW -->
 	<div class="combox">{PAGE_ROW_COMMENTS_COUNT}</div>
 	<h3><!-- IF {PHP.usr.isadmin} -->[ {PAGE_ROW_ADMIN_EDIT} ] &nbsp; <!-- ENDIF --><a href="{PAGE_ROW_URL}" title="{PAGE_ROW_SHORTTITLE}">{PAGE_ROW_SHORTTITLE}</a></h3>
@@ -31,5 +31,5 @@
 <!-- END: PAGE_ROW -->
 
 	<p class="paging">{PAGE_PAGEPREV}{PAGE_PAGENAV}{PAGE_PAGENEXT}</p>
-
+<br>news news.tpl end<br>
 <!-- END: NEWS -->

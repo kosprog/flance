@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>projects projects.tpl start<br>
 <div class="breadcrumb">{PRJ_TITLE}</div>
 
 <!-- IF {PRJ_REALIZED} -->
@@ -22,8 +22,9 @@
 
 <div class="row">
 	<div class="span1">
-		{PRJ_OWNER_AVATAR}
+		avatar{PRJ_OWNER_AVATAR}
 	</div>
+	
 	<div class="span5">
 		<p>{PRJ_OWNER_NAME}</p>
 		<p>
@@ -86,5 +87,5 @@
 		{OFFERS}
 	</div>
 </div>
-
+<br>projects projects.tpl end<br>
 <!-- END: MAIN -->

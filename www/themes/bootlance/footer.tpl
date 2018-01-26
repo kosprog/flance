@@ -1,5 +1,5 @@
 <!-- BEGIN: FOOTER -->
-
+<br>theme footer start<br>
 	</div>
 </div>
 <div id="footer" class="container">
@@ -12,6 +12,7 @@
 
 <script type="text/javascript" src="themes/{PHP.theme}/bootstrap/js/bootstrap.min.js"></script>
 {FOOTER_RC}
+<br>theme footer end<br>
 </body>
 </html>
 <!-- END: FOOTER -->

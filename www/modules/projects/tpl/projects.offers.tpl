@@ -1,5 +1,6 @@
 <!-- BEGIN: MAIN -->
 {FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
+<br>projects projects.offers.tpl start<br>
 <!-- IF {PRJ_PERFORMER_ID} > 0 -->
 <h4>{PHP.L.offers_vibran_ispolnitel}</h4>
 <div class="well well-small">
@@ -180,7 +181,7 @@
 	{PHP.L.offers_for_guest}
 </div>
 <!-- ENDIF -->
-
+<br>projects projects.offers.tpl end<br>
 <!-- END: MAIN -->
 
 

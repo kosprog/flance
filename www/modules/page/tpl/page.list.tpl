@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>page page.list.tpl start<br>
 		<div class="col3-2 first">
 			<div class="block">
 				<h2 class="folder">{LIST_CATTITLE}</h2>
@@ -43,5 +43,5 @@
 			</div>
 			{FILE "{PHP.cfg.themes_dir}/{PHP.theme}/inc/contact.tpl"}
 		</div>
-
+<br>page page.list.tpl end<br>
 <!-- END: MAIN -->

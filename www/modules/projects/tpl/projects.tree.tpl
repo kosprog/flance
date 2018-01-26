@@ -1,4 +1,5 @@
 <!-- BEGIN: MAIN -->
+<br>projects projects.tree.tpl start<br>
 <ul<!-- IF {LEVEL} == 0 --> class="nav nav-list"<!-- ENDIF -->>
 	<!-- IF {ROW_LEVEL} == 0 -->
 	<li><a href="{PHP|cot_url('projects')}">{PHP.L.All}</a></li>		
@@ -11,4 +12,5 @@
 	</li>
 	<!-- END: CATS -->
 </ul>
+<br>projects projects.tree.tpl end<br>
 <!-- END: MAIN -->

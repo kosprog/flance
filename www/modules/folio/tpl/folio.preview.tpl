@@ -1,4 +1,5 @@
 <!-- BEGIN: MAIN -->
+<br>projects folio.preview.tpl start<br>
 <div class="breadcrumb">{PRD_TITLE}</div>
 <h1><!-- IF {PRD_COST} > 0 --><div class="pull-right cost">{PRD_COST} {PHP.cfg.payments.valuta}</div><!-- ENDIF -->{PRD_SHORTTITLE}</h1>
 <div class="row">
@@ -41,5 +42,5 @@
 		</div>	
 	</div>
 </div>
-
+<br>projects folio.preview.tpl end<br>
 <!-- END: MAIN -->
