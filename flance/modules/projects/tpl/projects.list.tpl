@@ -10,9 +10,160 @@
 	{PHP.L.projects}
 <!-- ENDIF -->
 </h1>
+
 <!-- IF {PHP.c} == "gravura" -->
 <div class="breadcrumb">
  {PHP.L.projects_gravura}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "abstract" -->
+<div class="breadcrumb">
+ {PHP.L.projects_abstract}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "akvarel" -->
+<div class="breadcrumb">
+ {PHP.L.projects_akvarel}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "arbrut" -->
+<div class="breadcrumb">
+ {PHP.L.projects_arbrut}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "barocco" -->
+<div class="breadcrumb">
+ {PHP.L.projects_barocco}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "biomechanics" -->
+<div class="breadcrumb">
+ {PHP.L.projects_biomechanics}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "bioorganics" -->
+<div class="breadcrumb">
+ {PHP.L.projects_bioorganics}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "blekvork" -->
+<div class="breadcrumb">
+ {PHP.L.projects_blekvork}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "geometry" -->
+<div class="breadcrumb">
+ {PHP.L.projects_geometry}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "graphic" -->
+<div class="breadcrumb">
+ {PHP.L.projects_graphic}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "dotwork" -->
+<div class="breadcrumb">
+ {PHP.L.projects_dotwork}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "classic" -->
+<div class="breadcrumb">
+ {PHP.L.projects_classic}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "linework" -->
+<div class="breadcrumb">
+ {PHP.L.projects_linework}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "minimalizm" -->
+<div class="breadcrumb">
+ {PHP.L.projects_minimalizm}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "neoclassic" -->
+<div class="breadcrumb">
+ {PHP.L.projects_neoclassic}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "newscool" -->
+<div class="breadcrumb">
+ {PHP.L.projects_newscool}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "oldscool" -->
+<div class="breadcrumb">
+ {PHP.L.projects_oldscool}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "oriental" -->
+<div class="breadcrumb">
+ {PHP.L.projects_oriental}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "ornamental" -->
+<div class="breadcrumb">
+ {PHP.L.projects_ornamental}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "portret" -->
+<div class="breadcrumb">
+ {PHP.L.projects_portret}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "realizm" -->
+<div class="breadcrumb">
+ {PHP.L.projects_realizm}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "sketchstyle" -->
+<div class="breadcrumb">
+ {PHP.L.projects_sketchstyle}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "surrealizm" -->
+<div class="breadcrumb">
+ {PHP.L.projects_surrealizm}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "traibl" -->
+<div class="breadcrumb">
+ {PHP.L.projects_traibl}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "trafaret" -->
+<div class="breadcrumb">
+ {PHP.L.projects_trafaret}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "tresh-polka" -->
+<div class="breadcrumb">
+ {PHP.L.projects_tresh-polka}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "fantasy" -->
+<div class="breadcrumb">
+ {PHP.L.projects_fantasy}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "handpoke" -->
+<div class="breadcrumb">
+ {PHP.L.projects_handpoke}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "black-white" -->
+<div class="breadcrumb">
+ {PHP.L.projects_black-white}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "chikano" -->
+<div class="breadcrumb">
+ {PHP.L.projects_chikano}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "etnika" -->
+<div class="breadcrumb">
+ {PHP.L.projects_etnika}
 </div>
 <!-- ENDIF -->
 <!-- IF {CATDESC} -->
