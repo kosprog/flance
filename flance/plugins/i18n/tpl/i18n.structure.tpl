@@ -1,4 +1,5 @@
 <!-- BEGIN: MAIN -->
+<br>projects i18n.structure.tpl start<br>
 <div id="ajaxBlock">
 		<div class="block">
 			<h2>{PHP.L.i18n_structure}</h2>
@@ -9,6 +10,7 @@
 						<td class="coltop">{I18N_ORIGINAL_LANG}</td>
 						<td class="coltop">{I18N_TARGET_LANG}</td>
 					</tr>
+					
 <!-- BEGIN: I18N_CATEGORY_ROW -->
 					<tr>
 						<td>
@@ -32,4 +34,5 @@
 		</div>
 		<p class="paging">{I18N_PAGINATION_PREV}{I18N_PAGNAV}{I18N_PAGINATION_NEXT}</p>
 </div>
+<br>projects i18n.structure.tpl end<br>
 <!-- END: MAIN -->
