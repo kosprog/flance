@@ -1,11 +1,12 @@
 <!-- BEGIN: MAIN -->
 <br>projects projects.list.tpl start<br>
-<div class="breadcrumb">{BREADCRUMBS}</div>
+<div class="breadcrumb">{PHP.catpath},{BREADCRUMBS}</div>
 
 <h1>
 
 <!-- IF {PHP.c} -->
-	{CATTITLE}
+	{PHP.c},{CATTITLE}
+	
 <!-- ELSE -->
 	{PHP.L.projects}
 <!-- ENDIF -->

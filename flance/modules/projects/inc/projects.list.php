@@ -171,6 +171,7 @@ $t->assign(array(
 	"BREADCRUMBS" => $catpath,
 	"CATTITLE" => (!empty($c)) ? $structure['projects'][$c]['title'] : '',
 	"CATDESC" => (!empty($c)) ? $structure['projects'][$c]['desc'] : '',
+	"CATROW" => (!empty($c)) ? $structure['projects'][$c]['row'] : '',
 	"SUBMITNEWPROJECT_URL" => cot_url('projects', 'm=add&c='.$c.'&type='.$type)
 ));
 

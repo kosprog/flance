@@ -5,6 +5,7 @@
 	<li><a href="{PHP|cot_url('projects')}">{PHP.L.All}</a></li>		
 	<!-- ENDIF -->
 	<!-- BEGIN: CATS -->
+	row-{PHP.row}, i18n_locale-{PHP.i18n_locale}, ROW_JJ-{ROW_JJ}, i18pole-{i18pole},ROW_CAT-{ROW_CAT}, ROW_TITLE-{ROW_TITLE}, ROW_DESC-{ROW_DESC}, ROW_COUNT-{ROW_COUNT}, ROW_ICON-{ROW_ICON}.
 	<li<!-- IF {ROW_SELECTED} --> class="active"<!-- ENDIF -->><a href="{ROW_HREF}">{ROW_TITLE} ({ROW_COUNT})</a>
 		<!-- IF {ROW_SUBCAT} -->
 		{ROW_SUBCAT}

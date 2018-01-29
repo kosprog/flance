@@ -132,7 +132,10 @@ function cot_build_structure_projects_tree($parent = '', $selected = array(), $l
 			"ROW_SUBCAT" => cot_build_structure_projects_tree($row, $selected, $level + 1),
 			"ROW_LEVEL" => $level,
 			"ROW_ODDEVEN" => cot_build_oddeven($jj),
-			"ROW_JJ" => $jj
+			"ROW_JJ" => $jj,
+			'i18pole' => 'off'
+			
+		
 		));
 
 		if ($i18n_enabled && $i18n_notmain)
@@ -143,6 +146,7 @@ function cot_build_structure_projects_tree($parent = '', $selected = array(), $l
 			{
 				$urlparams = (!$cfg['plugin']['i18n']['omitmain'] || $i18n_locale != $cfg['defaultlang']) ? "c=$row&l=$i18n_locale" : "c=$row";
 				$t1->assign(array(
+					'i18pole' => 'on',
 					'ROW_URL' => cot_url('page', $urlparams),
 					'ROW_TITLE' => $x_i18n['title'],
 					'ROW_DESC' => $x_i18n['desc'],
