@@ -99,6 +99,10 @@ $L['page_deletepage'] = 'Удалить страницу';
 
 $L['page_savedasdraft'] = 'Страница сохранена в черновиках';
 
+$L['page_news'] = 'Новости';
+$L['page_reviews'] = 'Отзывы';
+$L['page_about'] = 'О нас';
+$L['page_contacts'] = 'Контакты';
 /**
  * Page statuses
  */

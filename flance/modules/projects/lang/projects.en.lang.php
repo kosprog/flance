@@ -39,9 +39,15 @@ $L['projects_empty_text'] = "Text of project is empty";
 $L['projects_forreview'] = 'Your project is submitted for review';
 $L['projects_isrealized'] = 'Executed!';
 
-$L['projects'] = 'Projects catalog';
+$L['projects'] = 'Styles';
 //$L['projects_projects'] = 'Projects';
 $L['projects_projects'] = 'Styles';
+
+$L['projects_news'] = 'News';
+$L['projects_reviews'] = 'Reviews';
+$L['projects_about'] = 'About';
+$L['projects_contacts'] = 'Contacts';
+$L['projects_forum'] = 'Forum';
 
 $L['projects_gravura'] = '<p style="text-align:justify">&nbsp; &nbsp;<span style="font-size:30px">E</span>ngraving as a kind of art originated back in the VI. and was a primitive drawing on various materials: wood, metal, etc. Soon the technique began to improve, and simple images gave way to landscapes, biblical motifs, illustrations for books and other complex compositions. A good tattoo in the style of engraving is sustained in the best traditions of this ancient and co lex art.</p>
 <p style="text-align:justify">&nbsp; &nbsp;The distinctive features of the tattoo made in this technique are: monotone (predominance of black color); strong hatching; no blurred contours, colored and gray details; fine neat lines; Imitation of the printed image; clear graphic elements; linear shading of shadows. The tattoo in this style resembles pencil sketches and in some ways echoes with sketch tatu and old school. This is dominated by laconicism, austerity and at the same time the elegance of lines.</p>

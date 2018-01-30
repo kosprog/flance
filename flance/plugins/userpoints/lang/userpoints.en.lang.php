@@ -23,5 +23,5 @@ $L['cfg_reviewminus'] = array('Изменить рейтинг за отрица
 $L['cfg_auth'] = array('Изменить рейтинг за посещение сайта');
 $L['cfg_portfolioaddtocat'] = array('Изменить рейтинг за размещение работы в портфолио');
 
-$L['userpoints_topfreelancers'] = 'Top-freelancers';
+$L['userpoints_topfreelancers'] = 'Top-masters tatu';
 $L['userpoints_topemployers'] = 'Top-employers';

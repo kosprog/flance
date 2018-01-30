@@ -14,3 +14,4 @@ $L['usercategories_admin_config_groupid'] = 'Группа';
 $L['usercategories_admin_config_limit'] = 'Лимит';
 
 $L['usercategories_error_catslimit'] = 'Вы можете выбрать не более {$limit} специализаций';
+$L['usercategories_master'] = 'Мастер тату';

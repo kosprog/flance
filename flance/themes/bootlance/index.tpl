@@ -18,8 +18,8 @@
 		{PHP|cot_get_topusers (4, 5)}
 		<br/>
 		<br/>
-		<h4 class="mboxHD">{PHP.L.userpoints_topemployers}</h4>
-		{PHP|cot_get_topusers (7, 5)}	
+		<!--h4 class="mboxHD">{PHP.L.userpoints_topemployers}</h4-->
+		<!--{PHP|cot_get_topusers (7, 5)}-->	
 		<!-- ENDIF -->	
 		
 		<!-- IF {INDEX_NEWS} -->

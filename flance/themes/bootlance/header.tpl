@@ -146,16 +146,17 @@
 				<ul>
 					<li<!-- IF {PHP.env.ext} == 'index' --><!-- ENDIF -->><a href="{PHP|cot_url('index')}">{PHP.L.Home}</a></li>
 					<li<!-- IF {PHP.env.ext} == 'projects' --><!-- ENDIF -->><a href="{PHP|cot_url('projects')}">{PHP.L.projects_projects}</a></li>
-					<li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.4.alias} AND {PHP.m} == 'main' --><!-- ENDIF -->><a href="{PHP.cot_groups.4.alias|cot_url('users', 'group='$this)}">{PHP.cot_groups.4.name}</a></li>
+					<li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.4.alias} AND {PHP.m} == 'main' --><!-- ENDIF -->><a href="{PHP.cot_groups.4.alias|cot_url('users', 'group='$this)}">{PHP.L.usercategories_master}</a></li>
 					<!--li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.7.alias} AND {PHP.m} == 'main' --><!-- ENDIF -->><a href="{PHP.cot_groups.7.alias|cot_url('users', 'group='$this)}">{PHP.cot_groups.7.name}</a></li-->
 					<!--li<!-- IF {PHP.env.ext} == 'market' AND !{PHP.type} --> class="active"<!-- ENDIF -->><a href="{PHP|cot_url('market')}">{PHP.L.market}</a></li-->
 					
 					<!--li><a href="">Мастера тату</a></li-->
 					<li><a href="">{PHP.L.project_articles}</a></li>
-					<li><a href="{PHP|cot_url('page',c='news')}">Новости</a></li>
-					<li><a href="{PHP|cot_url('page',c='reviews')}">Отзывы</a></li>
-					<li><a href="{PHP|cot_url('page',c='About')}">О нас</a></li>
-					<li><a href="{PHP|cot_url('page',c='contacts')}">{PHP.L.project_contact}</a></li>
+					<li><a href="{PHP|cot_url('page',c='News')}">{PHP.L.projects_news}</a></li>
+					<li><a href="{PHP|cot_url('page',c='Reviews')}">{PHP.L.projects_reviews}</a></li>
+					<li><a href="{PHP|cot_url('page',c='About')}">{PHP.L.projects_about}</a></li>
+					<li><a href="{PHP|cot_url('page',c='Contacts')}">{PHP.L.projects_contacts}</a></li>
+					<li><a href="{PHP|cot_url('forums')}">{PHP.L.Forums}</a></li>
 					
 					
 				</ul>
