@@ -47,13 +47,13 @@ $cfg['admintheme'] = 'fusion';			// Put custom administration theme name here
 // Performance-related settings
 // ========================
 
-$cfg['cache'] = TRUE;			// Enable data caching
+$cfg['cache'] = FALSE;			// Enable data caching
 $cfg['cache_drv'] = '';			// Cache driver name to use on your server (if available)
 								// Possible values: APC, Memcache, Xcache
 $cfg['cache_drv_host'] = 'localhost';
 $cfg['cache_drv_port'] = null;
 
-$cfg['xtpl_cache'] = TRUE;		// Enable XTemplate structure disk cache. Should be TRUE on production sites
+$cfg['xtpl_cache'] = FALSE;		// Enable XTemplate structure disk cache. Should be TRUE on production sites
 $cfg['html_cleanup'] = FALSE;	// Wipe extra spaces and breaks from HTML to get smaller footprint
 
 $cfg['cache_index'] = FALSE;    // Static page cache for guests on index

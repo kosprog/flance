@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-start index
+
 <div class="row">
 
 	<div class="span12">
@@ -45,5 +45,5 @@ start index
 		{PROJECTS}
 	</div>
 </div>
-end index	
+	
 <!-- END: MAIN -->

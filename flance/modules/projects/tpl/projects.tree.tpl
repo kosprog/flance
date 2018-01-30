@@ -4,7 +4,7 @@
 	<li><a href="{PHP|cot_url('projects')}">{PHP.L.All}</a></li>		
 	<!-- ENDIF -->
 	<!-- BEGIN: CATS -->
-	<li<!-- IF {ROW_SELECTED} --> class="active"<!-- ENDIF -->><a href="{ROW_HREF}">{ROW_TITLE} ({ROW_COUNT})</a>
+	<li<!-- IF {ROW_SELECTED} --> class="active"<!-- ENDIF -->><a href="{ROW_HREF}"><!-- IF {PHP.i18n_locale} == "en" --> {ROW_CAT} ({ROW_COUNT}) <!-- ELSE --> {ROW_TITLE} ({ROW_COUNT}) <!-- ENDIF --></a>
 		<!-- IF {ROW_SUBCAT} -->
 		{ROW_SUBCAT}
 		<!-- ENDIF -->
