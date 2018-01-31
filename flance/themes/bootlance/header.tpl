@@ -167,7 +167,7 @@
 		<div id="main" class="content">
 	
 <!-- IF {PHP.env.ext} == "index" -->
-<div class="uk-slidenav-position" data-uk-slideshow="{animation: 'swipe'}">
+<div class="uk-slidenav-position" data-uk-slideshow="{animation: 'swipe',autoplay:true}">
     <ul class="uk-slideshow">
         <li><img src="themes/{PHP.theme}/img/slider/side-1.jpg" alt=""></li>
         <li><img src="themes/{PHP.theme}/img/slider/side-2.jpg" alt=""></li>
