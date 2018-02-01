@@ -6,7 +6,7 @@ html	{ padding:0; height:100%; }
 
 body	{ 
 	
-	background-color:#FFFFFF;
+	background-color:#696969;
 }
 
 hr			{ border:0 dashed #ccc; border-top-width:1px; clear:both; height:0; }
@@ -26,27 +26,46 @@ textarea	{ width: 99%; min-height: 100px; }
 /* 1. Main Navigation
 -------------------------------------------------- */
 
-#nav				{ line-height:1.4em; background:#ddd; overflow:auto; margin:0; padding:0; }
+#nav				{ line-height:1.4em; background:#ddd; overflow:auto; margin:0; padding:0;  }
 #nav li				{ width:159px; border-right:1px solid #f8f8f8; float:left; }
 #nav li a				{ text-shadow:0 1px 0 #fff; padding:10px 20px; display:block; }
 #nav li a:hover		{ color:#fff; text-decoration:none; text-shadow:0 -1px 0 #000; background:#667e72; }
 #nav li a span			{ color:#999; font-size:.9em; text-transform:lowercase; display:block; }
 #nav li a:hover span	{ color:#ccc; }
 
+.breadcrumb{position:relative; height:auto; width:97%;border: solid 1px white;background:black;color:white }
+.breadcrumb ul{position:relative; margin:0 5px 0 5px; padding:0; height:30px; background:black; }
+.breadcrumb ul li{padding:0; margin:0; list-style:none; float:left; height:30px display:inline;background:black;}
+.breadcrumb ul li a{font:15px Arial, Helvetica, sans-serif; color:white; text-decoration:none; line-height:30px; display:block; background:black; padding:0 17px 0 15px; outline:none;}
+.breadcrumb ul li a:hover {text-decoration:underline; color:rgb(100,100,100);}
+.breadcrumb ul li a.active{background:none; color:rgb(255,255,255);}
+.breadcrumb ul li a.active:hover {text-decoration:none;}
+.breadcrumb .left{position:absolute; top:0px; left:0px; width:10px; height:30px; display:block; z-index:1; background:black;}
+.breadcrumb .right{position:absolute; top:0px; right:0px; width:10px; height:30px; display:block; z-index:1; background:black; }
+
+.well {border: solid 1px white}
+.opis {border: solid 1px white}
+
+
+
+
+
+
+
 /* 2. Structure
 -------------------------------------------------- */
 
 #wrapper 			{ min-height:100%; }
-#main 				{ padding-bottom: 100px; }
+#main 				{ padding-bottom: 100px;color:white }
 
 #header 				{ margin-top: 40px; height: 140px; }
 #header .logo		{ padding:10px 0px 0px; font-size: 36px; font-weight: bold; }
 #header .logo a		{ color:#0065CC; text-decoration: none; }
 #header .auth 		{ margin: 0; text-align: right; }
 
-#footer				{ border-top: #DEDEE6 solid 1px; padding: 10px 0; height: 40px; margin-top: -61px; font-size: 12px; }
-
-.block				{ margin:0 0 25px; }
+#footer				{ border-top: #DEDEE6 solid 1px; padding: 10px 0; height: 40px; margin-top: -61px; font-size: 12px; color:white}
+.contacts	{ padding:20px 0px 0px; font:25px Arial, Helvetica, sans-serif; color:rgb(0,0,0); text-decoration:none; border: solid 0px black; float: right; }
+.block				{ margin:0 0 25px;  }
 
 /* 3. Headings
 -------------------------------------------------- */
@@ -253,6 +272,6 @@ ol					{ margin-left:20px; list-style-type:decimal; }
 	margin-bottom: 20px;
 }
 
-#listprojects {}
+#listprojects {color:white}
 #listprojects .prjtop { background-color: #feefb3; }
 #listprojects .prjbold { background-color: #dff2bf; }
