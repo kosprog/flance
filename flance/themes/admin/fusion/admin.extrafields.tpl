@@ -1,4 +1,5 @@
 <!-- BEGIN: MAIN -->
+<br>themes admin.extrafields.tpl start<br>
 <h2>{PHP.L.adm_extrafields}</h2>
 		{FILE "{PHP.cfg.themes_dir}/admin/{PHP.cfg.admintheme}/warnings.tpl"}
 <!-- BEGIN: TABLELIST -->
@@ -212,4 +213,5 @@
 	</form>
 </div>
 <!-- END: TABLE -->
+<br>themes admin.extrafields.tpl end<br>
 <!-- END: MAIN -->
