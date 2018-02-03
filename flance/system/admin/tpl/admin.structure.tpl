@@ -1,4 +1,5 @@
 <!-- BEGIN: LIST -->
+<br>system admin.structure.tpl start<br>
 <h2>{PHP.L.Modules}</h2>
 	<div class="block">
 		<table class="cells">
@@ -202,5 +203,5 @@
 			</form>
 		</div>
 		<!-- END: NEWCAT -->
-
+<br>system admin.structure.tpl end<br>
 <!-- END: MAIN -->

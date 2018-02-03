@@ -1,4 +1,5 @@
 <!-- BEGIN: LIST -->
+<br>themes admin.structure.tpl start<br>
 <h2>{PHP.L.Modules}</h2>
 <div class="row">
 	<!-- BEGIN: ADMIN_STRUCTURE_EXT -->
@@ -201,5 +202,5 @@
 			</form>
 		</div>
 		<!-- END: NEWCAT -->
-
+<br>themes admin.structure.tpl end<br>
 <!-- END: MAIN -->

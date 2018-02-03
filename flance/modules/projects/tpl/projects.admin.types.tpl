@@ -1,5 +1,6 @@
-<!-- BEGIN: MAIN -->
 
+<!-- BEGIN: MAIN -->
+<br>projects projects.admin.types.tpl start<br>
 <h3>{PHP.L.projects_projects}</h3>
 
 <div class="block">
@@ -52,5 +53,5 @@
 	</form>
 </div>
 <!-- END: ADDFORM -->
-
+<br>projects projects.admin.types.tpl end<br>
 <!-- END: MAIN -->

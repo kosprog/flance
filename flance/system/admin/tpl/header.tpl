@@ -1,4 +1,5 @@
 <!-- BEGIN: HEADER -->
+<br>system admin header.tpl start<br>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
@@ -61,5 +62,5 @@
 				<img src="system/admin/tpl/img/adminmenu/other.png" alt="{PHP.L.Other}" /><span>{PHP.L.Other}</span>
 			</a></li>
 	</ul>
-
+<br>system admin header.tpl end<br>
 <!-- END: HEADER -->

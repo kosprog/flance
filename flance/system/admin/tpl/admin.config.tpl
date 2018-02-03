@@ -1,4 +1,5 @@
 <!-- BEGIN: MAIN -->
+		<br>system admin.config.tpl start<br>
 		<h2>{PHP.L.Configuration}</h2>
 		{FILE "{PHP.cfg.system_dir}/admin/tpl/warnings.tpl"}
 		<div class="block">
@@ -64,4 +65,5 @@
 </div>
 <!-- END: DEFAULT -->
 		</div>
+		<br>system admin.config.tpl end<br>
 <!-- END: MAIN -->
