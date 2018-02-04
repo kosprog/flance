@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>plugins tags.tpl start <br>
 		<div class="col3-2 first">
 			<div class="block">
 				<h2 class="tags">{PHP.L.tags_Search_tags}</h2>
@@ -50,5 +50,5 @@
 				{TAGS_HINT}
 			</div>
 		</div>
-
+<br>plugins tags.tpl end <br>
 <!-- END: MAIN -->

@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules pm.list.tpl start<br>
 <!-- BEGIN: BEFORE_AJAX -->
 		<div id="ajaxBlock">
 <!-- END: BEFORE_AJAX -->
@@ -68,5 +68,5 @@
 <!-- BEGIN: AFTER_AJAX -->
 		</div>
 <!-- END: AFTER_AJAX -->
-
+<br>modules pm.list.tpl end<br>
 <!-- END: MAIN -->

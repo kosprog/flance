@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules users.register.tpl start<br>
 		<div class="block">
 			<h2 class="users">{USERS_REGISTER_TITLE}</h2>
 			{FILE "{PHP.cfg.themes_dir}/{PHP.usr.theme}/warnings.tpl"}
@@ -36,5 +36,5 @@
 				</table>
 			</form>
 		</div>
-
+<br>modules users.register.tpl end<br>
 <!-- END: MAIN -->

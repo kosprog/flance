@@ -1,4 +1,5 @@
 <!-- BEGIN: POLL_VIEW -->
+<br>modules polls.index.tpl start<br>
 <div id = "poll_{POLL_ID}">
 	<form action="{POLL_FORM_URL}" method="post" id="poll_form_{POLL_ID}" class="ajax post-poll_{POLL_ID};index.php;e=polls&mode=ajax&poll_theme=index">
 		<input type="hidden" name="poll_id" value="{POLL_ID}" />
@@ -81,4 +82,5 @@
 <p class="small strong textcenter">{IPOLLS_ERROR}</p>
 <!-- END: ERROR -->
 <p class="small textcenter"><a href="{IPOLLS_ALL}">{PHP.L.polls_viewarchives}</a></p>
+<br>modules polls.index.tpl end<br>
 <!-- END: INDEXPOLLS -->

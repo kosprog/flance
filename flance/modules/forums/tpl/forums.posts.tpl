@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules forums.posts.tpl start<br>
 <!-- BEGIN: FORUMS_POSTS_TOPICPRIVATE -->
 		<div class="error">{PHP.L.forums_privatetopic}</div>
 <!-- END: FORUMS_POSTS_TOPICPRIVATE -->
@@ -105,5 +105,5 @@
 			</table>
 		</form>
 <!-- END: FORUMS_POSTS_NEWPOST -->
-
+<br>modules forums.posts.tpl end<br>
 <!-- END: MAIN -->

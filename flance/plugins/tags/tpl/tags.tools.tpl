@@ -1,4 +1,5 @@
 <!-- BEGIN: MAIN -->
+<br>plugins tags.tools.tpl start <br>	
 		<script type="text/javascript">
 			$(document).ready(function()
 			{
@@ -63,4 +64,5 @@
 <!-- END: ADMIN_TAGS_ROW -->
 			</table>
 			<p class="paging">{ADMIN_TAGS_PAGINATION_PREV}{ADMIN_TAGS_PAGNAV}{ADMIN_TAGS_PAGINATION_NEXT}<span>{PHP.L.Total}: {ADMIN_TAGS_TOTALITEMS}, {PHP.L.Onpage}: {ADMIN_TAGS_COUNTER_ROW}</span></p>
+<br>plugins tags.tools.tpl end <br>
 <!-- END: MAIN -->

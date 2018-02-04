@@ -1,4 +1,5 @@
 <!-- BEGIN: MAIN -->
+<br>modules users.passrecover.tpl start<br>
 		<div class="block">
 			<h2 class="users">{PASSRECOVER_TITLE}</h2>
 			<!-- IF {PHP.msg} == 'request' --><p>{PHP.L.pasrec_mailsent}</p><!-- ENDIF -->
@@ -16,4 +17,5 @@
 			<p>{PHP.L.pasrec_explain4}</p>
 			<!-- ENDIF -->
 		</div>
+		<br>modules users.passrecover.tpl end<br>
 <!-- END: MAIN -->

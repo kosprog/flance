@@ -1,4 +1,5 @@
 <!-- BEGIN: MAIN -->
+<br>plugins mavatars.admin.tpl start <br>
 <script src="{PHP.cfg.plugins_dir}/mavatars/js/mavatars.admin.js" type="text/javascript"></script>	
 <div id="catgenerator" style="display:none">
 	<table class="cells">
@@ -29,5 +30,5 @@
 		</tr>
 	</table>
 </div>
-
+<br>plugins mavatars.admin.tpl end <br>
 <!-- END: MAIN -->

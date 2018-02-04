@@ -1,6 +1,7 @@
 <!-- BEGIN: SEARCH -->
-	<!-- BEGIN: PTYPES -->
 <br>projects projects.index.tpl start<br>	
+	<!-- BEGIN: PTYPES -->
+	
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="{PTYPE_ALL_URL}">{PHP.L.All}</a></li>
 		<!-- BEGIN: PTYPES_ROWS -->

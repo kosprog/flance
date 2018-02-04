@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules folio.admin.tpl start<br>
 <h3>{PHP.L.folio}</h3>
 
 <div class="well">	
@@ -79,4 +79,5 @@
 <div class="alert">{PHP.L.folio_notfound}</div>
 <!-- ENDIF -->
 </form>	
+<br>modules folio.admin.tpl end<br>
 <!-- END: MAIN -->

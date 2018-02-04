@@ -1,4 +1,5 @@
 <!-- BEGIN: MAIN -->
+<br>plugins mavatars.form.tpl start <br>
 <div class="mavatar_uploadform">
 	<div class="uploadedfiles rows">
 	<!-- BEGIN: FILES -->	
@@ -93,5 +94,5 @@
 	<!-- ENDFOR -->	
 	<!-- END: CURLUPLOAD -->
 </div>
-
+<br>plugins mavatars.form.tpl end <br>
 <!-- END: MAIN -->

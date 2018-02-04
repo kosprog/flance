@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules forums.topics.tpl start<br>
 		<div class="block">
 			<h2 class="forums">{FORUMS_TOPICS_PAGETITLE}</h2>
 <!-- BEGIN: FORUMS_SECTIONS -->
@@ -103,5 +103,5 @@
 				</tr>
 			</table>
 		</div>
-
+<br>modules forums.topics.tpl end<br>
 <!-- END: MAIN -->

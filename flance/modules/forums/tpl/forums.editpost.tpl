@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules forums.editpost.tpl start<br>
 		<div class="block">
 			<h2 class="forums">{FORUMS_EDITPOST_PAGETITLE}</h2>
 			<!-- IF {FORUMS_EDITPOST_SUBTITLE} --><p class="marginbottom10 small">{FORUMS_EDITPOST_SUBTITLE}</p><!-- ENDIF -->
@@ -71,5 +71,5 @@
 				</table>
 			</form>
 		</div>
-
+<br>modules forums.editpost.tpl end<br>
 <!-- END: MAIN -->

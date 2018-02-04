@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules forums.sections.tpl start<br>
 		<div class="block">
 			<h2 class="forums">{FORUMS_SECTIONS_PAGETITLE}</h2>
 <!-- BEGIN: FORUMS_SECTIONS -->
@@ -60,5 +60,5 @@
 			<h2 class="tags">{PHP.L.Tags}</h2>
 			{FORUMS_SECTIONS_TAG_CLOUD}
 		</div>
-
+<br>modules forums.sections.tpl end<br>
 <!-- END: MAIN -->

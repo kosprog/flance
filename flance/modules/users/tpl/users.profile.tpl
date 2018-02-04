@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules users.profile.tpl start<br>
 		<div class="block">
 			<h2 class="users">{USERS_PROFILE_TITLE}</h2>
 			{FILE "{PHP.cfg.themes_dir}/{PHP.usr.theme}/warnings.tpl"}
@@ -118,5 +118,5 @@
 				</table>
 			</form>
 		</div>
-
+<br>modules users.profile.tpl end<br>
 <!-- END: MAIN -->

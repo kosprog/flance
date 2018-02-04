@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules forums.newtopic.tpl start<br>
 		<div class="block">
 			<h2 class="forums">{FORUMS_NEWTOPIC_PAGETITLE}</h2>
 			{FILE "{PHP.cfg.themes_dir}/{PHP.usr.theme}/warnings.tpl"}
@@ -71,5 +71,5 @@
 				</table>
 			</form>
 		</div>
-
+<br>modules forums.newtopic.tpl end<br>
 <!-- END: MAIN -->

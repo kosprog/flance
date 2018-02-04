@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>modules forums.admin.tpl start<br>
 		<h2>{PHP.L.Forums}</h2>
 
 		<div class="block button-toolbar">
@@ -38,4 +38,5 @@
 <!-- END: ADMIN_FORUMS_ROW_USER -->
 			</table>
 		</div>
+		<br>modules forums.admin.tpl end<br>
 <!-- END: MAIN -->

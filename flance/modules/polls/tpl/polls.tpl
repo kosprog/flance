@@ -1,4 +1,5 @@
 <!-- BEGIN: POLL_VIEW -->
+<br>modules polls.tpl start<br>
 		<div id = "poll_{POLL_ID}">
 			<form action="{POLL_FORM_URL}" method="post" id="poll_form_{POLL_ID}" class="ajax post-poll_{POLL_ID};index.php;e=polls&mode=ajax">
 				<input type="hidden" name="poll_id" value="{POLL_ID}" />
@@ -130,5 +131,5 @@
 <!-- END: POLLS_VIEWALL -->
 
 {FILE "{PHP.cfg.themes_dir}/{PHP.usr.theme}/warnings.tpl"}
-
+<br>modules polls.tpl end<br>
 <!-- END: MAIN -->
