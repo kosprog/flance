@@ -138,20 +138,24 @@
 		</div>
 		</div>
 
-		<!--div class="navbar"-->
-		<div class="breadcrumb">
-			<!--div class="navbar-inner"-->
+<!-- BEGIN: NOPARSE -->
+		<div class="navbar">
+			<div class="navbar-inner">
+				<ul class="nav">
+<!-- END: NOPARSE -->		
+		<div class="breadcrumb">			
 			<span class="left"></span>
-				<!--ul class="nav"-->
+				
 				<ul>
 					<li<!-- IF {PHP.env.ext} == 'index' --><!-- ENDIF -->><a href="{PHP|cot_url('index')}">{PHP.L.Home}</a></li>
 					<li<!-- IF {PHP.env.ext} == 'projects' --><!-- ENDIF -->><a href="{PHP|cot_url('projects')}">{PHP.L.projects_projects}</a></li>
 					<li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.4.alias} AND {PHP.m} == 'main' --><!-- ENDIF -->><a href="{PHP.cot_groups.4.alias|cot_url('users', 'group='$this)}">{PHP.L.projects_master}</a></li>
-					<!--li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.7.alias} AND {PHP.m} == 'main' --><!-- ENDIF -->><a href="{PHP.cot_groups.7.alias|cot_url('users', 'group='$this)}">{PHP.cot_groups.7.name}</a></li-->
-					<!--li<!-- IF {PHP.env.ext} == 'market' AND !{PHP.type} --> class="active"<!-- ENDIF -->><a href="{PHP|cot_url('market')}">{PHP.L.market}</a></li-->
-					
-					<!--li><a href="">Мастера тату</a></li-->
+					<!-- BEGIN: NOPARSE -->
+					<li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.7.alias} AND {PHP.m} == 'main' --><!-- ENDIF -->><a href="{PHP.cot_groups.7.alias|cot_url('users', 'group='$this)}">{PHP.cot_groups.7.name}</a></li>
+					<li<!-- IF {PHP.env.ext} == 'market' AND !{PHP.type} --> class="active"<!-- ENDIF -->><a href="{PHP|cot_url('market')}">{PHP.L.market}</a></li>
+					<li><a href="">Мастера тату</a></li>
 					<li><a href="">{PHP.L.project_articles}</a></li>
+					<!-- END: NOPARSE -->
 					<li><a href="{PHP|cot_url('page',c='News')}">{PHP.L.projects_news}</a></li>
 					<li><a href="{PHP|cot_url('page',c='Reviews')}">{PHP.L.projects_reviews}</a></li>
 					<li><a href="{PHP|cot_url('page',c='About')}">{PHP.L.projects_about}</a></li>
@@ -161,7 +165,9 @@
 					
 				</ul>
 			<span class="right"></span>	
-			<!--/div-->
+			<!-- BEGIN: NOPARSE -->
+			</div>
+			<!-- END: NOPARSE -->
 		</div>
 		
 		<div id="main" class="content">
