@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>extrafield {LIST_ROW_1}
 <div class="breadcrumb">{BREADCRUMBS}</div>
 
 <h1>

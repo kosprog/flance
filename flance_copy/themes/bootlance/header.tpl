@@ -184,7 +184,7 @@
       </ul>
 </div>
 structure {PHP|projects_cat_extra('descext')} 
-
+<br>extrafield {LIST_ROW_1}
 <!-- ENDIF -->		
 
 <!-- END: HEADER -->
