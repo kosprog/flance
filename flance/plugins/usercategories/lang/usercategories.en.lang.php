@@ -15,4 +15,4 @@ $L['usercategories_admin_config_groupid'] = 'Group';
 $L['usercategories_admin_config_limit'] = 'Limit';
 
 $L['usercategories_error_catslimit'] = 'You can select up to {$limit} specializations';
-$L['usercategories_master'] = 'Master tatu';
+
