@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.add.tpl start<br>
+<br>MAIN projects projects.add.tpl start<br>
 <div class="breadcrumb">{PHP.L.projects_add_project_title}</div>
 
 {FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
@@ -37,10 +37,12 @@
 				<td>{PRJADD_FORM_TEXT}</td>
 			</tr>
 			<!-- BEGIN: TAGS -->
+			<br>TAGS projects projects.add.tpl start<br>
 			<tr>
 				<td>{PRJADD_TOP_TAGS}:</td>
 				<td>{PRJADD_FORM_TAGS} ({PRJADD_TOP_TAGS_HINT})</td>
 			</tr>
+			<br>TAGS projects projects.add.tpl end<br>
 			<!-- END: TAGS -->
 			<tr>
 				<td>{PHP.L.projects_price}:</td>
@@ -71,5 +73,5 @@
 		</table>
 	</form>
 </div>
-<br>projects projects.add.tpl end<br>
+<br>MAIN projects projects.add.tpl end<br>
 <!-- END: MAIN -->

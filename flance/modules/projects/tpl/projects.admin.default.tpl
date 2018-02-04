@@ -1,13 +1,17 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.admin.default.tpl start<br>
+<br>MAIN projects projects.admin.default.tpl start<br>
 <h3>{PHP.L.projects_projects}</h3>
 
 <div class="nav nav-tabs">
 	<!-- BEGIN: TYPES -->
+	<br>TYPES projects projects.admin.default.tpl start<br>
 	<li<!-- IF {PHP.p} != 'types' --> class="active"<!-- ENDIF -->><a href="{TYPE_ALL_URL}">{PHP.L.All}</a></li>
 	<!-- BEGIN: TYPES_ROWS -->
+	<br>TYPES_ROWS projects projects.admin.default.tpl start<br>
 	<li class="{TYPE_ALL_ACT}"><a href="{TYPE_ROW_URL}">{TYPE_ROW_TITLE}</a></li>
+	<br>TYPES_ROWS projects projects.admin.default.tpl end<br>
 	<!-- END: TYPES_ROWS -->
+	<br>TYPES projects projects.admin.default.tpl start<br>
 	<!-- END: TYPES -->
 	<li><a href="{TYPES_EDIT}">{PHP.L.projects_types_edit}</a></li>	
 </div>
@@ -64,6 +68,7 @@
 		</thead>
 		<tbody>
 		<!-- BEGIN: PRJ_ROWS -->
+		<br>PRJ_ROWS projects projects.admin.default.tpl start<br>
 		<tr class="prjitem">
 			<td><label><input type="checkbox" name="prj_arr[]" value="{PRJ_ROW_ID}">{PRJ_ROW_DATE}</label></td>
 			<td><a href="{PRJ_ROW_URL}" target="_blank">{PRJ_ROW_SHORTTITLE}</a></td>
@@ -80,6 +85,7 @@
 				<a href="{PRJ_ROW_DELETE_URL}" class="button btn">{PHP.L.Delete}</a>
 			</td>
 		</tr>
+		<br>PRJ_ROWS projects projects.admin.default.tpl end<br>
 		<!-- END: PRJ_ROWS -->
 		<tr class="prjitem">
 				<td colspan="2">
@@ -102,6 +108,6 @@
 	</div>
 	</form>		
 </div>
-<br>projects projects.admin.default.tpl end<br>
+<br>MAIN projects projects.admin.default.tpl end<br>
 
 <!-- END: MAIN -->

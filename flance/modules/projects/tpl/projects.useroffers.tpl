@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.useroffers.tpl start<br>
+<br>MAIN projects projects.useroffers.tpl start<br>
 <div class="breadcrumb">{BREADCRUMBS}</div>
 <h1>{PHP.L.offers_useroffers}</h1>
 
@@ -11,6 +11,7 @@
 </ul>
 
 <!-- BEGIN: OFFER_ROWS -->
+<br>BEGIN: OFFER_ROWS projects projects.useroffers.tpl start<br>
 <div class="row">
 	<div class="span12">		
 		<div class="media<!-- IF {OFFER_ROW_PROJECT_ISBOLD} --> well prjbold<!-- ENDIF --><!-- IF {OFFER_ROW_PROJECT_ISTOP} --> well prjtop<!-- ENDIF -->">
@@ -66,10 +67,11 @@
 	</div>
 </div>
 <hr/>
+<br>BEGIN: OFFER_ROWS projects projects.useroffers.tpl end<br>
 <!-- END: OFFER_ROWS -->
 <div class="pagination"><ul>{PAGENAV_PAGES}</ul></div>
 
-<br>projects projects.useroffers.tpl end<br>
+<br>MAIN projects projects.useroffers.tpl end<br>
 
 <!-- END: MAIN -->
 

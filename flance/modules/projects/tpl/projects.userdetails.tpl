@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.userdetails.tpl start<br>
+<br>MAIN projects projects.userdetails.tpl start<br>
 <h4><!-- IF {PHP.usr.id} == {PHP.urr.user_id} AND {ADDPRJ_SHOWBUTTON} --><div class="pull-right"><a href="{PHP|cot_url('projects', 'm=add')}" class="btn btn-success">{PHP.L.projects_add_to_catalog}</a></div><!-- ENDIF -->{PHP.L.projects_projects}</h4>
 
 <ul class="nav nav-pills">
@@ -7,6 +7,7 @@
  	  <a href="{PHP.urr.user_id|cot_url('users', 'm=details&id=$this&tab=projects')}">{PHP.L.All}</a>
   </li>
   	<!-- BEGIN: CAT_ROW -->
+  	<br>CAT_ROW projects projects.userdetails.tpl start<br>
   		<li class="centerall <!-- IF {PRJ_CAT_ROW_SELECT} -->active<!-- ENDIF -->">
   				<a href="{PRJ_CAT_ROW_URL}">
   						<!-- IF {PRJ_ROW_CAT_ICON} -->
@@ -16,11 +17,13 @@
   					<span class="badge badge-inverse">{PRJ_CAT_ROW_COUNT_PROJECTS}</span>
   				</a>
   		</li>
+  	<br>CAT_ROW projects projects.userdetails.tpl end<br>	
   	<!-- END: CAT_ROW -->
 </ul>
 <hr>
 <div id="listprojects">
 	<!-- BEGIN: PRJ_ROWS -->
+	<br>PRJ_ROWS projects projects.userdetails.tpl start<br>
 	<div class="media<!-- IF {PRJ_ROW_ISBOLD} --> well prjbold<!-- ENDIF --><!-- IF {PRJ_ROW_ISTOP} --> well prjtop<!-- ENDIF -->">
 		<h4>
 			<!-- IF {PRJ_ROW_COST} > 0 --><div class="pull-right">{PRJ_ROW_COST} {PHP.cfg.payments.valuta}</div><!-- ENDIF -->
@@ -36,6 +39,7 @@
 		<div class="type"><!-- IF {PRJ_ROW_TYPE} -->{PRJ_ROW_TYPE} / <!-- ENDIF --><a href="{PRJ_ROW_CATURL}">{PRJ_ROW_CATTITLE}</a></div>
 	</div>
 	<hr/>
+	<br>PRJ_ROWS projects projects.userdetails.tpl end<br>
 	<!-- END: PRJ_ROWS -->
 </div>
 
@@ -44,5 +48,5 @@
 <!-- ELSE -->
 <div class="alert">{PHP.L.projects_empty}</div>
 <!-- ENDIF -->
-<br>projects projects.userdetails.tpl end<br>
+<br>MAIN projects projects.userdetails.tpl end<br>
 <!-- END: MAIN -->

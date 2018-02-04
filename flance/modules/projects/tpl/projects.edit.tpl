@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.edit.tpl start<br>
+<br>MAIN projects projects.edit.tpl start<br>
 <div class="breadcrumb">{PHP.L.projects_edit_project_title}</div>
 
 {FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
@@ -37,10 +37,12 @@
 				<td>{PRJEDIT_FORM_TEXT}</td>
 			</tr>
 			<!-- BEGIN: TAGS -->
+			<br>TAGS projects projects.edit.tpl start<br>
 			<tr>
 				<td>{PRJEDIT_TOP_TAGS}:</td>
 				<td>{PRJEDIT_FORM_TAGS} ({PRJEDIT_TOP_TAGS_HINT})</td>
 			</tr>
+			<br>TAGS projects projects.edit.tpl end<br>
 			<!-- END: TAGS -->
 			<tr>
 				<td>{PHP.L.projects_price}:</td>
@@ -75,5 +77,5 @@
 		</table>
 	</form>
 </div>
-<br>projects projects.edit.tpl end<br>
+<br>MAIN projects projects.edit.tpl end<br>
 <!-- END: MAIN -->

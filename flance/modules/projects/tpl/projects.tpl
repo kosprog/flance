@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.tpl start<br>
+<br>MAIN projects projects.tpl start<br>
 <div class="breadcrumb">{PRJ_TITLE}</div>
 
 <!-- IF {PRJ_REALIZED} -->
@@ -87,5 +87,5 @@
 		{OFFERS}
 	</div>
 </div>
-<br>projects projects.tpl end<br>
+<br>MAIN projects projects.tpl end<br>
 <!-- END: MAIN -->

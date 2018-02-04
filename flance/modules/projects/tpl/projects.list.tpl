@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.list.tpl start<br>
+<br>MAIN projects projects.list.tpl start<br>
 <div class="breadcrumb">{PHP.catpath},{BREADCRUMBS}</div>
 
 <h1>
@@ -47,10 +47,13 @@
 	<div class="span9">
 
 		<!-- BEGIN: PTYPES -->
+		<br>PTYPES projects projects.list.tpl start<br>
 		<ul class="nav nav-tabs">
 			<li<!-- IF {PTYPE_ALL_ACT} --> class="active"<!-- ENDIF -->><a href="{PTYPE_ALL_URL}">{PHP.L.All}</a></li>
 			<!-- BEGIN: PTYPES_ROWS -->
+			<br>PTYPES_ROWS projects projects.list.tpl start<br>
 			<li<!-- IF {PTYPE_ROW_ACT} --> class="active"<!-- ENDIF -->><a href="{PTYPE_ROW_URL}">{PTYPE_ROW_TITLE}</a></li>
+			<br>PTYPES_ROWS projects projects.list.tpl end<br>
 			<!-- END: PTYPES_ROWS -->
 			<!-- IF {PHP.cot_plugins_active.paypro} -->
 			<!--li<!-- IF {PHP.forpro} --> class="active"<!-- ENDIF -->><a href="{FORPRO_URL}"><span class="label label-important">{PHP.L.paypro_forpro}</span></a></li-->
@@ -59,6 +62,7 @@
 			<!--li class="pull-right"><noindex><a rel="nofollow" class="btn btn-success" href="{SUBMITNEWPROJECT_URL}" title="{PHP.L.projects_add_to_catalog}">{PHP.L.projects_add_to_catalog}</a></noindex></li-->
 			<!-- ENDIF -->
 		</ul>	
+		<br>PTYPES projects projects.list.tpl end<br>
 		<!-- END: PTYPES -->
 		
 		<div class="well">			
@@ -104,6 +108,7 @@
 		
 		<div id="listprojects">
 			<!-- BEGIN: PRJ_ROWS -->
+			<br>PRJ_ROWS projects projects.list.tpl start<br>
 			<div class="media<!-- IF {PRJ_ROW_ISBOLD} --> well prjbold<!-- ENDIF --><!-- IF {PRJ_ROW_ISTOP} --> well prjtop<!-- ENDIF -->">
 				<h4>
 					<!-- IF {PRJ_ROW_COST} > 0 --><div class="pull-right">{PRJ_ROW_COST} {PHP.cfg.payments.valuta}</div><!-- ENDIF -->
@@ -116,8 +121,17 @@
 				<!-- IF {PHP.cot_plugins_active.tags} AND {PHP.cot_plugins_active.tagslance} AND {PHP.cfg.plugin.tagslance.projects} -->
 				<!--tag-->
 				<p class="small">{PHP.L.Tags}: 
-					<!-- BEGIN: PRJ_ROW_TAGS_ROW --><!-- IF {PHP.tag_i} > 0 -->, <!-- ENDIF --><a href="{PRJ_ROW_TAGS_ROW_URL}" title="{PRJ_ROW_TAGS_ROW_TAG}" rel="nofollow">{PRJ_ROW_TAGS_ROW_TAG}</a><!-- END: PRJ_ROW_TAGS_ROW -->
-					<!-- BEGIN: PRJ_ROW_NO_TAGS -->{PRJ_ROW_NO_TAGS}<!-- END: PRJ_ROW_NO_TAGS -->
+					<!-- BEGIN: PRJ_ROW_TAGS_ROW -->
+					<br>PRJ_ROW_TAGS_ROW projects projects.list.tpl start<br>
+					 <!-- IF {PHP.tag_i} > 0 -->, <!-- ENDIF -->
+					 <a href="{PRJ_ROW_TAGS_ROW_URL}" title="{PRJ_ROW_TAGS_ROW_TAG}" rel="nofollow">{PRJ_ROW_TAGS_ROW_TAG}</a>
+					 <br>PRJ_ROW_TAGS_ROW projects projects.list.tpl end<br>
+					 <!-- END: PRJ_ROW_TAGS_ROW -->
+					<!-- BEGIN: PRJ_ROW_NO_TAGS -->
+					<br>PRJ_ROW_NO_TAGS projects projects.list.tpl start<br>
+					{PRJ_ROW_NO_TAGS}
+					<br>PRJ_ROW_NO_TAGS projects projects.list.tpl end<br>
+					<!-- END: PRJ_ROW_NO_TAGS -->
 				</p>
 				<!-- ENDIF -->
 				<!--add offer-->
@@ -125,6 +139,7 @@
 				<div class="type"><!-- IF {PHP.cot_plugins_active.paypro} AND {PRJ_ROW_FORPRO} --><span class="label label-important">{PHP.L.paypro_forpro}</span> <!-- ENDIF --><!-- IF {PRJ_ROW_TYPE} -->{PRJ_ROW_TYPE} / <!-- ENDIF --><a href="{PRJ_ROW_CATURL}">{PRJ_ROW_CATTITLE}</a></div>
 			</div>
 			<hr/>
+			<br>PRJ_ROWS projects projects.list.tpl end
 			<!-- END: PRJ_ROWS -->
 		</div>
 		<!-- IF {PAGENAV_COUNT} > 0 -->	
@@ -134,5 +149,5 @@
 		<!-- ENDIF -->
 	</div>
 </div>
-<br>projects projects.list.tpl end<br>
+<br>MAIN projects projects.list.tpl end<br>
 <!-- END: MAIN -->

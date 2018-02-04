@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.offers.tpl start<br>
+<br>MAIN projects projects.offers.tpl start<br>
 {FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
 
 <!-- IF {PRJ_PERFORMER_ID} > 0 -->
@@ -23,16 +23,21 @@
 <!-- ENDIF -->
 
 <!-- BEGIN: PROJECTFORPRO -->
+<br>PROJECTFORPRO projects projects.offers.tpl start<br>
 <div class="alert alert-warning">{PHP.L.paypro_warning_onlyforpro}</div>
+<br>PROJECTFORPRO projects projects.offers.tpl end<br>
 <!-- END: PROJECTFORPRO -->
 
 <!-- BEGIN: OFFERSLIMITEMPTY -->
+<br>OFFERSLIMITEMPTY projects projects.offers.tpl start<br>
 <div class="alert alert-warning">{PHP.L.paypro_warning_offerslimit_empty}</div>
+<br>OFFERSLIMITEMPTY projects projects.offers.tpl end<br>
 <!-- END: OFFERSLIMITEMPTY -->
 
 <div id="offers">	
 	<h4>{PHP.L.offers_offers} ({ALLOFFERS_COUNT})</h4><br/>
 	<!-- BEGIN: ROWS -->
+	<br>ROWS projects projects.offers.tpl start<br>
 	<div class="row">
 		<div class="span1">
 			{OFFER_ROW_OWNER_AVATAR}
@@ -40,6 +45,7 @@
 		<div class="span11">
 			
 			<!-- BEGIN: CHOISE -->
+			<br>CHOISE projects projects.offers.tpl start<br>
 			<div class="pull-right">
 				<div class="well span3">
 					<!-- IF {OFFER_ROW_CHOISE} == "refuse" -->
@@ -59,6 +65,7 @@
 					<!-- ENDIF -->
 				</div>
 			</div>
+			<br>CHOISE projects projects.offers.tpl end<br>
 			<!-- END: CHOISE -->
 			
 			<p class="owner">{OFFER_ROW_OWNER_NAME} <span class="date">[{OFFER_ROW_DATE}] &nbsp; {OFFER_ROW_EDIT}</span></p>
@@ -100,9 +107,11 @@
 				<!-- ENDIF -->
 			</p>
 			<!-- BEGIN: POSTS -->
+			<br>POSTS projects projects.offers.tpl start<br>
 			<h5>{PHP.L.offers_posts_title}</h5>
 			<div id="projectsposts">
 				<!-- BEGIN: POSTS_ROWS -->
+				<br>POSTS_ROWS projects projects.offers.tpl start<br>
 				<div class="row">
 					<div class="span1">{POST_ROW_OWNER_AVATAR}</div>
 					<div class="span10">
@@ -111,22 +120,26 @@
 					</div>
 				</div>
 				<hr/>
+				<br>POSTS_ROWS projects projects.offers.tpl end<br>
 				<!-- END: POSTS_ROWS -->
 
 				<!-- BEGIN: POSTFORM -->
+				<br>POSTFORM projects projects.offers.tpl start<br>
 				<div class="postform customform" id="postform{ADDPOST_OFFERID}">
 					<form action="{ADDPOST_ACTION_URL}" method="post">
 						{ADDPOST_TEXT}<br/>
 						<input type="submit" name="submit" class="btn" value="{PHP.L.Submit}" />
 					</form>
 				</div>
+				<br>POSTFORM projects projects.offers.tpl end<br>
 				<!-- END: POSTFORM -->
 			</div>
-
+<br>POSTS projects projects.offers.tpl end<br>
 			<!-- END: POSTS -->
 			
 		</div>
 	</div>
+	<br>ROWS projects projects.offers.tpl end<br>
 	<!-- END: ROWS -->
 </div>
 					
@@ -139,6 +152,7 @@
 <!-- ENDIF -->
 
 <!-- BEGIN: ADDOFFERFORM -->
+<br>ADDOFFERFORM projects projects.offers.tpl start<br>
 <h4>{PHP.L.offers_ostavit_predl}</h3>
 <div id="addofferform" class="customform">
 	<form action="{OFFER_FORM_ACTION_URL}" method="post" enctype="multipart/form-data">
@@ -175,6 +189,7 @@
 		</table>
 	</form>
 </div>
+<br>ADDOFFERFORM projects projects.offers.tpl end<br>
 <!-- END: ADDOFFERFORM -->
 
 <!-- IF {PHP.usr.id} == 0 -->
@@ -182,7 +197,7 @@
 	{PHP.L.offers_for_guest}
 </div>
 <!-- ENDIF -->
-<br>projects projects.offers.tpl end<br>
+<br>MAIN projects projects.offers.tpl end<br>
 <!-- END: MAIN -->
 
 
