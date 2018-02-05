@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>MAIN themes users.register.tpl start<br>	
 	<div class="breadcrumb">{USERS_REGISTER_TITLE}</div>
 	<div class="well">
 		{FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
@@ -60,5 +60,5 @@
 			</table>
 		</form>
 	</div>
-
+<br>MAIN themes users.register.tpl end<br>	
 <!-- END: MAIN -->

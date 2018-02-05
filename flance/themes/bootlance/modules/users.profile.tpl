@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>MAIN themes users.profile.tpl start<br>	
 		<div class="block">
 			<h2 class="users">{USERS_PROFILE_TITLE}</h2>
 			{FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
@@ -33,6 +33,7 @@
 						<td>{USERS_PROFILE_REGDATE}</td>
 					</tr>
 <!-- BEGIN: USERS_PROFILE_EMAILCHANGE -->
+					<br>USERS_PROFILE_EMAILCHANGE themes users.profile.tpl start<br>	
 					<tr>
 						<td>{PHP.L.Email}:</td>
 						<td id="emailtd">
@@ -40,6 +41,7 @@
 								{PHP.L.Email}:<br />{USERS_PROFILE_EMAIL}
 							</div>
 <!-- BEGIN: USERS_PROFILE_EMAILPROTECTION -->
+<br>USERS_PROFILE_EMAILPROTECTION themes users.profile.tpl start<br>
 							<script type="text/javascript">
 								//<![CDATA[
 								$(document).ready(function(){
@@ -52,9 +54,11 @@
 								{PHP.themelang.usersprofile.Emailpassword}:<br />{USERS_PROFILE_EMAILPASS}
 							</div>
 							<div class="small" id="emailnotes">{PHP.themelang.usersprofile.Emailnotes}</div>
+	<br>USERS_PROFILE_EMAILPROTECTION themes users.profile.tpl end<br>						
 <!-- END: USERS_PROFILE_EMAILPROTECTION -->
 						</td>
 					</tr>
+					<br>USERS_PROFILE_EMAILCHANGE themes users.profile.tpl end<br>
 <!-- END: USERS_PROFILE_EMAILCHANGE -->
 					<tr>
 						<td>{PHP.L.users_hideemail}:</td>
@@ -136,5 +140,5 @@
 				</table>
 			</form>
 		</div>
-
+<br>MAIN themes users.profile.tpl end<br>
 <!-- END: MAIN -->

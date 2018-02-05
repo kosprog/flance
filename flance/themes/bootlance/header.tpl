@@ -152,10 +152,10 @@
 					
 					<!--li><a href="">Мастера тату</a></li-->
 					<li><a href="">{PHP.L.project_articles}</a></li>
-					<li><a href="{PHP|cot_url('page',c='news')}">Новости</a></li>
-					<li><a href="{PHP|cot_url('page',c='reviews')}">Отзывы</a></li>
+					<li><a href="{PHP|cot_url('page',c='News')}">Новости</a></li>
+					<li><a href="{PHP|cot_url('page',c='Reviews')}">Отзывы</a></li>
 					<li><a href="{PHP|cot_url('page',c='About')}">О нас</a></li>
-					<li><a href="{PHP|cot_url('page',c='contacts')}">{PHP.L.project_contact}</a></li>
+					<li><a href="{PHP|cot_url('page',c='Contacts')}">{PHP.L.project_contact}</a></li>
 					<li><a href="{PHP|cot_url('forums')}">forum</a></li>
 					
 				</ul>

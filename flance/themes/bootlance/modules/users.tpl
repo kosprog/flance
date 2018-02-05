@@ -1,5 +1,7 @@
 <!-- BEGIN: MAIN -->
+<br>MAIN themes users.tpl start<br>	
 	<div class="breadcrumb">{USERS_TITLE}</div>
+	
 	<h1>
 	<!-- IF {PHP.cat} -->
 		{CATTITLE}
@@ -44,6 +46,7 @@
 			</div>
 			
 			<!-- BEGIN: USERS_ROW -->
+				<br>USERS_ROW  themes users.tpl start<br>	
 				<div class="row">
 					<div class="span1">
 						{USERS_ROW_AVATAR}
@@ -57,6 +60,7 @@
 					</div>
 				</div>
 				<hr/>
+				<br>USERS_ROW  themes users.tpl end<br>	
 			<!-- END: USERS_ROW -->
 
 			<!-- IF {USERS_TOP_TOTALUSERS} > 0 -->
@@ -67,5 +71,5 @@
 		</div>
 	</div>
 		
-
+<br>MAIN  themes users.tpl end<br>	
 <!-- END: MAIN -->

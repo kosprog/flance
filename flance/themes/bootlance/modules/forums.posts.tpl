@@ -1,19 +1,24 @@
 <!-- BEGIN: MAIN -->
-
+<br>MAIN themes forums.posts.tpl start<br>
 <!-- BEGIN: FORUMS_POSTS_TOPICPRIVATE -->
+<br>FORUMS_POSTS_TOPICPRIVATE themes forums.posts.tpl start<br>
 		<div class="error">{PHP.L.forums_privatetopic}</div>
+<br>FORUMS_POSTS_TOPICPRIVATE themes forums.posts.tpl end<b
 <!-- END: FORUMS_POSTS_TOPICPRIVATE -->
 
 <!-- BEGIN: POLLS_VIEW -->
+		<br>POLLS_VIEW  themes forums.posts.tpl start<br>
 		<div class="block">
 			<div class="mboxHD polls">{POLLS_TITLE}</div>
 			{POLLS_FORM}
 		</div>
+		<br>POLLS_VIEW  themes forums.posts.tpl end<br>
 <!-- END: POLLS_VIEW -->
 
 		<div class="block">
 			<div class="breadcrumb">{FORUMS_POSTS_PAGETITLE}</div>
 <!-- BEGIN: FORUMS_POSTS_ADMIN -->
+			<br>FORUMS_POSTS_ADMIN  themes forums.posts.tpl start<br>
 			<form id="movetopic" action="{FORUMS_POSTS_MOVE_URL}" method="post" class="marginbottom10">
 				<table class="flat">
 					<tr>
@@ -34,6 +39,7 @@
 					</tr>
 				</table>
 			</form>
+		<br>FORUMS_POSTS_ADMIN  themes forums.posts.tpl end<br>	
 <!-- END: FORUMS_POSTS_ADMIN -->
 			<table class="cells">
 				<tr>
@@ -41,6 +47,7 @@
 					<td class="coltop width80">{PHP.L.Message}</td>
 				</tr>
 				<!-- BEGIN: FORUMS_POSTS_ROW -->
+				<br>FORUMS_POSTS_ROW  themes forums.posts.tpl start<br>
 				<tr>
 					<td class="{FORUMS_POSTS_ROW_ODDEVEN}">
 						{FORUMS_POSTS_ROW_ANCHORLINK}
@@ -70,21 +77,27 @@
 						{FORUMS_POSTS_ROW_USERTEXT}
 					</td>
 				</tr>
+				<br>FORUMS_POSTS_ROW  themes forums.posts.tpl end<br>
 				<!-- END: FORUMS_POSTS_ROW -->
 			</table>
 			<!-- IF {FORUMS_POSTS_PAGES} --><p class="pagination"><ul>{FORUMS_POSTS_PAGEPREV}{FORUMS_POSTS_PAGENEXT}{FORUMS_POSTS_PAGES}</ul></p><!-- ENDIF -->
 		</div>
 <!-- BEGIN: FORUMS_POSTS_TOPICLOCKED -->
+<br>FORUMS_POSTS_TOPICLOCKED  themes forums.posts.tpl start<br>
 		<div class="error">{FORUMS_POSTS_TOPICLOCKED_BODY}</div>
+<br>FORUMS_POSTS_TOPICLOCKED  themes forums.posts.tpl end<br>		
 <!-- END: FORUMS_POSTS_TOPICLOCKED -->
 
 <!-- BEGIN: FORUMS_POSTS_ANTIBUMP -->
+<br>FORUMS_POSTS_ANTIBUMP  themes forums.posts.tpl start<br>
 		<div>{FORUMS_POSTS_ANTIBUMP_BODY}</div>
+<br>FORUMS_POSTS_ANTIBUMP  themes forums.posts.tpl end<br>
 <!-- END: FORUMS_POSTS_ANTIBUMP -->
 
 {FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
 
 <!-- BEGIN: FORUMS_POSTS_NEWPOST -->
+<br>FORUMS_POSTS_NEWPOST themes forums.posts.tpl start<br>
 		<form action="{FORUMS_POSTS_NEWPOST_SEND}" method="post" name="newpost">
 			<table class="flat">
 				<tr>
@@ -95,6 +108,7 @@
 				</tr>
 			</table>
 		</form>
+<br>FORUMS_POSTS_NEWPOST themes forums.posts.tpl end<br>		
 <!-- END: FORUMS_POSTS_NEWPOST -->
-
+<br>MAIN themes forums.posts.tpl end<br>
 <!-- END: MAIN -->

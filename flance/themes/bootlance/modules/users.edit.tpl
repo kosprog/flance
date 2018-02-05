@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-
+<br>MAIN themes users.edit.tpl start<br>
 		<div class="block">
 			<h2 class="users">{USERS_EDIT_TITLE}</h2>
 			{FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
@@ -124,5 +124,5 @@
 				</table>
 			</form>
 		</div>
-
+<br>MAIN themes users.edit.tpl end<br>
 <!-- END: MAIN -->
