@@ -30,7 +30,7 @@
 						<td class="centerall">
 							{FORUMS_SECTIONS_ROW_ICON}
 						</td>
-						<td>
+						<td class="centerall">
 							<h4><a href="{FORUMS_SECTIONS_ROW_URL}">{FORUMS_SECTIONS_ROW_TITLE}</a></h4>
 							<!-- IF {FORUMS_SECTIONS_ROW_DESC} -->
 							<p class="small">{FORUMS_SECTIONS_ROW_DESC}</p>
