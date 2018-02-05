@@ -1,8 +1,9 @@
 <!-- BEGIN: MAIN -->
-
+<br>MAIN themes forums.topics.tpl start<br>
 		<div class="block">
 			<div class="breadcrumb">{FORUMS_TOPICS_PAGETITLE}</div>
 <!-- BEGIN: FORUMS_SECTIONS -->
+		<br>FORUMS_SECTIONS themes forums.topics.tpl start<br>
 			<table class="cells">
 				<tr>
 					<td class="coltop width5"></td>
@@ -12,6 +13,7 @@
 					<td class="coltop width10">{PHP.L.forums_topics}</td>
 				</tr>
 <!-- BEGIN: FORUMS_SECTIONS_ROW_SECTION -->
+				<br>FORUMS_SECTIONS_ROW_SECTION themes forums.topics.tpl start<br>
 				<tr>
 					<td class="centerall {FORUMS_SECTIONS_ROW_ODDEVEN}">
 						{PHP.R.icon_subfolder}
@@ -31,14 +33,18 @@
 						{FORUMS_SECTIONS_ROW_TOPICCOUNT}
 					</td>
 				</tr>
+				<br>FORUMS_SECTIONS_ROW_SECTION themes forums.topics.tpl end<br>
 <!-- END: FORUMS_SECTIONS_ROW_SECTION -->
 			</table>
+			<br>FORUMS_SECTIONS themes forums.topics.tpl end<br>
 <!-- END: FORUMS_SECTIONS -->
 
 			<ul id="newf">
 				<li><a href="{FORUMS_TOPICS_NEWTOPICURL}" rel="nofollow">{PHP.L.forums_newtopic}</a></li>
 				<!-- BEGIN: FORUMS_SECTIONS_POLLS -->
+				<br>FORUMS_SECTIONS_POLLS themes forums.topics.tpl start<br>
 				<li><a href="{FORUMS_TOPICS_NEWPOLLURL}" rel="nofollow">{PHP.L.forums_newpoll}</a></li>
+				<br>FORUMS_SECTIONS_POLLS themes forums.topics.tpl end<br>
 				<!-- END: FORUMS_SECTIONS_POLLS -->
 			</ul>
 
@@ -51,6 +57,7 @@
 					<td class="coltop width10">{FORUMS_TOPICS_TITLE_VIEWS}</td>
 				</tr>
 <!-- BEGIN: FORUMS_TOPICS_ROW -->
+				<br>FORUMS_TOPICS_ROW themes forums.topics.tpl start<br>
 				<tr>
 					<td class="centerall {FORUMS_TOPICS_ROW_ODDEVEN}">{FORUMS_TOPICS_ROW_ICON}</td>
 					<td class="{FORUMS_TOPICS_ROW_ODDEVEN}">
@@ -68,12 +75,15 @@
 						{FORUMS_TOPICS_ROW_VIEWCOUNT}
 					</td>
 				</tr>
+				<br>FORUMS_TOPICS_ROW themes forums.topics.tpl end<br>
 <!-- END: FORUMS_TOPICS_ROW -->
 			</table>
 
 			<p class="pagination">
 <!-- BEGIN: FORUMS_SECTIONS_VIEWERS -->
+			<br>FORUMS_SECTIONS_VIEWERS themes forums.topics.tpl start<br>
 				<span>{PHP.L.forums_viewers}: {FORUMS_TOPICS_VIEWERS} {FORUMS_TOPICS_VIEWER_NAMES}</span>
+			<br>FORUMS_SECTIONS_VIEWERS themes forums.topics.tpl end<br>
 <!-- END: FORUMS_SECTIONS_VIEWERS -->
 				<ul>{FORUMS_TOPICS_PAGEPREV}{FORUMS_TOPICS_PAGES}{FORUMS_TOPICS_PAGENEXT}</ul>
 			</p>
@@ -103,5 +113,5 @@
 				</tr>
 			</table>
 		</div>
-
+<br>MAIN themes forums.topics.tpl end<br>
 <!-- END: MAIN -->

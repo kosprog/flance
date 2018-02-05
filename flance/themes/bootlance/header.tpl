@@ -156,7 +156,7 @@
 					<li><a href="{PHP|cot_url('page',c='reviews')}">Отзывы</a></li>
 					<li><a href="{PHP|cot_url('page',c='About')}">О нас</a></li>
 					<li><a href="{PHP|cot_url('page',c='contacts')}">{PHP.L.project_contact}</a></li>
-					
+					<li><a href="{PHP|cot_url('forums')}">forum</a></li>
 					
 				</ul>
 			<span class="right"></span>	

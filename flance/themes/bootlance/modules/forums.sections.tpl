@@ -1,8 +1,9 @@
 <!-- BEGIN: MAIN -->
-
+<br>MAIN themes forums.sections.tpl start<br>
 		<div class="block">
 			<div class="breadcrumb">{FORUMS_SECTIONS_PAGETITLE}</div>
 <!-- BEGIN: FORUMS_SECTIONS -->
+<br>FORUMS_SECTIONS themes forums.sections.tpl start<br>
 			<table class="cells">
 				<thead>
 					<tr>
@@ -17,6 +18,7 @@
 					</tr>
 				</thead>
 <!-- BEGIN: CAT -->
+<br>CAT themes forums.sections.tpl start<br>
 				<tbody id="{FORUMS_SECTIONS_ROW_CAT}">
 					<tr>
 						<td class="forumssection" colspan="6">
@@ -26,6 +28,7 @@
 				</tbody>
 				<tbody id="blk_{FORUMS_SECTIONS_ROW_CAT}"<!-- IF {FORUMS_SECTIONS_ROW_FOLD} --> style="display:none;"<!-- ENDIF -->>
 <!-- BEGIN: SECTION -->
+<br>SECTION themes forums.sections.tpl start<br>
 					<tr>
 						<td class="centerall">
 							{FORUMS_SECTIONS_ROW_ICON}
@@ -37,7 +40,9 @@
 							<!-- ENDIF -->
 							<ul class="subforums">
 <!-- BEGIN: SUBSECTION -->
+<br>SUBSECTION themes forums.sections.tpl start<br>
 								<li>{PHP.R.forums_icon_subforum}<a href="{FORUMS_SECTIONS_ROW_URL}">{FORUMS_SECTIONS_ROW_TITLE}</a></li>
+<br>SUBSECTION themes forums.sections.tpl end<br>
 <!-- END: SUBSECTION -->
 							</ul>
 						</td>
@@ -49,10 +54,13 @@
 						<td class="centerall">{FORUMS_SECTIONS_ROW_POSTCOUNT}</td>
 						<td class="centerall">{FORUMS_SECTIONS_ROW_ACTIVITY}</td>
 					</tr>
+<br>SECTION themes forums.sections.tpl end<br>
 <!-- END: SECTION -->
 				</tbody>
+				<br>CAT themes forums.sections.tpl end<br>
 			<!-- END: CAT -->
 			</table>
+			<br>FORUMS_SECTIONS themes forums.sections.tpl end<br>
 <!-- END: FORUMS_SECTIONS -->
 			<p class="paging"><span><a href="{PHP|cot_url('plug','e=search&amp;tab=frm')}">{PHP.L.forums_searchinforums}</a></span><span><a href="{PHP|cot_url('plug','e=forumstats')}">{PHP.L.Statistics}</a></span><span><a href="{PHP|cot_url('forums','n=markall')}" rel="nofollow">{PHP.L.forums_markasread}</a></span></p>
 		</div>
@@ -60,5 +68,5 @@
 			<div class="mboxHD tags">{PHP.L.Tags}</div>
 			{FORUMS_SECTIONS_TAG_CLOUD}
 		</div>
-
+<br>MAIN themes forums.sections.tpl end<br>
 <!-- END: MAIN -->
