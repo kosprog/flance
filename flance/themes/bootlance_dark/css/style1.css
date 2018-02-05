@@ -82,7 +82,7 @@ div.help										{ color:#00529b; background-color:#bde5f8; background-image:ur
 
 /* 4. Tables
 -------------------------------------------------- */
-#pub {background:#C0C0C0}
+
 table td 	{ vertical-align:top; }
 
 table.flat	{ border-collapse:collapse; width:100%; }
@@ -103,14 +103,14 @@ table.fico td img	{ margin-right:10px; vertical-align:middle; }
 
 .coltop		{ text-align:center; vertical-align:middle; font-size:.9em; background-color:#ddd!important; color:#000; }
 .coltop img	{ vertical-align:middle; }
-.centerall 	{ text-align:center; vertical-align:middle; background:#C0C0C0}
+.centerall 	{ text-align:center; vertical-align:middle; }
 .valid 		{ height:48px; text-align:center; vertical-align:middle; border:0!important; }
 
 /* 6. Misc
 -------------------------------------------------- */
 
-.odd	{ background-color:#C0C0C0!important; }
-.even	{ background-color:#DCDCDC!important; }
+.odd	{ background-color:#fff!important; }
+.even	{ background-color:#f1f1f1!important; }
 .code 	{ color:#000; background:#e3e3e3; border:1px solid #ccc; padding:2px 15px; margin:5px 0; font-family:monospace; font-size:1.1em; white-space:pre-wrap; }
 
 .clear	{ clear:both; }

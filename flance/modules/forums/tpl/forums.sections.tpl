@@ -5,7 +5,7 @@
 <!-- BEGIN: FORUMS_SECTIONS -->
 			<table class="cells">
 				<thead>
-					<tr>
+					<tr>123
 						<td class="coltop" class="width10">&nbsp;</td>
 						<td class="coltop" class="width40">
 							<a href="{PHP|cot_url('forums','c=fold#top')}" rel="nofollow">{PHP.L.forums_foldall}</a><span class="spaced">/</span><a href="{PHP|cot_url('forums','c=unfold#top')}" rel="nofollow">{PHP.L.forums_unfoldall}</a>
@@ -18,7 +18,7 @@
 				</thead>
 <!-- BEGIN: CAT -->
 				<tbody id="{FORUMS_SECTIONS_ROW_CAT}">
-					<tr>
+					<tr>123
 						<td class="forumssection" colspan="6">
 							<a href="{FORUMS_SECTIONS_ROW_SECTIONSURL}" onclick="return toggleblock('blk_{FORUMS_SECTIONS_ROW_CAT}')">{FORUMS_SECTIONS_ROW_TITLE}</a>
 						</td>
@@ -26,11 +26,11 @@
 				</tbody>
 				<tbody id="blk_{FORUMS_SECTIONS_ROW_CAT}"<!-- IF {FORUMS_SECTIONS_ROW_FOLD} --> style="display:none;"<!-- ENDIF -->>
 <!-- BEGIN: SECTION -->
-					<tr>
+					<tr>123
 						<td class="centerall">
 							{FORUMS_SECTIONS_ROW_ICON}
 						</td>
-						<td>
+						<td>123
 							<h4><a href="{FORUMS_SECTIONS_ROW_URL}">{FORUMS_SECTIONS_ROW_TITLE}</a></h4>
 							<!-- IF {FORUMS_SECTIONS_ROW_DESC} -->
 							<p class="small">{FORUMS_SECTIONS_ROW_DESC}</p>
