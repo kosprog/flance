@@ -37,15 +37,15 @@ $where['userid'] = "o.offer_userid=" . $usr['id'];
 switch($choise)
 {
 	case 'none':
-		$where['item_choise'] = "o.offer_choise=''";
+		$where['offer_choise'] = "o.offer_choise=''";
 		break;
 	
 	case 'performer':
-		$where['item_choise'] = "o.offer_choise='performer'";
+		$where['offer_choise'] = "o.offer_choise='performer'";
 		break;
 	
 	case 'refuse':
-		$where['item_choise'] = "o.offer_choise='refuse'";
+		$where['offer_choise'] = "o.offer_choise='refuse'";
 		break;
 }
 
@@ -66,7 +66,7 @@ $totalitems = $db->query("SELECT COUNT(*) FROM $db_projects_offers AS o
 	" . $where . "")->fetchColumn();
 
 $sql = $db->query("SELECT o.* FROM $db_projects_offers AS o
-	LEFT JOIN $db_projects AS p ON o.item_pid=p.item_id
+	LEFT JOIN $db_projects AS p ON o.offer_pid=p.item_id
 	" . $where . "
 	" . $order . "
 	" . $query_limit . "");
