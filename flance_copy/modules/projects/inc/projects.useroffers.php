@@ -32,24 +32,24 @@ $t = new XTemplate(cot_tplfile(array('projects', 'useroffers')));
 
 $out['subtitle'] = $L['offers_useroffers'];
 
-$where['userid'] = "o.item_userid=" . $usr['id'];
+$where['userid'] = "o.offer_userid=" . $usr['id'];
 
 switch($choise)
 {
 	case 'none':
-		$where['item_choise'] = "o.item_choise=''";
+		$where['offer_choise'] = "o.offer_choise=''";
 		break;
 	
 	case 'performer':
-		$where['item_choise'] = "o.item_choise='performer'";
+		$where['offer_choise'] = "o.offer_choise='performer'";
 		break;
 	
 	case 'refuse':
-		$where['item_choise'] = "o.item_choise='refuse'";
+		$where['offer_choise'] = "o.offer_choise='refuse'";
 		break;
 }
 
-$order['date'] = 'o.item_date DESC';
+$order['date'] = 'o.offer_date DESC';
 
 /* === Hook === */
 foreach (cot_getextplugins('projects.list.query') as $pl)
@@ -66,7 +66,7 @@ $totalitems = $db->query("SELECT COUNT(*) FROM $db_projects_offers AS o
 	" . $where . "")->fetchColumn();
 
 $sql = $db->query("SELECT o.* FROM $db_projects_offers AS o
-	LEFT JOIN $db_projects AS p ON o.item_pid=p.item_id
+	LEFT JOIN $db_projects AS p ON o.offer_pid=p.item_id
 	" . $where . "
 	" . $order . "
 	" . $query_limit . "");
