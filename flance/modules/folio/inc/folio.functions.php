@@ -4,7 +4,7 @@
  * folio module
  *
  * @package folio
- * @version 2.5.2
+ * @version 2.5.8
  * @author CMSWorks Team
  * @copyright Copyright (c) CMSWorks.ru, littledev.ru
  * @license BSD
@@ -19,11 +19,10 @@ require_once cot_langfile('folio', 'module');
 require_once cot_incfile('forms');
 require_once cot_incfile('extrafields');
 
-// Global variables
-global $cot_extrafields, $db_folio, $db_x;
-$db_folio = (isset($db_folio)) ? $db_folio : $db_x . 'folio';
+// Tables and extras
+cot::$db->registerTable('folio');
 
-$cot_extrafields[$db_folio] = (!empty($cot_extrafields[$db_folio])) ? $cot_extrafields[$db_folio] : array();
+cot_extrafields_register_table('folio');
 
 $structure['folio'] = (is_array($structure['folio'])) ? $structure['folio'] : array();
 
@@ -87,10 +86,20 @@ function cot_folio_auth($cat = null)
 
 
 
-function cot_build_structure_folio_tree($parent = '', $selected = array(), $level = 0, $template = '')
+function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0, $template = '')
 {
-	global $structure, $cfg, $db, $sys;
+	global $structure, $cfg, $db, $sys, $cot_extrafields, $db_structure;
 	global $i18n_notmain, $i18n_locale, $i18n_write, $i18n_admin, $i18n_read, $db_i18n_pages;
+
+	$urlparams = array();
+
+	/* === Hook === */
+	foreach (cot_getextplugins('folio.tree.first') as $pl)
+	{
+		include $pl;
+	}
+	/* ===== */
+
 	if (empty($parent))
 	{
 		$i18n_enabled = $i18n_read;
@@ -106,39 +115,73 @@ function cot_build_structure_folio_tree($parent = '', $selected = array(), $leve
 	else
 	{
 		$i18n_enabled = $i18n_read && cot_i18n_enabled($parent);
-		$children = cot_structure_children('folio', $parent, false, false);
+		$children = $structure['folio'][$parent]['subcats'];
 	}
-	//cot_print($children, $parent);
+
 	$t1 = new XTemplate(cot_tplfile(array('folio', 'tree', $template), 'module'));
+
+	/* === Hook === */
+	foreach (cot_getextplugins('folio.tree.main') as $pl)
+	{
+		include $pl;
+	}
+	/* ===== */
 
 	if (count($children) == 0)
 	{
 		return false;
 	}
+
+	$t1->assign(array(
+		"TITLE" => htmlspecialchars($structure['folio'][$parent]['title']),
+		"DESC" => $structure['folio'][$parent]['desc'],
+		"COUNT" => $structure['folio'][$parent]['count'],
+		"ICON" => $structure['folio'][$parent]['icon'],
+		"HREF" => cot_url("folio", $urlparams + array('c' => $parent)),
+		"LEVEL" => $level,
+	));
+
 	$jj = 0;
+
+	/* === Hook - Part1 : Set === */
+	$extp = cot_getextplugins('folio.tree.loop');
+	/* ===== */
+
 	foreach ($children as $row)
 	{
 		$jj++;
+		$urlparams['c'] = $row;
+		$subcats = $structure['folio'][$row]['subcats'];
 		$t1->assign(array(
 			"ROW_TITLE" => htmlspecialchars($structure['folio'][$row]['title']),
 			"ROW_DESC" => $structure['folio'][$row]['desc'],
 			"ROW_COUNT" => $structure['folio'][$row]['count'],
 			"ROW_ICON" => $structure['folio'][$row]['icon'],
-			"ROW_HREF" => cot_url("folio", "c=" . $row . "&type=" . $type),
-			"ROW_SELECTED" => in_array($row, $selected) ? 1 : 0,
-			"ROW_SUBCAT" => cot_build_structure_folio_tree($row, $selected, $level + 1),
+			"ROW_HREF" => cot_url("folio", $urlparams),
+			"ROW_SELECTED" => ((is_array($selected) && in_array($row, $selected)) || (!is_array($selected) && $row == $selected)) ? 1 : 0,
+			"ROW_SUBCAT" => (count($subcats) > 0) ? cot_build_structure_folio_tree($row, $selected, $level + 1) : '',
 			"ROW_LEVEL" => $level,
 			"ROW_ODDEVEN" => cot_build_oddeven($jj),
 			"ROW_JJ" => $jj
 		));
-
-		if ($i18n_enabled && $i18n_notmain)
+		
+		// Extra fields for structure
+		foreach ($cot_extrafields[$db_structure] as $exfld)
 		{
-			$x_i18n = cot_i18n_get_cat($row, $i18n_locale);
+			$uname = strtoupper($exfld['field_name']);
+			$t1->assign(array(
+				'ROW_'.$uname.'_TITLE' => isset($L['structure_'.$exfld['field_name'].'_title']) ?  $L['structure_'.$exfld['field_name'].'_title'] : $exfld['field_description'],
+				'ROW_'.$uname => cot_build_extrafields_data('structure', $exfld, $structure['folio'][$row][$exfld['field_name']]),
+				'ROW_'.$uname.'_VALUE' => $structure['folio'][$row][$exfld['field_name']],
+			));
+		}
 
-			if ($x_i18n)
-			{
-				$urlparams = (!$cfg['plugin']['i18n']['omitmain'] || $i18n_locale != $cfg['defaultlang']) ? "c=$row&l=$i18n_locale" : "c=$row";
+		if ($i18n_enabled && $i18n_notmain){
+			$x_i18n = cot_i18n_get_cat($row, $i18n_locale);
+			if ($x_i18n){
+				if(!$cfg['plugin']['i18n']['omitmain'] || $i18n_locale != $cfg['defaultlang']){
+					$urlparams['l'] = $i18n_locale;
+				}
 				$t1->assign(array(
 					'ROW_URL' => cot_url('folio', $urlparams),
 					'ROW_TITLE' => $x_i18n['title'],
@@ -146,16 +189,15 @@ function cot_build_structure_folio_tree($parent = '', $selected = array(), $leve
 				));
 			}
 		}
-		$t1->parse("MAIN.CATS");
 
-		$t1->assign(array(
-			"TITLE" => htmlspecialchars($structure['folio'][$parent]['title']),
-			"DESC" => $structure['folio'][$parent]['desc'],
-			"COUNT" => $structure['folio'][$parent]['count'],
-			"ICON" => $structure['folio'][$parent]['icon'],
-			"HREF" => cot_url("folio", "c=" . $parent),
-			"LEVEL" => $level,
-		));
+		/* === Hook - Part2 : Include === */
+		foreach ($extp as $pl)
+		{
+			include $pl;
+		}
+		/* ===== */
+
+		$t1->parse("MAIN.CATS");
 	}
 	if ($jj == 0)
 	{
@@ -245,7 +287,7 @@ function cot_generate_foliotags($item_data, $tag_prefix = '', $textlength = 0, $
 			'CATPATH' => $catpath,
 			'TEXT' => $text,
 			'SHORTTEXT' => $text_cut,
-			'COST' => number_format($item_data['item_cost'], '0', '.', ' '),
+			'COST' => (floor($item_data['item_cost']) != $item_data['item_cost']) ? number_format($item_data['item_cost'], '2', '.', ' ') : number_format($item_data['item_cost'], '0', '.', ' '),
 			'DATE' => cot_date('datetime_medium', $item_data['item_date']),
 			'DATE_STAMP' => $item_data['item_date'],
 			'SHOW_URL' => $item_data['item_pageurl'],
@@ -387,7 +429,7 @@ function cot_folio_import($source = 'POST', $ritem = array(), $auth = array())
 	$ritem['item_title'] = cot_import('rtitle', $source, 'TXT');
 	$ritem['item_alias'] = cot_import('ralias', $source, 'TXT');
 	$ritem['item_text'] = cot_import('rtext', $source, 'HTM');
-	$ritem['item_cost'] = cot_import('rcost', $source, 'TXT');
+	$ritem['item_cost'] = cot_import('rcost', $source, 'NUM');
 	$ritem['item_parser'] = cot_import('rparser', $source, 'ALP');
 	
 	if(empty($ritem['item_date']))
@@ -431,9 +473,7 @@ function cot_folio_validate($ritem)
 	cot_check(empty($ritem['item_cat']), 'folio_select_cat', 'rcat');
 	if ($structure['folio'][$ritem['item_cat']]['locked'])
 	{
-		global $L;
-		require_once cot_langfile('message', 'core');
-		cot_error('msg602_body', 'rcat');
+		cot_error('folio_locked_cat', 'rcat');
 	}
 	cot_check(mb_strlen($ritem['item_title']) < 2, 'folio_empty_title', 'rtitle');
 	cot_check(!empty($ritem['item_alias']) && preg_match('`[+/?%#&]`', $ritem['item_alias']), 'folio_aliascharacters', 'ralias');
@@ -698,4 +738,8 @@ function cot_folio_selectcat($check, $name, $subcat = '', $hideprivate = true)
 	$result = cot_selectbox($check, $name, array_keys($result_array), array_values($result_array), true);
 
 	return($result);
+}
+
+if ($cfg['folio']['markup'] == 1){
+  $folioeditor = $cfg['folio']['folioeditor'];
 }

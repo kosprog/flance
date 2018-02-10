@@ -40,8 +40,8 @@ if ($a == 'addoffer')
 	}
 	/* ===== */
 	
-	$roffer['offer_cost_min'] = (int)cot_import('costmin', 'P', 'INT');
-	$roffer['offer_cost_max'] = (int)cot_import('costmax', 'P', 'INT');
+	$roffer['offer_cost_min'] = (int)cot_import('costmin', 'P', 'NUM');
+	$roffer['offer_cost_max'] = (int)cot_import('costmax', 'P', 'NUM');
 	$roffer['offer_time_min'] = (int)cot_import('timemin', 'P', 'INT');
 	$roffer['offer_time_max'] = (int)cot_import('timemax', 'P', 'INT');
 	$roffer['offer_time_type'] = (int)cot_import('timetype', 'P', 'INT');
@@ -201,7 +201,10 @@ if ($a == 'refuse' && !empty($userid))
 	if ($usr['id'] == $item['item_userid'] && (int)$userid > 0 && !cot_error_found())
 	{
 		if($db->update($db_projects_offers, array('offer_choise' => 'refuse', 'offer_choise_date' => (int)$sys['now_offset']), "offer_pid=" . $id . " AND offer_userid=" . (int)$userid . "")){
-			$db->update($db_projects, array("item_performer" => 0), "item_id=" . (int)$id);
+			if($userid == $item['item_performer'])
+			{
+				$db->update($db_projects, array("item_performer" => 0), "item_id=" . (int)$id);
+			}
 		}
 
 		$urlparams = empty($item['item_alias']) ?
@@ -240,8 +243,8 @@ if ($a == 'addpost')
 	$offer_post['post_text'] = cot_import('posttext', 'P', 'TXT');
 
 	$offer = $db->query("SELECT * FROM $db_projects_offers AS o 
-		LEFT JOIN $db_users AS u ON u.user_id=o.item_userid
-		WHERE item_id=" . $offer_post['post_oid'] . " LIMIT 1")->fetch();
+		LEFT JOIN $db_users AS u ON u.user_id=o.offer_userid
+		WHERE offer_id=" . $offer_post['post_oid'] . " LIMIT 1")->fetch();
 	
 	/* === Hook === */
 	foreach (cot_getextplugins('projects.offers.addpost.error') as $pl)
@@ -255,7 +258,7 @@ if ($a == 'addpost')
 
 		$db->insert($db_projects_posts, $offer_post);
 
-		if ($usr['id'] == $offer['item_userid'])
+		if ($usr['id'] == $offer['offer_userid'])
 		{
 			$urlparams = empty($item['item_alias']) ?
 				array('c' => $item['item_cat'], 'id' => $item['item_id']) :
@@ -322,9 +325,6 @@ $where['pid'] = "o.offer_pid=" . $id;
 
 $order['date'] = "o.offer_date DESC";
 
-$where = ($where) ? 'WHERE ' . implode(' AND ', $where) : '';
-$order = ($order) ? 'ORDER BY ' . implode(', ', $order) : '';
-
 $query_limit = ($cfg['projects']['offersperpage'] > 0) ? "LIMIT $d, ".$cfg['projects']['offersperpage'] : '';
 
 /* === Hook === */
@@ -333,6 +333,9 @@ foreach (cot_getextplugins('projects.offers.query') as $pl)
 	include $pl;
 }
 /* ===== */
+
+$where = ($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+$order = ($order) ? 'ORDER BY ' . implode(', ', $order) : '';
 
 $totaloffers = $db->query("SELECT COUNT(*) FROM $db_projects_offers AS o 
 	" . $where . "")->fetchColumn();
@@ -365,43 +368,26 @@ $t_o->assign(array(
 ));
 
 /* === Hook === */
-$extp = cot_getextplugins('projects.offers.loop');
-$extp1 = cot_getextplugins('projects.offers.posts.loop');
+$extp1 = cot_getextplugins('projects.offers.choise.first');
+$extp2 = cot_getextplugins('projects.offers.choise');
+$extp3 = cot_getextplugins('projects.offers.posts.loop');
+$extp4 = cot_getextplugins('projects.offers.loop');
 /* ===== */
 
 while ($offer = $sql->fetch())
-{
-	$choise_enabled = true;
-	
-	if ($usr['id'] == $item['item_userid'] && $choise_enabled)
-	{
-		$t_o->assign(array(
-			"OFFER_ROW_CHOISE" => $offer['offer_choise'],
-			"OFFER_ROW_SETPERFORMER" => cot_url('projects', 'id=' . $id . '&a=setperformer&userid=' . $offer['user_id'] . '&' . cot_xg()),
-			"OFFER_ROW_REFUSE" => cot_url('projects', 'id=' . $id . '&a=refuse&userid=' . $offer['user_id'] . '&' . cot_xg()),
-		));
-		
-		/* === Hook === */
-		foreach (cot_getextplugins('projects.offers.choise') as $pl)
-		{
-			include $pl;
-		}
-		/* ===== */
-		
-		$t_o->parse("MAIN.ROWS.CHOISE");
-	}
-
-	$t_o->assign(cot_generate_usertags($offer, 'OFFER_ROW_OWNER_'));
+{  
+  	$t_o->assign(cot_generate_usertags($offer, 'OFFER_ROW_OWNER_'));
 	$t_o->assign(array(
 		"OFFER_ROW_DATE" => cot_date('d.m.Y H:i', $offer['offer_date']),
 		"OFFER_ROW_DATE_STAMP" => $offer['offer_date'],
 		"OFFER_ROW_TEXT" => cot_parse($offer['offer_text']),
-		"OFFER_ROW_COSTMIN" => number_format($offer['offer_cost_min'], '0', '.', ' '),
-		"OFFER_ROW_COSTMAX" => number_format($offer['offer_cost_max'], '0', '.', ' '),
+		"OFFER_ROW_COSTMIN" => (floor($offer['offer_cost_min']) != $offer['offer_cost_min']) ? number_format($offer['offer_cost_min'], '2', '.', ' ') : number_format($offer['offer_cost_min'], '0', '.', ' '),
+		"OFFER_ROW_COSTMAX" => (floor($offer['offer_cost_max']) != $offer['offer_cost_max']) ? number_format($offer['offer_cost_max'], '2', '.', ' ') : number_format($offer['offer_cost_max'], '0', '.', ' '),
 		"OFFER_ROW_TIMEMIN" => $offer['offer_time_min'],
 		"OFFER_ROW_TIMEMAX" => $offer['offer_time_max'],
 		"OFFER_ROW_TIMETYPE" => $L['offers_timetype'][$offer['offer_time_type']],
 		"OFFER_ROW_HIDDEN" => $offer['offer_hidden'],
+		"OFFER_ROW_CHOISE" => $offer['offer_choise'],
 	));
 	
 	// Extrafields
@@ -412,9 +398,35 @@ while ($offer = $sql->fetch())
 			$uname = mb_strtoupper($exfld['field_name']);
 			$t_o->assign(array(
 				'OFFER_ROW_' . $uname . '_TITLE' => isset($L['offers_' . $exfld['field_name'] . '_title']) ? $L['offers_' . $exfld['field_name'] . '_title'] : $exfld['field_description'],
-				'OFFER_ROW_' . $uname => cot_build_extrafields_data('offers', $exfld, $offer['item_' . $exfld['field_name']])
+				'OFFER_ROW_' . $uname => cot_build_extrafields_data('offers', $exfld, $offer['offer_' . $exfld['field_name']])
 			));
 		}
+	}
+
+	$choise_enabled = true;
+	
+	/* === Hook - Part1 : Include === */
+	foreach ($extp1 as $pl)
+	{
+		include $pl;
+	}
+	/* ===== */
+
+	if ($usr['id'] == $item['item_userid'] && $choise_enabled)
+	{
+		$t_o->assign(array(
+			"OFFER_ROW_SETPERFORMER" => cot_url('projects', 'id=' . $id . '&a=setperformer&userid=' . $offer['user_id'] . '&' . cot_xg()),
+			"OFFER_ROW_REFUSE" => cot_url('projects', 'id=' . $id . '&a=refuse&userid=' . $offer['user_id'] . '&' . cot_xg()),
+		));
+		
+		/* === Hook - Part2 : Include === */
+		foreach ($extp2 as $pl)
+		{
+			include $pl;
+		}
+		/* ===== */
+		
+		$t_o->parse("MAIN.ROWS.CHOISE");
 	}
 
 	if ($usr['id'] == $offer['offer_userid'] || $usr['id'] == $item['item_userid'] || $usr['isadmin'])
@@ -430,8 +442,8 @@ while ($offer = $sql->fetch())
 				"POST_ROW_DATE" => cot_date('d.m.y H:i', $posts['post_date']),
 				"POST_ROW_DATE_STAMP" => $posts['post_date'],
 			));
-			/* === Hook - Part2 : Include === */
-			foreach ($extp1 as $pl)
+			/* === Hook - Part3 : Include === */
+			foreach ($extp3 as $pl)
 			{
 				include $pl;
 			}
@@ -449,8 +461,8 @@ while ($offer = $sql->fetch())
 		$t_o->parse("MAIN.ROWS.POSTS");
 	}
 	
-	/* === Hook - Part2 : Include === */
-	foreach ($extp as $pl)
+	/* === Hook - Part4 : Include === */
+	foreach ($extp4 as $pl)
 	{
 		include $pl;
 	}
@@ -470,7 +482,7 @@ foreach (cot_getextplugins('projects.addofferform.main') as $pl)
 /* ===== */
 
 $sql = $db->query("SELECT * FROM $db_projects_offers WHERE offer_pid=" . $id . " AND offer_userid=" . $usr['id'] . "");
-if ($sql->fetchColumn() == 0 && $addoffer_enabled && $usr['auth_offers'] && $usr['id'] != $item['item_userid'] && empty($performer))
+if ($sql->fetchColumn() == 0 && $addoffer_enabled && $usr['auth_offers'] && $usr['id'] != $item['item_userid'] && !($item['item_performer'] || $item['item_realized']))
 {
 	$t_o->assign(array(
 		"OFFER_FORM_COSTMIN" => cot_inputbox('text', 'costmin', $roffer['offer_cost_min'], 'size="7"'),

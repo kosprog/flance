@@ -1,5 +1,4 @@
 <!-- BEGIN: MAIN -->
-	<br>system admin.other.tpl start<br>
 	<h2>{PHP.L.Core}</h2>
 	<div class="block">
 		<table class="cells">
@@ -72,5 +71,5 @@
 		</table>
 	</div>
 <!-- END: SECTION -->
-<br>system admin.other.tpl end<br>
+
 <!-- END: MAIN -->

@@ -16,6 +16,7 @@ cot_block($usr['auth_read']);
 $sort = cot_import('sort', 'G', 'ALP');
 $c = cot_import('c', 'G', 'ALP');
 $sq = cot_import('sq', 'G', 'TXT');
+$sq = $db->prep($sq);
 
 $maxrowsperpage = ($cfg['folio']['cat_' . $c]['maxrowsperpage']) ? $cfg['folio']['cat_' . $c]['maxrowsperpage'] : $cfg['folio']['cat___default']['maxrowsperpage'];
 list($pn, $d, $d_url) = cot_import_pagenav('d', $maxrowsperpage);
@@ -54,7 +55,7 @@ if (!empty($c))
 
 if (!empty($sq))
 {
-	$words = explode(' ', $sq);
+	$words = explode(' ', preg_replace("'\s+'", " ", $sq));
 	$sqlsearch = '%'.implode('%', $words).'%';
 
 	$where['search'] = "(item_title LIKE '".$db->prep($sqlsearch)."' OR item_text LIKE '".$db->prep($sqlsearch)."')";
@@ -63,11 +64,12 @@ if (!empty($sq))
 // Extra fields
 foreach ($cot_extrafields[$db_folio] as $exfld)
 {
-	$shfld[$exfld['field_name']] = cot_import_extrafields($exfld['field_name'], $exfld, 'G', $shfld[$exfld['field_name']]);
+	$fld_value = cot_import($exfld['field_name'], 'G', 'TXT');
+	$fld_value = $db->prep($fld_value);
 	
-	if(!empty($shfld[$exfld['field_name']]))
+	if(!empty($fld_value))
 	{
-		$where[$exfld['field_name']] = "item_".$exfld['field_name']." LIKE '%".$shfld[$exfld['field_name']]."%'";
+		$where[$exfld['field_name']] = "item_".$exfld['field_name']." LIKE '%".$fld_value."%'";
 	}
 }
 
@@ -87,8 +89,10 @@ switch($sort)
 }
 $list_url_path = array('c' => $c, 'sort' => $sort, 'sq' => $sq);
 
+// Building the canonical URL
+$out['canonical_uri'] = cot_url('folio', $list_url_path);
+
 $mskin = cot_tplfile(array('folio', 'list', $structure['folio'][$c]['tpl']));
-$t = new XTemplate($mskin);
 
 /* === Hook === */
 foreach (cot_getextplugins('folio.list.query') as $pl)
@@ -97,13 +101,17 @@ foreach (cot_getextplugins('folio.list.query') as $pl)
 }
 /* ===== */
 
+$t = new XTemplate($mskin);
+
 $where = ($where) ? 'WHERE ' . implode(' AND ', $where) : '';
 $order = ($order) ? 'ORDER BY ' . implode(', ', $order) : '';
 
 $totalitems = $db->query("SELECT COUNT(*) FROM $db_folio AS f $join_condition 
+	LEFT JOIN $db_users AS u ON u.user_id=f.item_userid
 	" . $where . "")->fetchColumn();
 
-$sqllist = $db->query("SELECT * FROM $db_folio AS f $join_condition 
+$sqllist = $db->query("SELECT f.*, u.* $join_columns 
+	FROM $db_folio AS f $join_condition 
 	LEFT JOIN $db_users AS u ON u.user_id=f.item_userid 
 	" . $where . " 
 	" . $order . "
@@ -122,7 +130,7 @@ $catpath = cot_breadcrumbs($catpatharray, $cfg['homebreadcrumb'], true);
 
 $t->assign(array(
 	"SEARCH_ACTION_URL" => cot_url('folio', '', '', true),
-	"SEARCH_SQ" => cot_inputbox('text', 'sq', $sq, 'class="schstring"'),
+	"SEARCH_SQ" => cot_inputbox('text', 'sq', htmlspecialchars($sq), 'class="schstring"'),
 	"SEARCH_CAT" => cot_folio_selectcat($c, 'c'),
 	"SEARCH_SORTER" => cot_selectbox($sort, "sort", array('', 'costasc', 'costdesc'), array($L['folio_mostrelevant'], $L['folio_costasc'], $L['folio_costdesc']), false),
 	"PAGENAV_PAGES" => $pagenav['main'],
@@ -131,24 +139,36 @@ $t->assign(array(
 	"PAGENAV_COUNT" => $totalitems,
 	"CATALOG" => cot_build_structure_folio_tree('', array($c), 0),
 	"BREADCRUMBS" => $catpath,
-	"CATTITLE" => (!empty($c)) ? $structure['folio'][$c]['title'] : '',
-	"CATDESC" => (!empty($c)) ? $structure['folio'][$c]['desc'] : '',
 ));
 
 foreach($cot_extrafields[$db_folio] as $exfld)
 {
-	$uname = strtoupper($exfld['field_name']);
-	$exfld_val = cot_build_extrafields($exfld['field_name'], $exfld, $shfld[$exfld['field_name']]);
-	$exfld_title = isset($L['projects_'.$exfld['field_name'].'_title']) ?  $L['projects_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
+	$fld_value = cot_import($exfld['field_name'], 'G', 'TXT');
+	$fld_value = $db->prep($fld_value);
+
+	$fieldname = strtoupper($exfld['field_name']);
+	$exfld_val = cot_build_extrafields($exfld['field_name'], $exfld, $fld_value);
+	$exfld_title = isset($L['folio_'.$exfld['field_name'].'_title']) ?  $L['folio_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
 	$t->assign(array(
-		'SEARCH_'.$uname => $exfld_val,
-		'SEARCH_'.$uname.'_TITLE' => $exfld_title,
+		'SEARCH_'.$fieldname => $exfld_val,
+		'SEARCH_'.$fieldname.'_TITLE' => $exfld_title,
 	));
 }
 
 /* === Hook === */
-$extp = cot_getextplugins('folio.list.search.tags');
+foreach (cot_getextplugins('folio.list.search.tags') as $pl)
+{
+	include $pl;
+}
 /* ===== */
+
+if(!empty($c) && is_array($structure['folio'][$c]))
+{
+	foreach ($structure['folio'][$c] as $field => $val)
+	{
+		$t->assign('CAT'.strtoupper($field), $val);
+	}
+}
 
 $sqllist_rowset = $sqllist->fetchAll();
 $sqllist_idset = array();

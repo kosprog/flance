@@ -3,8 +3,9 @@
 <div class="row">
 	<div class="span3">
 		<div class="thumbnail">{USERS_DETAILS_AVATAR}</div>
-		<!-- IF {PHP.cot_plugins_active.paypro} && {PHP.usr.id} > 0 -->
-		<a href="<!-- IF {PHP.usr.isadmin} -->{USERS_DETAILS_ID|cot_url('admin', 'm=other&p=paypro&id='$this)}<!-- ELSE -->{USERS_DETAILS_ID|cot_url('paypro', 'id='$this)}<!-- ENDIF -->">{PHP.L.paypro_giftpro}</a>
+		<!-- IF {PHP.cot_plugins_active.paypro} && {PHP.usr.id} > 0 AND {PHP.usr.id} != {USERS_DETAILS_ID} -->
+		<br/>
+		<a class="btn btn-info btn-block" href="<!-- IF {PHP.usr.isadmin} -->{USERS_DETAILS_ID|cot_url('admin', 'm=other&p=paypro&id='$this)}<!-- ELSE -->{USERS_DETAILS_ID|cot_url('paypro', 'id='$this)}<!-- ENDIF -->">{PHP.L.paypro_giftpro}</a>
 		<br/>
 		<!-- ENDIF -->
 		<br/>
@@ -34,7 +35,7 @@
 				<li<!-- IF {PHP.tab} == 'projects' --> class="active"<!-- ENDIF -->><a href="{USERS_DETAILS_PROJECTS_URL}#tab_projects" data-toggle="tab">{PHP.L.projects_projects} {USERS_DETAILS_PROJECTS_COUNT}</a></li>
 				<!-- ENDIF -->
 				<!-- IF {PHP.cot_plugins_active.reviews} -->
-				<li<!-- IF {PHP.tab} == 'reviews' --> class="active"<!-- ENDIF -->><a href="{USERS_DETAILS_REVIEWS_URL}#tab_reviews" data-toggle="tab">{PHP.L.review_reviews} {USERS_DETAILS_REVIEWS_COUNT}</a></li>
+				<li<!-- IF {PHP.tab} == 'reviews' --> class="active"<!-- ENDIF -->><a href="{USERS_DETAILS_REVIEWS_URL}#tab_reviews" data-toggle="tab">{PHP.L.reviews_reviews} {USERS_DETAILS_REVIEWS_COUNT}</a></li>
 				<!-- ENDIF -->
 			</ul>
 		</div>

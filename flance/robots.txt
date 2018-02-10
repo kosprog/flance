@@ -6,11 +6,11 @@ Disallow: /lang
 Disallow: /lib
 Disallow: /themes
 Disallow: /system
-Host: flance
+Host: utatton0.beget.tech
 
 # For sitemaps.xml autodiscovery (use only with SiteMap plugin).
 # Change domain name for real one and uncomment line below:
 # Sitemap: http://your-domain.com/sitemap.xml
 
-Sitemap: http://flance/index.php?r=sitemap&a=index
-Sitemap: http://flance/sitemap.xml
+Sitemap: http://utatton0.beget.tech/index.php?r=sitemap&a=index
+Sitemap: http://utatton0.beget.tech/sitemap.xml

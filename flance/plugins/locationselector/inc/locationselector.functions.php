@@ -22,7 +22,7 @@ require_once cot_langfile('locationselector', 'plug');
 global $db_ls_regions, $db_ls_cities, $db_x;
 $db_ls_regions = (isset($db_ls_regions)) ? $db_ls_regions : $db_x . 'ls_regions';
 $db_ls_cities = (isset($db_ls_cities)) ? $db_ls_cities : $db_x . 'ls_cities';
-$R['input_location'] = (empty($R['input_location'])) ? '<span class="locselect">{$country} {$region} {$city}</span>' : $R['input_location'];
+$R['input_location'] = (empty($R['input_location'])) ? '<span class="locselect"><span>{$country}</span> <span>{$region}</span> <span>{$city}</span></span>' : $R['input_location'];
 
 if (!$cot_countries)
 {
@@ -241,7 +241,7 @@ function cot_select_location($country = '', $region = 0, $city = 0, $userdefault
  */
 function cot_import_location($source = 'P')
 {
-	$result['country'] = cot_import('country',$source, 'TXT');
+	$result['country'] = cot_import('country',$source, 'ALP', 2);
 	$result['region'] = cot_import('region', $source, 'INT');
 	$result['city'] = cot_import('city', $source, 'INT');
 	$result['region'] = ($result['country'] == '0') ? 0 : $result['region'];

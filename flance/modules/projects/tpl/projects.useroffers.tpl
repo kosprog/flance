@@ -1,5 +1,4 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.useroffers.tpl start<br>
 <div class="breadcrumb">{BREADCRUMBS}</div>
 <h1>{PHP.L.offers_useroffers}</h1>
 
@@ -69,7 +68,7 @@
 <!-- END: OFFER_ROWS -->
 <div class="pagination"><ul>{PAGENAV_PAGES}</ul></div>
 
-<br>projects projects.useroffers.tpl end<br>
+
 
 <!-- END: MAIN -->
 

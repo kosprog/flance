@@ -1,5 +1,5 @@
 <!-- BEGIN: FOOTER -->
-<br>system footer.tpl start<br>
+
 <div id="footer">
 	<ul>
 		<li><a href="{PHP|cot_url('admin')}">{PHP.L.Home}</a></li>
@@ -14,5 +14,4 @@
 {FOOTER_RC}
 </body>
 </html>
-<br>system footer.tpl end<br>
 <!-- END: FOOTER -->

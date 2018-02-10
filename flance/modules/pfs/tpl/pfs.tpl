@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>pfs pfs.tpl start<br>
+
 <!-- BEGIN: STANDALONE_HEADER -->
 <html>
 	<head>
@@ -184,5 +184,5 @@
 	</body>
 </html>
 <!-- END: STANDALONE_FOOTER -->
-<br>pfs pfs.tpl end<br>
+
 <!-- END: MAIN -->

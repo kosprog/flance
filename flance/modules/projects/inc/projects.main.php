@@ -57,7 +57,7 @@ $out['meta_keywords'] = (!empty($item['item_keywords'])) ? $item['item_keywords'
 if ($item['item_state'] != 0 && !$usr['isadmin'] && $usr['id'] != $item['item_userid'])
 {
 	$userofferexists = (bool)$db->query("SELECT COUNT(*) FROM $db_projects_offers 
-			WHERE item_userid=" . $usr['id'] . " AND item_pid=" . $item['item_id'])->fetchColumn();
+			WHERE offer_userid=" . $usr['id'] . " AND offer_pid=" . $item['item_id'])->fetchColumn();
 	if(!$userofferexists)
 	{
 		cot_log("Attempt to directly access an un-validated", 'sec');
@@ -66,11 +66,16 @@ if ($item['item_state'] != 0 && !$usr['isadmin'] && $usr['id'] != $item['item_us
 	}
 }
 
-if (!$usr['isadmin'] || $cfg['count_admin'])
+if ($usr['id'] != $item['item_userid'] && (!$usr['isadmin'] || $cfg['projects']['count_admin']))
 {
 	$item['item_count']++;
 	$db->update($db_projects, array('item_count' => $item['item_count']), "item_id=" . (int)$item['item_id']);
 }
+
+// Building the canonical URL
+$pageurl_params = array('c' => $item['item_cat']);
+empty($al) ? $pageurl_params['id'] = $id : $pageurl_params['al'] = $al;
+$out['canonical_uri'] = cot_url('projects', $pageurl_params);
 
 $mskin = cot_tplfile(array('projects', $structure['projects'][$item['item_cat']]['tpl']));
 

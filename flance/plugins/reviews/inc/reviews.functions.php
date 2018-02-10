@@ -11,8 +11,9 @@
  */
 defined('COT_CODE') or die('Wrong URL.');
 
-global $cot_extrafields, $db_reviews, $db_x;
-$db_reviews = (isset($db_reviews)) ? $db_reviews : $db_x . 'reviews';
+global $cot_extrafields;
+// Tables
+cot::$db->registerTable('reviews');
 
 /**
  * Вывод "oчков" пользователя
@@ -104,10 +105,18 @@ function cot_reviews_list($userid, $area, $code='', $name='', $params='', $tail=
 					'REVIEW_FORM_ID' => $item['item_id'],
 					'REVIEW_FORM_SEND' => cot_url('plug', 'r=reviews&a=update&area='.$area.'&code='.$code.'&touser='.$userid.'&redirect='.$redirect.'&itemid=' . $item['item_id']),
 					'REVIEW_FORM_TEXT' => cot_textarea('rtext', $item['item_text'], 5, 50),
-					'REVIEW_FORM_SCORE' => cot_radiobox($item['item_score'], 'rscore', $L['review_score_values'], $L['review_score_titles']),
+					'REVIEW_FORM_SCORE' => cot_radiobox($item['item_score'], 'rscore', $L['reviews_score_values'], $L['reviews_score_titles']),
 					'REVIEW_FORM_USERID' => $item['item_userid'],
 					'REVIEW_FORM_DELETE_URL' => cot_url('plug', 'r=reviews&a=delete&area='.$area.'&code='.$code.'&touser='.$userid.'&redirect='.$redirect.'&itemid=' . $item['item_id']),
 				));
+        
+        /* === Hook === */
+        foreach (cot_getextplugins('reviews.edit.tags') as $pl)
+        {
+        	include $pl;
+        }
+        /* ===== */
+        
 				$t1->parse('MAIN.REVIEWS_ROWS.EDITFORM');
 			}
 			
@@ -124,6 +133,13 @@ function cot_reviews_list($userid, $area, $code='', $name='', $params='', $tail=
 				'REVIEW_ROW_DATE' => $item['item_date'],
 				'REVIEW_ROW_DELETE_URL' => ($usr['id'] == $item['item_userid'] || $usr['isadmin']) ? cot_url('plug', 'r=reviews&a=delete&area='.$area.'&code='.$code.'&itemid=' . $item['item_id'] . '&redirect='.$redirect) : '',
 			));
+      
+      /* === Hook === */
+      foreach (cot_getextplugins('reviews.list.tags') as $pl)
+      {
+      	include $pl;
+      }
+      /* ===== */
 
 			if($item['item_area'] == 'projects' && !empty($item['item_code']))
 			{
@@ -148,28 +164,28 @@ function cot_reviews_list($userid, $area, $code='', $name='', $params='', $tail=
 				$prjreviews[] = $row['item_code'];
 			}
 			
-			$prjreviews_string = (count($prjreviews) > 0) ? "AND o.item_pid NOT IN (".implode(",", $prjreviews).")" : '';
+			$prjreviews_string = (count($prjreviews) > 0) ? "AND o.offer_pid NOT IN (".implode(",", $prjreviews).")" : '';
 			
 			$bothprj_count = $db->query("SELECT COUNT(*) FROM  $db_projects_offers AS o
-				LEFT JOIN $db_projects AS p ON p.item_id=o.item_pid
-				WHERE ((p.item_userid = '".$userid."' AND o.item_userid='".$usr['id']."')
-					OR (p.item_userid = '".$usr['id']."' AND o.item_userid='".$userid."')) 
-					AND o.item_choise='performer' 
+				LEFT JOIN $db_projects AS p ON p.item_id=o.offer_pid
+				WHERE ((p.item_userid = '".$userid."' AND o.offer_userid='".$usr['id']."')
+					OR (p.item_userid = '".$usr['id']."' AND o.offer_userid='".$userid."')) 
+					AND o.offer_choise='performer' 
 					$prjreviews_string
 					")->fetchColumn();
 			
 			if($bothprj_count > 0)
 			{
 				$bothprj_sql = $db->query("SELECT * FROM  $db_projects_offers AS o
-				LEFT JOIN $db_projects AS p ON p.item_id=o.item_pid
-				WHERE ((p.item_userid = '".$userid."' AND o.item_userid='".$usr['id']."')
-					OR (p.item_userid = '".$usr['id']."' AND o.item_userid='".$userid."')) 
-					AND o.item_choise='performer' 
+				LEFT JOIN $db_projects AS p ON p.item_id=o.offer_pid
+				WHERE ((p.item_userid = '".$userid."' AND o.offer_userid='".$usr['id']."')
+					OR (p.item_userid = '".$usr['id']."' AND o.offer_userid='".$userid."')) 
+					AND o.offer_choise='performer' 
 					$prjreviews_string
 					");
 				while($bprj = $bothprj_sql->fetch())
 				{
-					$prj_ids[] = $bprj['item_pid'];
+					$prj_ids[] = $bprj['offer_pid'];
 					$prj_titles[] = $bprj['item_title'];
 				}
 			}
@@ -195,10 +211,18 @@ function cot_reviews_list($userid, $area, $code='', $name='', $params='', $tail=
 			$t1->assign(array(
 				'REVIEW_FORM_SEND' => cot_url('plug', 'r=reviews&a=add&area='.$area.'&touser='.$userid.'&redirect='.$redirect),
 				'REVIEW_FORM_TEXT' => cot_textarea('rtext', $ritem['item_text'], 5, 50),
-				'REVIEW_FORM_SCORE' => cot_radiobox($ritem['item_score'], 'rscore', $L['review_score_values'], $L['review_score_titles']),
+				'REVIEW_FORM_SCORE' => cot_radiobox($ritem['item_score'], 'rscore', $L['reviews_score_values'], $L['reviews_score_titles']),
 				'REVIEW_FORM_PROJECTS' => ($cfg['plugin']['reviews']['checkprojects'] && cot_module_active('projects') && $bothprj_count > 0) ? cot_selectbox($pid, 'code', $prj_ids, $prj_titles, false) : '',
 				'REVIEW_FORM_ACTION' => 'ADD',
 			));
+      
+      /* === Hook === */
+      foreach (cot_getextplugins('reviews.add.tags') as $pl)
+      {
+      	include $pl;
+      }
+      /* ===== */
+      
 			$t1->parse('MAIN.FORM');
 		}
 		$t1->parse('MAIN');
@@ -206,4 +230,62 @@ function cot_reviews_list($userid, $area, $code='', $name='', $params='', $tail=
 	}
 	return '';
 }
-?>
+
+/**
+ * Вывод последних отзывов
+ *
+ * @param int $count Количество отзывов
+ * @return string
+ */
+function cot_reviews_last($count = 0)
+{
+	global $db_reviews, $db_users, $db, $L, $usr, $cfg;
+	list($usr['auth_read'], $usr['auth_write'], $usr['isadmin']) = cot_auth('plug', 'reviews', 'RWA');
+	if ($usr['auth_read'])
+	{
+		$t1 = new XTemplate(cot_tplfile(array('reviews', 'last'), 'plug'));
+
+		require_once cot_langfile('reviews', 'plug');
+		
+		if($count > 0) $limit = "LIMIT $count";
+
+		$sql = $db->query("SELECT * FROM $db_reviews as r 
+			LEFT JOIN $db_users as u ON u.user_id=r.item_userid 
+			ORDER BY item_date ASC $limit");
+
+		while ($item = $sql->fetch())
+		{			
+			$t1->assign(cot_generate_usertags($item, 'REVIEW_ROW_OWNER_'));
+			$t1->assign(cot_generate_usertags($item['item_touserid'], 'REVIEW_ROW_TO_'));
+			$t1->assign(array(
+				'REVIEW_ROW_ID' => $item['item_id'],
+				'REVIEW_ROW_TEXT' => $item['item_text'],
+				'REVIEW_ROW_SCORE' => ($item['item_score'] > 0) ? '+' . $item['item_score'] : $item['item_score'],
+				'REVIEW_ROW_AREA' => $item['item_area'],
+				'REVIEW_ROW_CODE' => $item['item_code'],
+				'REVIEW_ROW_DATE' => $item['item_date'],
+			));
+
+			if($item['item_area'] == 'projects' && !empty($item['item_code']))
+			{
+				require_once cot_incfile('projects', 'module');
+				global $db_projects;
+				
+				$prj = $db->query("SELECT * FROM $db_projects WHERE item_id=".$item['item_code'])->fetch();
+				$t1->assign(cot_generate_projecttags($prj, 'REVIEW_ROW_PRJ_'));
+			}
+      
+			/* === Hook === */
+			foreach (cot_getextplugins('reviews.list.loop') as $pl)
+			{
+				include $pl;
+			}
+			/* ===== */
+			
+			$t1->parse('MAIN.REVIEW_ROW');
+		}
+		$t1->parse('MAIN');
+		return $t1->text('MAIN');
+	}
+	return '';
+}

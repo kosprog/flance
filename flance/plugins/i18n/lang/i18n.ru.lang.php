@@ -36,4 +36,3 @@ $L['i18n_original'] = 'Оригинал';
 $L['i18n_structure'] = 'Интернационализация структуры';
 $L['i18n_translate'] = 'Перевести';
 $L['i18n_translation'] = 'Перевод';
-$L['i18n_contacts'] = 'Контакты';

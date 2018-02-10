@@ -9,7 +9,6 @@
 	</div>
 
 	<div class="span3">
-	
 	<!-- BEGIN: PAGE_ADMIN -->
 		<div class="block">
 			<div class="mboxHD admin">{PHP.L.Adminpanel}</div>

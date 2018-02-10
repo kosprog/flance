@@ -27,10 +27,10 @@ if (empty($m))
 	// Получаем информацию о заказе
 	if (!empty($pid) && $pinfo = cot_payments_payinfo($pid))
 	{
-
+		cot_block($usr['id'] == $pinfo['pay_userid']);
 		cot_block($pinfo['pay_status'] == 'new' || $pinfo['pay_status'] == 'process');
 
-		$url = ($cfg['plugin']['roboxbilling']['testmode']) ? 'http://test.robokassa.ru/Index.aspx' : 'https://merchant.roboxchange.com/Index.aspx';
+		$url = 'https://merchant.roboxchange.com/Index.aspx';
 
 		$mrh_login = $cfg['plugin']['roboxbilling']['mrh_login'];
 		$mrh_pass1 = $cfg['plugin']['roboxbilling']['mrh_pass1'];
@@ -39,11 +39,16 @@ if (empty($m))
 		$inv_desc = $pinfo['pay_desc'];
 		$in_curr = '';
 		$culture = "ru";
-		$out_summ = $pinfo['pay_summ']*$cfg['plugin']['roboxbilling']['rate'];
+		$out_summ = number_format($pinfo['pay_summ']*$cfg['plugin']['roboxbilling']['rate'], 2, '.', '');
+
+		if($cfg['plugin']['roboxbilling']['testmode'])
+		{
+			$test_string = "&IsTest=1";
+		}
 
 		$crc = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1:Shp_item=$shp_item");
 
-		$post_opt = "MrchLogin=" . $mrh_login . "&OutSum=" . $out_summ . "&InvId=" . $inv_id . "&Desc=" . $inv_desc . "&SignatureValue=" . $crc . "&Shp_item=" . $shp_item . "&IncCurrLabel=" . $in_curr . "&Culture=" . $culture;
+		$post_opt = "MrchLogin=" . $mrh_login . "&OutSum=" . $out_summ . "&InvId=" . $inv_id . "&Desc=" . $inv_desc . "&SignatureValue=" . $crc . "&Shp_item=" . $shp_item . "&IncCurrLabel=" . $in_curr . "&Culture=" . $culture . $test_string;
 
 		cot_payments_updatestatus($pid, 'process'); // Изменяем статус "в процессе оплаты"
 

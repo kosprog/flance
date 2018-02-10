@@ -108,16 +108,18 @@ else
 	{
 		$adminhelp = $L['adm_help_structure'];
 	}
-	if ($a == 'reset' && !empty($_POST))
+
+	if ($a == 'reset' && !empty($al))
 	{
-		cot_config_reset($n, $v, $is_module ? 'module' : 'plug', $structure_code);
+		cot_config_reset($n, $v, $is_module, $al);
 	}
 	if ($a == 'update' && !empty($_POST))
 	{
 		$editconfig = cot_import('editconfig', 'P', 'TXT');
 		if (!empty($editconfig))
 		{
-			$optionslist = cot_config_list($is_module ? 'module' : 'plug', $n, $editconfig);
+            $owner = $is_module ? 'module' : 'plug';
+			$optionslist = cot_config_list($owner, $n, $editconfig);
 			foreach ($optionslist as $key => $val)
 			{
 				$data = cot_import($key, 'P', sizeof($cot_import_filters[$key]) ? $key : 'NOC');
@@ -131,21 +133,20 @@ else
 					}
 					else
 					{
-						$db->update($db_config, array('config_value' => $data), "config_name = ? AND config_owner = ?
-						AND config_cat = ?  AND config_subcat = ?)", array($key, $o, $p, $editconfig));
+						$db->update($db_config, array('config_value' => $data),
+                            "config_name = ? AND config_owner = ? AND config_cat = ?  AND config_subcat = ?",
+                            array($key, $owner, $n, $editconfig));
 					}
 				}
+
 			}
 
-			if ($o == 'module' || $o == 'plug')
-			{
-				$dir = $o == 'module' ? $cfg['modules_dir'] : $cfg['plugins_dir'];
-				// Run configure extension part if present
-				if (file_exists($dir."/".$p."/setup/".$p.".configure.php"))
-				{
-					include $dir."/".$p."/setup/".$p.".configure.php";
-				}
-			}
+            $dir = $owner == 'module' ? $cfg['modules_dir'] : $cfg['plugins_dir'];
+            // Run configure extension part if present
+            if (file_exists($dir."/".$n."/setup/".$n.".configure.php"))
+            {
+                include $dir."/".$n."/setup/".$n.".configure.php";
+            }
 		}
 
 		$rstructurecode = cot_import('rstructurecode', 'P', 'ARR');
@@ -168,7 +169,7 @@ else
 
 		foreach ($rstructurecode as $i => $k)
 		{
-			$oldrow = $db->query("SELECT * FROM $db_structure WHERE structure_id=".(int)$i)->fetch();
+			$oldrow = cot::$db->query("SELECT * FROM ".cot::$db->structure." WHERE structure_id=".(int)$i)->fetch();
 			$rstructure['structure_code'] = preg_replace('#[^\w\p{L}\-]#u', '', cot_import($rstructurecode[$i], 'D', 'TXT'));
 			$rstructure['structure_path'] = cot_import($rstructurepath[$i], 'D', 'TXT');
 			$rstructure['structure_title'] = cot_import($rstructuretitle[$i], 'D', 'TXT');
@@ -179,11 +180,17 @@ else
 				$rstructure['structure_locked'] = (cot_import($rstructurelocked[$i], 'D', 'BOL')) ? 1 : 0;
 			}
 
-			foreach ($cot_extrafields[$db_structure] as $exfld)
-			{
-                $rstructure['structure_'.$exfld['field_name']] = cot_import_extrafields('rstructure'.$exfld['field_name'].'_'.$i,
-                    $exfld, 'P', $oldrow['structure_'.$exfld['field_name']]);
-			}
+            if(!empty(cot::$extrafields[cot::$db->structure])) {
+                foreach (cot::$extrafields[cot::$db->structure] as $exfld) {
+                    $rstructure['structure_' . $exfld['field_name']] = cot_import_extrafields('rstructure' . $exfld['field_name'] . '_' . $i,
+                        $exfld, 'P', $oldrow['structure_' . $exfld['field_name']], 'structure_');
+                }
+            }
+            
+			($rstructure['structure_code'] != 'all') || cot_error('adm_structure_code_reserved', 'rstructurecode');
+			$rstructure['structure_code'] || cot_error('adm_structure_code_required', 'rstructurecode');
+			$rstructure['structure_path'] || cot_error('adm_structure_path_required', 'rstructurepath');
+			$rstructure['structure_title'] || cot_error('adm_structure_title_required', 'rstructuretitle');
 
 			$rtplmode = cot_import($rtplmodearr[$i], 'D', 'INT');
 			$rtplquick = cot_import($rtplquickarr[$i], 'D', 'TXT');
@@ -250,10 +257,12 @@ else
 		$rtplmode = cot_import('rtplmode', 'P', 'INT');
 		$rtplquick = cot_import('rtplquick', 'P', 'TXT');
 
-		foreach ($cot_extrafields[$db_structure] as $exfld)
-		{
-			$rstructure['structure_'.$exfld['field_name']] = cot_import_extrafields('rstructure'.$exfld['field_name'], $exfld);
-		}
+        if(!empty(cot::$extrafields[cot::$db->structure])) {
+            foreach (cot::$extrafields[cot::$db->structure] as $exfld) {
+                $rstructure['structure_' . $exfld['field_name']] = cot_import_extrafields('rstructure' . $exfld['field_name'],
+                    $exfld, 'P', '', 'structure_');
+            }
+        }
 
 		($rstructure['structure_code'] != 'all') || cot_error('adm_structure_code_reserved', 'rstructurecode');
 		$rstructure['structure_code'] || cot_error('adm_structure_code_required', 'rstructurecode');
@@ -356,7 +365,14 @@ else
 	}
 	$ext_info = cot_get_extensionparams($n, true);
 	$adminpath[] = array(cot_url('admin', 'm=extensions'), $L['Extensions']);
-	$adminpath[] = array(($is_module ? cot_url('admin', 'm='.$n) : cot_url('admin', 'm=extensions&a=details&pl='.$n)), $ext_info['name']);
+    $urlParams = array('m' => 'extensions', 'a' => 'details');
+    if($is_module) {
+        $urlParams['mod'] = $n;
+
+    } else {
+        $urlParams['pl'] = $n;
+    }
+	$adminpath[] = array(cot_url('admin', $urlParams), $ext_info['name']);
 	$adminpath[] = array(cot_url('admin', 'm=structure&n='.$n), $L['Structure']);
 
 	if ($id > 0 || !empty($al))
@@ -456,18 +472,21 @@ else
 			'ADMIN_STRUCTURE_ODDEVEN' => cot_build_oddeven($ii)
 		));
 
-		foreach ($cot_extrafields[$db_structure] as $exfld)
-		{
-			$exfld_val = cot_build_extrafields('rstructure'.$exfld['field_name'].'_'.$structure_id, $exfld, $row['structure_'.$exfld['field_name']]);
-			$exfld_title = isset($L['structure_'.$exfld['field_name'].'_title']) ? $L['structure_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
-			$t->assign(array(
-				'ADMIN_STRUCTURE_'.strtoupper($exfld['field_name']) => $exfld_val,
-				'ADMIN_STRUCTURE_'.strtoupper($exfld['field_name']).'_TITLE' => $exfld_title,
-				'ADMIN_STRUCTURE_EXTRAFLD' => $exfld_val,
-				'ADMIN_STRUCTURE_EXTRAFLD_TITLE' => $exfld_title
-			));
-			$t->parse(($id || !empty($al)) ? 'MAIN.OPTIONS.EXTRAFLD' : 'MAIN.DEFAULT.ROW.EXTRAFLD');
-		}
+        if(!empty(cot::$extrafields[cot::$db->structure])) {
+            foreach (cot::$extrafields[cot::$db->structure] as $exfld) {
+                $exfld_val = cot_build_extrafields('rstructure' . $exfld['field_name'] . '_' . $structure_id, $exfld,
+                    $row['structure_' . $exfld['field_name']]);
+                $exfld_title = cot_extrafield_title($exfld, 'structure_');
+
+                $t->assign(array(
+                    'ADMIN_STRUCTURE_' . strtoupper($exfld['field_name']) => $exfld_val,
+                    'ADMIN_STRUCTURE_' . strtoupper($exfld['field_name']) . '_TITLE' => $exfld_title,
+                    'ADMIN_STRUCTURE_EXTRAFLD' => $exfld_val,
+                    'ADMIN_STRUCTURE_EXTRAFLD_TITLE' => $exfld_title
+                ));
+                $t->parse(($id || !empty($al)) ? 'MAIN.OPTIONS.EXTRAFLD' : 'MAIN.DEFAULT.ROW.EXTRAFLD');
+            }
+        }
 
 		/* === Hook - Part2 : Include === */
 		foreach ($extp as $pl)
@@ -496,7 +515,7 @@ else
 				else
 				{
 					$t->assign(array(
-						'ADMIN_CONFIG_ROW_CONFIG' => cot_config_input($row_c['config_name'], $row_c['config_type'], $row_c['config_value'], $row_c['config_variants']),
+						'ADMIN_CONFIG_ROW_CONFIG' => cot_config_input($row_c),
 						'ADMIN_CONFIG_ROW_CONFIG_TITLE' => $title,
 						'ADMIN_CONFIG_ROW_CONFIG_MORE_URL' => cot_url('admin', 'm=structure&n='.$n.'&d='.$durl.'&id='.$structure_id.'&al='.$structure_code.'&a=reset&v='.$row_c['config_name'].'&'.cot_xg()),
 						'ADMIN_CONFIG_ROW_CONFIG_MORE' => $hint
@@ -552,18 +571,20 @@ else
 		));
 
 		// Extra fields
-		foreach ($cot_extrafields[$db_structure] as $exfld)
-		{
-			$exfld_val = cot_build_extrafields('rstructure'.$exfld['field_name'], $exfld, null);
-			$exfld_title = isset($L['structure_'.$exfld['field_name'].'_title']) ? $L['structure_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
-			$t->assign(array(
-				'ADMIN_STRUCTURE_'.strtoupper($exfld['field_name']) => $exfld_val,
-				'ADMIN_STRUCTURE_'.strtoupper($exfld['field_name']).'_TITLE' => $exfld_title,
-				'ADMIN_STRUCTURE_EXTRAFLD' => $exfld_val,
-				'ADMIN_STRUCTURE_EXTRAFLD_TITLE' => $exfld_title
-			));
-			$t->parse('MAIN.NEWCAT.EXTRAFLD');
-		}
+        if(!empty(cot::$extrafields[cot::$db->structure])) {
+            foreach (cot::$extrafields[cot::$db->structure] as $exfld) {
+                $exfld_val = cot_build_extrafields('rstructure' . $exfld['field_name'], $exfld, null);
+                $exfld_title = cot_extrafield_title($exfld, 'structure_');
+                
+                $t->assign(array(
+                    'ADMIN_STRUCTURE_' . strtoupper($exfld['field_name']) => $exfld_val,
+                    'ADMIN_STRUCTURE_' . strtoupper($exfld['field_name']) . '_TITLE' => $exfld_title,
+                    'ADMIN_STRUCTURE_EXTRAFLD' => $exfld_val,
+                    'ADMIN_STRUCTURE_EXTRAFLD_TITLE' => $exfld_title
+                ));
+                $t->parse('MAIN.NEWCAT.EXTRAFLD');
+            }
+        }
 		$t->parse('MAIN.NEWCAT');
 	}
 

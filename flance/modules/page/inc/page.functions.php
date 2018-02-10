@@ -179,6 +179,7 @@ function cot_generate_pagetags($page_data, $tag_prefix = '', $textlength = 0, $a
 			'TEXT_CUT' => $text_cut,
 			'TEXT_IS_CUT' => $cutted,
 			'DESC_OR_TEXT' => (!empty($page_data['page_desc'])) ? htmlspecialchars($page_data['page_desc']) : $text,
+			'DESC_OR_TEXT_CUT' => (!empty($page_data['page_desc'])) ? htmlspecialchars($page_data['page_desc']) : $text_cut,
 			'MORE' => ($cutted) ? cot_rc('list_more', array('page_url' => $page_data['page_pageurl'])) : '',
 			'AUTHOR' => htmlspecialchars($page_data['page_author']),
 			'OWNERID' => $page_data['page_ownerid'],
@@ -235,26 +236,28 @@ function cot_generate_pagetags($page_data, $tag_prefix = '', $textlength = 0, $a
 		}
 
 		// Extrafields
-		if (isset($cot_extrafields[$db_pages]))
-		{
-			foreach ($cot_extrafields[$db_pages] as $exfld)
-			{
+        if(!empty(cot::$extrafields[cot::$db->pages])) {
+            foreach (cot::$extrafields[cot::$db->pages] as $exfld) {
 				$tag = mb_strtoupper($exfld['field_name']);
-				$temp_array[$tag.'_TITLE'] = isset($L['page_'.$exfld['field_name'].'_title']) ?  $L['page_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
-				$temp_array[$tag] = cot_build_extrafields_data('page', $exfld, $page_data['page_'.$exfld['field_name']], $page_data['page_parser']);
+                $exfld_title = cot_extrafield_title($exfld, 'page_');
+
+				$temp_array[$tag.'_TITLE'] = $exfld_title;
+				$temp_array[$tag] = cot_build_extrafields_data('page', $exfld, $page_data['page_'.$exfld['field_name']], 
+                    $page_data['page_parser']);
 				$temp_array[$tag.'_VALUE'] = $page_data['page_'.$exfld['field_name']];
 			}
 		}
 
 		// Extra fields for structure
-		if (isset($cot_extrafields[$db_structure]))
-		{
-			foreach ($cot_extrafields[$db_structure] as $exfld)
-			{
+		if (isset(cot::$extrafields[cot::$db->structure])) {
+			foreach (cot::$extrafields[cot::$db->structure] as $exfld) {
 				$tag = mb_strtoupper($exfld['field_name']);
-				$temp_array['CAT_'.$tag.'_TITLE'] = isset($L['structure_'.$exfld['field_name'].'_title']) ?  $L['structure_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
-				$temp_array['CAT_'.$tag] = cot_build_extrafields_data('structure', $exfld, $structure['page'][$page_data['page_cat']][$exfld['field_name']]);
-				$temp_array['CAT_'.$tag.'_VALUE'] = $structure['page'][$page_data['page_cat']][$exfld['field_name']];
+                $exfld_title = cot_extrafield_title($exfld, 'structure_');
+
+				$temp_array['CAT_'.$tag.'_TITLE'] = $exfld_title;
+				$temp_array['CAT_'.$tag] = cot_build_extrafields_data('structure', $exfld,
+                    cot::$structure['page'][$page_data['page_cat']][$exfld['field_name']]);
+				$temp_array['CAT_'.$tag.'_VALUE'] = cot::$structure['page'][$page_data['page_cat']][$exfld['field_name']];
 			}
 		}
 
@@ -284,16 +287,16 @@ function cot_generate_pagetags($page_data, $tag_prefix = '', $textlength = 0, $a
 }
 
 /**
- * Returns possible values for category sorting order
+ * Possible values for category sorting order
+ * @param bool $adminpart Call from admin part
+ * @return array
  */
-function cot_page_config_order()
+function cot_page_config_order($adminpart = false)
 {
 	global $cot_extrafields, $L, $db_pages;
 
 	$options_sort = array(
 		'id' => $L['Id'],
-		'type' => $L['Type'],
-		'key' => $L['Key'],
 		'title' => $L['Title'],
 		'desc' => $L['Description'],
 		'text' => $L['Body'],
@@ -308,7 +311,6 @@ function cot_page_config_order()
 		'filecount' => $L['adm_filecount'],
 		'count' => $L['Count'],
 		'updated' => $L['Updated'],
-		'rating' => $L['Rating'],
 		'cat' => $L['Category']
 	);
 
@@ -317,8 +319,16 @@ function cot_page_config_order()
 		$options_sort[$exfld['field_name']] = isset($L['page_'.$exfld['field_name'].'_title']) ? $L['page_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
 	}
 
-	$L['cfg_order_params'] = array_values($options_sort);
-	return array_keys($options_sort);
+	if ($adminpart || version_compare('0.9.19', cot::$cfg['version']) < 1)
+	{
+		return $options_sort;
+	}
+	else
+	{
+		// old style trick, will be removed in next versions
+		$L['cfg_order_params'] = array_values($options_sort);
+		return array_keys($options_sort);
+	}
 }
 
 /**
@@ -457,21 +467,24 @@ function cot_page_import($source = 'POST', $rpage = array(), $auth = array())
 	}
 	else
 	{
-		$rpage['page_ownerid'] = $usr['id'];
+		$rpage['page_ownerid'] = cot::$usr['id'];
 	}
 
 	$parser_list = cot_get_parsers();
 
-	if (empty($rpage['page_parser']) || !in_array($rpage['page_parser'], $parser_list) || $rpage['page_parser'] != 'none' && !cot_auth('plug', $rpage['page_parser'], 'W'))
+	if (empty($rpage['page_parser']) || !in_array($rpage['page_parser'], $parser_list) || $rpage['page_parser'] != 'none' &&
+        !cot_auth('plug', $rpage['page_parser'], 'W'))
 	{
-		$rpage['page_parser'] = isset($sys['parser']) ? $sys['parser'] : $cfg['page']['parser'];
+		$rpage['page_parser'] = isset(cot::$sys['parser']) ? cot::$sys['parser'] : cot::$cfg['page']['parser'];
 	}
 
 	// Extra fields
-	foreach ($cot_extrafields[$db_pages] as $exfld)
-	{
-		$rpage['page_'.$exfld['field_name']] = cot_import_extrafields('rpage'.$exfld['field_name'], $exfld, $source, $rpage['page_'.$exfld['field_name']]);
-	}
+    if(!empty(cot::$extrafields[cot::$db->pages])) {
+        foreach (cot::$extrafields[cot::$db->pages] as $exfld) {
+            $rpage['page_' . $exfld['field_name']] = cot_import_extrafields('rpage' . $exfld['field_name'], $exfld,
+                $source, $rpage['page_' . $exfld['field_name']], 'page_');
+        }
+    }
 
 	return $rpage;
 }
@@ -733,3 +746,225 @@ function cot_page_update($id, &$rpage, $auth = array())
 
 	return true;
 }
+
+/**
+ * Generates page list widget
+ * @param  mixed   $categories       Custom parent categories code
+ * @param  integer $count            Number of items to show. 0 - all items
+ * @param  string  $template         Path for template file
+ * @param  string  $order            Sorting order (SQL)
+ * @param  string  $condition        Custom selection filter (SQL)
+ * @param  mixed   $active_only	     Custom parent category code
+ * @param  boolean $use_subcat       Include subcategories TRUE/FALSE
+ * @param  boolean $exclude_current  Exclude the current page from the rowset for pages.
+ * @param  string  $blacklist        Category black list, semicolon separated
+ * @param  string  $pagination       Pagination symbol
+ * @param  integer $cache_ttl        Cache lifetime in seconds, 0 disables cache
+ * @return string                    Parsed HTML
+ */
+function cot_page_enum($categories = '', $count = 0, $template = '', $order = '', $condition = '',
+	$active_only = true, $use_subcat = true, $exclude_current = false, $blacklist = '', $pagination = '', $cache_ttl=null)
+{
+	global $db, $db_pages, $db_users, $structure, $cfg, $sys, $lang, $cache;
+
+	// Compile lists
+	if(!is_array($blacklist))
+	{
+		$blacklist = str_replace(' ', '', $blacklist);
+		$blacklist = (!empty($blacklist)) ? explode(',', $blacklist) : array();
+	}
+
+	// Get the cats
+	if(!empty($categories))
+	{
+		if(!is_array($categories))
+		{
+			$categories = str_replace(' ', '', $categories);
+			$categories = explode(',', $categories);
+		}
+		$categories = array_unique($categories);
+		if ($use_subcat)
+		{
+
+			$total_categories = array();
+			foreach ($categories as $cat)
+			{
+				$cats = cot_structure_children('page', $cat, $use_subcat);
+				$total_categories = array_merge($total_categories, $cats);
+			}
+			$categories = array_unique($total_categories);
+		}
+		$categories = (count($blacklist) > 0 ) ? array_diff($categories, $blacklist) : $categories;
+		$where['cat'] = "page_cat IN ('" . implode("','", $categories) . "')";
+
+
+	}
+	elseif (count($blacklist))
+	{
+		$where['cat_black'] = "page_cat NOT IN ('" . implode("','", $blacklist) . "')";
+	}
+
+	$where['condition'] = $condition;
+
+	if ($exclude_current && defined('COT_PAGES') && !defined('COT_LIST'))
+	{
+		global $id;
+        $tmp = 0;
+        if(!empty($id)) $tmp = (int)$id;
+		if(!empty($tmp)) $where['page_id'] = "page_id != $tmp";
+	}
+	if ($active_only)
+	{
+		$where['state'] = "page_state = 0";
+		$where['date'] = "page_begin <= {$sys['now']} AND (page_expire = 0 OR page_expire > {$sys['now']})";
+	}
+
+	// Get pagination number if necessary
+	if(!empty($pagination))
+	{
+		list($pg, $d, $durl) = cot_import_pagenav($pagination, $count);
+	}
+	else
+	{
+		$d = 0;
+	}
+
+	// Display the items
+	$mskin = file_exists($template) ? $template : cot_tplfile(array('page', 'enum', $template), 'module');
+
+    $cns_join_tables = '';
+	$cns_join_columns = '';
+
+	/* === Hook === */
+	foreach (cot_getextplugins('page.enum.query') as $pl)
+	{
+		include $pl;
+	}
+	/* ===== */
+
+	if (cot_plugin_active('comments'))
+	{
+		global $db_com;
+		require_once cot_incfile('comments', 'plug');
+		$cns_join_columns .= ", (SELECT COUNT(*) FROM `$db_com` WHERE com_area = 'page' AND com_code = p.page_id) AS com_count";
+	}
+	$sql_order = empty($order) ? 'ORDER BY page_date DESC' : "ORDER BY $order";
+	$sql_limit = ($count > 0) ? "LIMIT $d, $count" : '';
+	$where = array_filter($where);
+	$where = ($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+
+	$sql_total = "SELECT COUNT(*) FROM $db_pages AS p $cns_join_tables $where";
+	$sql_query = "SELECT p.*, u.* $cns_join_columns FROM $db_pages AS p LEFT JOIN $db_users AS u ON p.page_ownerid = u.user_id
+			$cns_join_tables $where $sql_order $sql_limit";
+
+	$t = new XTemplate($mskin);
+
+	isset($md5hash) || $md5hash = 'page_enum_'.md5(str_replace($sys['now'], '_time_', $mskin.$lang.$sql_query));
+
+	if ($cache && (int)$cache_ttl > 0)
+	{
+		$page_query_html = $cache->disk->get($md5hash, 'page', (int)$cache_ttl);
+
+		if(!empty($page_query_html))
+		{
+			return $page_query_html;
+		}
+	}
+
+	$totalitems = $db->query($sql_total)->fetchColumn();
+	$sql = $db->query($sql_query);
+
+	$sql_rowset = $sql->fetchAll();
+	$jj = 0;
+	foreach ($sql_rowset as $pag)
+	{
+		$jj++;
+		$t->assign(cot_generate_pagetags($pag, 'PAGE_ROW_', $cfg['page']['cat___default']['truncatetext']));
+
+		$t->assign(array(
+			'PAGE_ROW_NUM' => $jj,
+			'PAGE_ROW_ODDEVEN' => cot_build_oddeven($jj),
+			'PAGE_ROW_RAW' => $pag
+		));
+
+		$t->assign(cot_generate_usertags($pag, 'PAGE_ROW_OWNER_'));
+
+		/* === Hook === */
+		foreach (cot_getextplugins('page.enum.loop') as $pl)
+		{
+			include $pl;
+		}
+		/* ===== */
+
+		if (cot_plugin_active('comments'))
+		{
+			$rowe_urlp = empty($pag['page_alias']) ? array('c' => $pag['page_cat'], 'id' => $pag['page_id']) : array('c' => $pag['page_cat'], 'al' => $pag['page_alias']);
+			$t->assign(array(
+				'PAGE_ROW_COMMENTS' => cot_comments_link('page', $rowe_urlp, 'page', $pag['page_id'], $pag['page_cat'], $pag),
+				'PAGE_ROW_COMMENTS_COUNT' => cot_comments_count('page', $pag['page_id'], $pag)
+			));
+		}
+
+		$t->parse("MAIN.PAGE_ROW");
+	}
+
+	// Render pagination
+	$url_params = $_GET;
+    if(isset($url_params['rwr'])) unset($url_params['rwr']);
+	$url_area = 'index';
+	$module_name = cot_import('e', 'G', 'ALP');
+	if(cot_module_active($module_name))
+	{
+		$url_area = $url_params['e'];
+		unset($url_params['e']);
+	}
+    elseif (cot_plugin_active($module_name))
+	{
+		$url_area = 'plug';
+	}
+	unset($url_params[$pagination]);
+
+    $pagenav = array(
+        'main' => null,
+        'prev' => null,
+        'next' => null,
+        'first' => null,
+        'last' => null,
+        'current' => 1,
+        'total' => 1,
+    );
+
+	if(!empty($pagination))
+	{
+		$pagenav = cot_pagenav($url_area, $url_params, $d, $totalitems, $count, $pagination);
+	}
+
+	$t->assign(array(
+		'PAGE_TOP_PAGINATION' => $pagenav['main'],
+		'PAGE_TOP_PAGEPREV' => $pagenav['prev'],
+		'PAGE_TOP_PAGENEXT' => $pagenav['next'],
+		'PAGE_TOP_FIRST' => $pagenav['first'],
+		'PAGE_TOP_LAST' => $pagenav['last'],
+		'PAGE_TOP_CURRENTPAGE' => $pagenav['current'],
+		'PAGE_TOP_TOTALLINES' => $totalitems,
+		'PAGE_TOP_MAXPERPAGE' => $count,
+		'PAGE_TOP_TOTALPAGES' => $pagenav['total']
+	));
+
+	/* === Hook === */
+	foreach (cot_getextplugins('page.enum.tags') as $pl)
+	{
+		include $pl;
+	}
+	/* ===== */
+
+	$t->parse("MAIN");
+	$page_query_html = $t->text("MAIN");
+
+	if ($cache && (int) $cache_ttl > 0)
+	{
+		$cache->disk->store($md5hash, $page_query_html, 'page');
+	}
+	return $page_query_html;
+}
+

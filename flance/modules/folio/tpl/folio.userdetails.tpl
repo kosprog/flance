@@ -1,5 +1,4 @@
 <!-- BEGIN: MAIN -->
-<br>projects folio.userdetails.tpl start<br>
 	<h4><!-- IF {PHP.usr.id} == {PHP.urr.user_id} AND {RPD_ADDPRD_SHOWBUTTON} --><div class="pull-right"><a href="{PRD_ADDPRD_URL}" class="btn btn-success">{PHP.L.folio_add_work}</a></div><!-- ENDIF -->{PHP.L.folio}</h4>
 	
 	<ul class="nav nav-pills">
@@ -37,5 +36,5 @@
 	<!-- ELSE -->
 	<div class="alert">{PHP.L.folio_empty}</div>
 	<!-- ENDIF -->
-<br>projects folio.userdetails.tpl end<br>
+
 <!-- END: MAIN -->

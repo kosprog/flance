@@ -33,6 +33,7 @@ $L['paytop_buy'] = 'Buy';
 $L['paytop_period'] = 'period';
 
 $L['paytop_how'] = 'How to get here?';
+$L['paytop_default_text'] = 'Advertising space';
 
 $L['paytop_header_buy'] = 'Buy place';
 $L['paytop_header_extend'] = 'Extend';
@@ -49,3 +50,19 @@ $L['paytop_month'] = 'month';
 $L['paytop_week'] = 'week';
 $L['paytop_day'] = 'day';
 $L['paytop_hour'] = 'hour';
+
+$L['paytop_mail_admin_subject'] = 'Purchase of advertising space';
+$L['paytop_mail_admin_body'] = 'Hi,
+
+User %1$s has paid advertising space.
+
+Detailed information:
+
+Space: %2$s
+Operation number: %3$s.
+Date of transaction: %4$s.
+
+';
+
+$L['paytop_my_area'] = 'Advertising space';
+$L['paytop_my_until'] = 'Expire';

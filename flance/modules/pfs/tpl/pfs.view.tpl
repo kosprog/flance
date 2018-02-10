@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>pfs pfs.view.tpl start<br>
+
 {PFSVIEW_HEADER1}
 
 <link href="themes/{PHP.theme}/css/{PHP.scheme}.css" type="text/css" rel="stylesheet" />
@@ -14,5 +14,5 @@
 	</div>
 
 {PFSVIEW_FOOTER}
-<br>pfs pfs.view.tpl end<br>
+
 <!-- END: MAIN -->

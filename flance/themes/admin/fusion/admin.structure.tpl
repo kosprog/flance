@@ -1,5 +1,4 @@
 <!-- BEGIN: LIST -->
-<br>themes admin.structure.tpl start<br>
 <h2>{PHP.L.Modules}</h2>
 <div class="row">
 	<!-- BEGIN: ADMIN_STRUCTURE_EXT -->
@@ -154,7 +153,8 @@
 				</tr>
 			</table>
 			</form>
-			<p class="paging">{ADMIN_STRUCTURE_PAGINATION_PREV}{ADMIN_STRUCTURE_PAGNAV}{ADMIN_STRUCTURE_PAGINATION_NEXT} <span>{PHP.L.Total}: {ADMIN_STRUCTURE_TOTALITEMS}, {PHP.L.Onpage}: {ADMIN_STRUCTURE_COUNTER_ROW}</span></p>
+			<div class="pagination"><ul>{ADMIN_STRUCTURE_PAGINATION_PREV}{ADMIN_STRUCTURE_PAGNAV}{ADMIN_STRUCTURE_PAGINATION_NEXT}</ul></div>
+			<p><span>{PHP.L.Total}: {ADMIN_STRUCTURE_TOTALITEMS}, {PHP.L.Onpage}: {ADMIN_STRUCTURE_COUNTER_ROW}</span></p>
 		</div>
 		<!-- END: DEFAULT -->
 
@@ -202,5 +202,5 @@
 			</form>
 		</div>
 		<!-- END: NEWCAT -->
-<br>themes admin.structure.tpl end<br>
+
 <!-- END: MAIN -->

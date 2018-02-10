@@ -33,6 +33,7 @@ $L['paytop_buy'] = 'Купить';
 $L['paytop_period'] = 'на срок';
 
 $L['paytop_how'] = 'Как сюда попасть?';
+$L['paytop_default_text'] = 'Место для рекламы';
 
 $L['paytop_header_buy'] = 'Купить рекламное место';
 $L['paytop_header_extend'] = 'Продлить услугу';
@@ -49,3 +50,19 @@ $L['paytop_month'] = 'месяц';
 $L['paytop_week'] = 'неделя';
 $L['paytop_day'] = 'день';
 $L['paytop_hour'] = 'час';
+
+$L['paytop_mail_admin_subject'] = 'Покупка рекламного места';
+$L['paytop_mail_admin_body'] = 'Здравствуйте,
+
+Пользователь %1$s произвел оплату рекламного места.
+
+Подробная информация:
+
+Рекламное место: %2$s
+Номер операции: %3$s.
+Дата операции: %4$s.
+
+';
+
+$L['paytop_my_area'] = 'Рекламное место';
+$L['paytop_my_until'] = 'Срок действия';

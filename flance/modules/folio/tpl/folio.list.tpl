@@ -1,5 +1,4 @@
 <!-- BEGIN: MAIN -->
-<br>projects folio.list.tpl start<br>
 <div class="breadcrumb">
 	{BREADCRUMBS}
 </div>
@@ -94,5 +93,5 @@
 		
 	</div>
 </div>
-<br>projects folio.list.tpl end<br>
+
 <!-- END: MAIN -->

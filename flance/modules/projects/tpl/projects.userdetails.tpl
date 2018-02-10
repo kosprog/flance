@@ -1,5 +1,4 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.userdetails.tpl start<br>
 <h4><!-- IF {PHP.usr.id} == {PHP.urr.user_id} AND {ADDPRJ_SHOWBUTTON} --><div class="pull-right"><a href="{PHP|cot_url('projects', 'm=add')}" class="btn btn-success">{PHP.L.projects_add_to_catalog}</a></div><!-- ENDIF -->{PHP.L.projects_projects}</h4>
 
 <ul class="nav nav-pills">
@@ -44,5 +43,5 @@
 <!-- ELSE -->
 <div class="alert">{PHP.L.projects_empty}</div>
 <!-- ENDIF -->
-<br>projects projects.userdetails.tpl end<br>
+
 <!-- END: MAIN -->

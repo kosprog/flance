@@ -128,6 +128,17 @@ if ($a == 'update')
 					));
 					cot_mail($usr['profile']['user_email'], $L['market_senttovalidation_mail_subj'], $rbody);
 				}
+
+				if ($cfg['market']['notifmarket_admin_moderate'])
+				{
+					$nbody = cot_rc($L['market_notif_admin_moderate_mail_body'], array( 
+						'user_name' => $usr['profile']['user_name'],
+						'prd_name' => $item['item_title'],
+						'sitename' => $cfg['maintitle'],
+						'link' => COT_ABSOLUTE_URL . $r_url
+					));
+					cot_mail($cfg['adminemail'], $L['market_notif_admin_moderate_mail_subj'], $nbody);
+				}
 				break;
 		}
 		cot_redirect($r_url);
@@ -243,7 +254,7 @@ $t->assign(array(
 	"PRDEDIT_FORM_CATTITLE" => $structure['market'][$item['item_cat']]['title'],
 	"PRDEDIT_FORM_TITLE" => cot_inputbox('text', 'rtitle', $item['item_title'], 'size="56"'),
 	"PRDEDIT_FORM_ALIAS" => cot_inputbox('text', 'ralias', $item['item_alias'], array('size' => '32', 'maxlength' => '255')),
-	"PRDEDIT_FORM_TEXT" => cot_textarea('rtext', $item['item_text'], 10, 60, 'id="formtext"', 'input_textarea_editor'),
+	"PRDEDIT_FORM_TEXT" => cot_textarea('rtext', $item['item_text'], 10, 60, 'id="formtext"', ($prdeditor && $prdeditor != 'disable') ? 'input_textarea_'.$prdeditor : ''),
 	"PRDEDIT_FORM_COST" => cot_inputbox('text', 'rcost', $item['item_cost'], 'size="10"'),
 	"PRDEDIT_FORM_STATE" => $item['item_state'],
 	"PRDEDIT_FORM_PARSER" => cot_selectbox($item['item_parser'], 'rparser', cot_get_parsers(), cot_get_parsers(), false),

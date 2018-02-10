@@ -19,6 +19,7 @@ $c = cot_import('c', 'G', 'ALP');
 $forpro = cot_import('forpro', 'G', 'INT');
 $realized = cot_import('realized', 'G', 'INT');
 $sq = cot_import('sq', 'G', 'TXT');
+$sq = $db->prep($sq);
 
 $maxrowsperpage = ($cfg['projects']['cat_' . $c]['maxrowsperpage']) ? $cfg['projects']['cat_' . $c]['maxrowsperpage'] : $cfg['projects']['cat___default']['maxrowsperpage'];
 list($pn, $d, $d_url) = cot_import_pagenav('d', $maxrowsperpage);
@@ -68,7 +69,7 @@ if (!empty($type))
 
 if (!empty($sq))
 {
-	$words = explode(' ', $sq);
+	$words = explode(' ', preg_replace("'\s+'", " ", $sq));
 	$sqlsearch = '%'.implode('%', $words).'%';
 
 	$where['search'] = "(item_title LIKE '".$db->prep($sqlsearch)."' OR item_text LIKE '".$db->prep($sqlsearch)."')";
@@ -77,11 +78,12 @@ if (!empty($sq))
 // Extra fields
 foreach ($cot_extrafields[$db_projects] as $exfld)
 {
-	$shfld[$exfld['field_name']] = cot_import_extrafields($exfld['field_name'], $exfld, 'G', $shfld[$exfld['field_name']]);
+	$fld_value = cot_import($exfld['field_name'], 'G', 'TXT');
+	$fld_value = $db->prep($fld_value);
 	
-	if(!empty($shfld[$exfld['field_name']]))
+	if(!empty($fld_value))
 	{
-		$where[$exfld['field_name']] = "item_".$exfld['field_name']." LIKE '%".$shfld[$exfld['field_name']]."%'";
+		$where[$exfld['field_name']] = "item_".$exfld['field_name']." LIKE '%".$fld_value."%'";
 	}
 }
 
@@ -101,9 +103,43 @@ switch($sort)
 }
 $list_url_path = array('c' => $c, 'type'=> $type, 'sort' => $sort, 'sq' => $sq);
 
+// Building the canonical URL
+$out['canonical_uri'] = cot_url('projects', $list_url_path);
+
 $mskin = cot_tplfile(array('projects', 'list', $structure['projects'][$c]['tpl']));
 
+/* === Hook === */
+foreach (cot_getextplugins('projects.list.query') as $pl)
+{
+	include $pl;
+}
+/* ===== */
+
 $t = new XTemplate($mskin);
+
+$where = ($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+$order = ($order) ? 'ORDER BY ' . implode(', ', $order) : '';
+
+$totalitems = $db->query("SELECT COUNT(*) FROM $db_projects AS p $join_condition
+	LEFT JOIN $db_users AS u ON u.user_id=p.item_userid
+	" . $where . "")->fetchColumn();
+
+$sqllist = $db->query("SELECT p.*, u.* $join_columns 
+	FROM $db_projects AS p $join_condition
+	LEFT JOIN $db_users AS u ON u.user_id=p.item_userid
+	" . $where . "
+	" . $order . "
+	LIMIT $d, " . $maxrowsperpage);
+
+$pagenav = cot_pagenav('projects', $list_url_path, $d, $totalitems, $maxrowsperpage);
+
+$catpatharray[] = array(cot_url('projects'), $L['projects']);
+if(!empty($c))
+{
+	$catpatharray = array_merge($catpatharray, cot_structure_buildpath('projects', $c));
+}
+
+$catpath = cot_breadcrumbs($catpatharray, $cfg['homebreadcrumb'], true);
 
 if(is_array($projects_types)){
 	foreach ($projects_types as $i => $pr_type)
@@ -129,38 +165,9 @@ $t->assign(array(
 
 $t->parse("MAIN.PTYPES");
 
-/* === Hook === */
-foreach (cot_getextplugins('projects.list.query') as $pl)
-{
-	include $pl;
-}
-/* ===== */
-
-$where = ($where) ? 'WHERE ' . implode(' AND ', $where) : '';
-$order = ($order) ? 'ORDER BY ' . implode(', ', $order) : '';
-
-$totalitems = $db->query("SELECT COUNT(*) FROM $db_projects AS p $join_condition
-	" . $where . "")->fetchColumn();
-
-$sqllist = $db->query("SELECT * FROM $db_projects AS p $join_condition
-	LEFT JOIN $db_users AS u ON u.user_id=p.item_userid
-	" . $where . "
-	" . $order . "
-	LIMIT $d, " . $maxrowsperpage);
-
-$pagenav = cot_pagenav('projects', $list_url_path, $d, $totalitems, $maxrowsperpage);
-
-$catpatharray[] = array(cot_url('projects'), $L['projects']);
-if(!empty($c))
-{
-	$catpatharray = array_merge($catpatharray, cot_structure_buildpath('projects', $c));
-}
-
-$catpath = cot_breadcrumbs($catpatharray, $cfg['homebreadcrumb'], true);
-
 $t->assign(array(
 	"SEARCH_ACTION_URL" => cot_url('projects', "&type=" . $type, '', true),
-	"SEARCH_SQ" => cot_inputbox('text', 'sq', $sq, 'class="schstring"'),
+	"SEARCH_SQ" => cot_inputbox('text', 'sq', htmlspecialchars($sq), 'class="schstring"'),
 	"SEARCH_CAT" => cot_projects_selectcat($c, 'c'),
 	"SEARCH_SORTER" => cot_selectbox($sort, "sort", array('', 'costasc', 'costdesc'), array($L['projects_mostrelevant'], $L['projects_costasc'], $L['projects_costdesc']), false),
 	"PAGENAV_PAGES" => $pagenav['main'],
@@ -169,26 +176,37 @@ $t->assign(array(
 	"PAGENAV_COUNT" => $totalitems,
 	"CATALOG" => cot_build_structure_projects_tree('', array($c)),
 	"BREADCRUMBS" => $catpath,
-	"CATTITLE" => (!empty($c)) ? $structure['projects'][$c]['title'] : '',
-	"CATDESC" => (!empty($c)) ? $structure['projects'][$c]['desc'] : '',
-	"CATROW" => (!empty($c)) ? $structure['projects'][$c]['row'] : '',
 	"SUBMITNEWPROJECT_URL" => cot_url('projects', 'm=add&c='.$c.'&type='.$type)
 ));
 
 foreach($cot_extrafields[$db_projects] as $exfld)
 {
-	$uname = strtoupper($exfld['field_name']);
-	$exfld_val = cot_build_extrafields($exfld['field_name'], $exfld, $shfld[$exfld['field_name']]);
+	$fld_value = cot_import($exfld['field_name'], 'G', 'TXT');
+	$fld_value = $db->prep($fld_value);
+	
+	$fieldname = strtoupper($exfld['field_name']);
+	$exfld_val = cot_build_extrafields($exfld['field_name'], $exfld, $fld_value);
 	$exfld_title = isset($L['projects_'.$exfld['field_name'].'_title']) ?  $L['projects_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
 	$t->assign(array(
-		'SEARCH_'.$uname => $exfld_val,
-		'SEARCH_'.$uname.'_TITLE' => $exfld_title,
+		'SEARCH_'.$fieldname => $exfld_val,
+		'SEARCH_'.$fieldname.'_TITLE' => $exfld_title,
 	));
 }
 
 /* === Hook === */
-$extp = cot_getextplugins('projects.list.search.tags');
+foreach (cot_getextplugins('projects.list.search.tags') as $pl)
+{
+	include $pl;
+}
 /* ===== */
+
+if(!empty($c) && is_array($structure['projects'][$c]))
+{
+	foreach ($structure['projects'][$c] as $field => $val)
+	{
+		$t->assign('CAT'.strtoupper($field), $val);
+	}
+}
 
 $sqllist_rowset = $sqllist->fetchAll();
 $sqllist_idset = array();

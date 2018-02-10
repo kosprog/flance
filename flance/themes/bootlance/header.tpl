@@ -12,18 +12,10 @@
 {HEADER_HEAD}
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-
-<style type="text/css">
-   body { 
-    background-image: url(themes/{PHP.theme}/img/Pattern_small.png);
-    background-repeat: repeat; 
-   }
-  </style>
-
 </head>
 
 <body>
-<br>theme header start<br>
+
 	<!-- IF {PHP.usr.id} == 0 -->
 	<div id="AuthModal" class="modal hide fade">
 		<div class="modal-header">
@@ -73,13 +65,16 @@
 							<!-- BEGIN: USER -->
 							<li><a href="{PHP.usr.name|cot_url('users', 'm=details&u='$this)}">{PHP.usr.name}</a></li>
 							<li><a href="{PHP|cot_url('users', 'm=profile')}">{PHP.L.Profile}</a></li>
-							<!-- IF {PHP.cfg.payments.balance_enabled} -->
+							<!-- IF {PHP.cot_modules.payments} AND {PHP.cfg.payments.balance_enabled} -->
 							<li><a href="{HEADER_USER_BALANCE_URL}">{PHP.L.payments_mybalance}: {HEADER_USER_BALANCE|number_format($this, '2', '.', ' ')} {PHP.cfg.payments.valuta}</a></li>
 							<!-- ENDIF -->
+							<!-- IF {PHP.cot_modules.projects} -->
 							<li class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#">{PHP.L.projects_projects}<b class="caret"></b></a>
 								<ul class="dropdown-menu">
+									<!-- IF {PHP|cot_auth('projects', 'any', 'W')} -->
 									<li><a href="{PHP.usr.id|cot_url('users', 'm=details&id='$this'&tab=projects')}">{PHP.L.projects_myprojects}</a></li>
+									<!-- ENDIF -->
 									<!-- IF {PHP.cot_plugins_active.sbr} -->
 									<li><a href="{PHP|cot_url('sbr')}">{PHP.L.sbr_mydeals}</a></li>
 									<!-- ENDIF -->
@@ -88,6 +83,8 @@
 									<!-- ENDIF --> 
 								</ul>
 							</li>
+							<!-- ENDIF -->
+							<!-- IF {PHP.cot_modules.market} -->
 							<li class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#">{PHP.L.market}<b class="caret"></b></a>
 								<ul class="dropdown-menu">
@@ -98,6 +95,8 @@
 									<!-- ENDIF --> 
 								</ul>
 							</li>
+							<!-- ENDIF -->
+							<!-- IF {PHP.cot_plugins_active.paypro} -->
 							<li>
 								<!-- IF {HEADER_USER_PROEXPIRE} -->
 								<a href="{PHP|cot_url('plug', 'e=paypro')}" title="{PHP.L.paypro_header_extend}">{PHP.L.paypro_header_expire_short} {HEADER_USER_PROEXPIRE|cot_date('d.m.Y', $this)}</a>
@@ -105,7 +104,16 @@
 								<a href="{PHP|cot_url('plug', 'e=paypro')}" title="{PHP.L.paypro_header_buy}">{PHP.L.paypro_header_buy}</a>
 								<!-- ENDIF -->
 							</li>
+							<!-- ENDIF -->
 							<!-- IF {HEADER_USER_PMREMINDER} --><li>{HEADER_USER_PMREMINDER}</li><!-- ENDIF -->
+							<!-- IF {HEADER_NOTICES} -->
+							<li class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">{PHP.L.header_notice}<b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									{HEADER_NOTICES}
+								</ul>
+							</li>
+							<!-- ENDIF -->
 							<li>{HEADER_USER_ADMINPANEL}</li>
 							<li>{HEADER_USER_LOGINOUT}</li>
 							<!-- END: USER -->
@@ -117,7 +125,6 @@
 		<div id="header" class="row">
 			<div class="span4">
 				<div class="logo"><a href="{PHP|cot_url('index')}" title="{PHP.cfg.maintitle} {PHP.cfg.separator} {PHP.cfg.subtitle}"><img src="themes/{PHP.theme}/img/logo.png"/></a></div>
-				
 			</div>
 			<div class="span5">
 				
@@ -129,63 +136,24 @@
 					<!-- END: I18N_LANG_ROW -->
 				<!-- END: I18N_LANG -->
 			</div>
-		<div class="contacts">+7(495)233-04-44
-		<br>&nbsp &nbsp &nbsp<a href=""><img src="themes/{PHP.theme}/img/facebook.png"/></a>
-			<a href=""><img src="themes/{PHP.theme}/img/inst.png"/></a>
-			<a href=""><img src="themes/{PHP.theme}/img/twitter.png"/></a>
-			<a href=""><img src="themes/{PHP.theme}/img/vk.png"/></a>
-			<a href=""><img src="themes/{PHP.theme}/img/ok.png"/></a>
-		</div>
 		</div>
 
-		<!--div class="navbar"-->
-		<div class="breadcrumb">
-			<!--div class="navbar-inner"-->
-			<span class="left"></span>
-				<!--ul class="nav"-->
-				<ul>
-					<li<!-- IF {PHP.env.ext} == 'index' --><!-- ENDIF -->><a href="{PHP|cot_url('index')}">{PHP.L.Home}</a></li>
-					<li<!-- IF {PHP.env.ext} == 'projects' --><!-- ENDIF -->><a href="{PHP|cot_url('projects')}">{PHP.L.projects_projects}</a></li>
-					<li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.4.alias} AND {PHP.m} == 'main' --><!-- ENDIF -->><a href="{PHP.cot_groups.4.alias|cot_url('users', 'group='$this)}">{PHP.cot_groups.4.name}</a></li>
-					<!--li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.7.alias} AND {PHP.m} == 'main' --><!-- ENDIF -->><a href="{PHP.cot_groups.7.alias|cot_url('users', 'group='$this)}">{PHP.cot_groups.7.name}</a></li-->
-					<!--li<!-- IF {PHP.env.ext} == 'market' AND !{PHP.type} --> class="active"<!-- ENDIF -->><a href="{PHP|cot_url('market')}">{PHP.L.market}</a></li-->
-					
-					<!--li><a href="">Мастера тату</a></li-->
-					<li><a href="">{PHP.L.project_articles}</a></li>
-					<li><a href="{PHP|cot_url('page',c='news')}">Новости</a></li>
-					<li><a href="{PHP|cot_url('page',c='reviews')}">Отзывы</a></li>
-					<li><a href="{PHP|cot_url('page',c='About')}">О нас</a></li>
-					<li><a href="{PHP|cot_url('page',c='contacts')}">{PHP.L.project_contact}</a></li>
-					
-					
+		<div class="navbar">
+			<div class="navbar-inner">
+				<ul class="nav">
+					<li<!-- IF {PHP.env.ext} == 'index' --> class="active"<!-- ENDIF -->><a href="{PHP|cot_url('index')}">{PHP.L.Home}</a></li>
+					<!-- IF {PHP.cot_modules.projects} -->
+					<li<!-- IF {PHP.env.ext} == 'projects' --> class="active"<!-- ENDIF -->><a href="{PHP|cot_url('projects')}">{PHP.L.projects_projects}</a></li>
+					<!-- ENDIF -->
+					<li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.4.alias} AND {PHP.m} == 'main' --> class="active"<!-- ENDIF -->><a href="{PHP.cot_groups.4.alias|cot_url('users', 'group='$this)}">{PHP.cot_groups.4.name}</a></li>
+					<li<!-- IF {PHP.env.ext} == 'users' AND ({PHP.group} == {PHP.cot_groups.7.alias} AND {PHP.m} == 'main' --> class="active"<!-- ENDIF -->><a href="{PHP.cot_groups.7.alias|cot_url('users', 'group='$this)}">{PHP.cot_groups.7.name}</a></li>
+					<!-- IF {PHP.cot_modules.market} -->
+					<li<!-- IF {PHP.env.ext} == 'market' AND !{PHP.type} --> class="active"<!-- ENDIF -->><a href="{PHP|cot_url('market')}">{PHP.L.market}</a></li>
+					<!-- ENDIF -->
 				</ul>
-			<span class="right"></span>	
-			<!--/div-->
+			</div>
 		</div>
 		
 		<div id="main" class="content">
-	
-<!-- IF {PHP.env.ext} == "index" -->
-<div class="uk-slidenav-position" data-uk-slideshow="{animation: 'swipe'}">
-    <ul class="uk-slideshow">
-        <li><img src="themes/{PHP.theme}/img/slider/side-1.jpg" alt=""></li>
-        <li><img src="themes/{PHP.theme}/img/slider/side-2.jpg" alt=""></li>
-        <li><img src="themes/{PHP.theme}/img/slider/side-3.jpg" alt=""></li>
-    </ul>
-    <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideshow-item="previous"></a>
-    <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"></a>
-</div>
-<!-- ENDIF -->
-
-<!-- IF {PHP.c} == "gravura" -->
-<div class="uk-slidenav-position" data-uk-slideshow="{animation: 'swipe'}">
-    <ul class="uk-slideshow">
-        <li><img src="themes/{PHP.theme}/img/slider/sidegrav-1.jpg" alt=""></li>
-      </ul>
-    <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideshow-item="previous"></a>
-    <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"></a>
-</div>
-
-<!-- ENDIF -->		
-<br>theme header end<br>
+		
 <!-- END: HEADER -->

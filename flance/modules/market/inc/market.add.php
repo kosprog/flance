@@ -89,6 +89,28 @@ if ($a == 'add')
 					array('c' => $ritem['item_cat'], 'id' => $id) :
 					array('c' => $ritem['item_cat'], 'al' => $ritem['item_alias']);
 				$r_url = cot_url('market', $urlparams, '', true);
+
+				if (!$usr['isadmin'])
+				{
+					$rbody = cot_rc($L['market_senttovalidation_mail_body'], array( 
+						'user_name' => $usr['profile']['user_name'],
+						'prd_name' => $ritem['item_title'],
+						'sitename' => $cfg['maintitle'],
+						'link' => COT_ABSOLUTE_URL . $r_url
+					));
+					cot_mail($usr['profile']['user_email'], $L['market_senttovalidation_mail_subj'], $rbody);
+				}
+
+				if ($cfg['market']['notifmarket_admin_moderate'])
+				{
+					$nbody = cot_rc($L['market_notif_admin_moderate_mail_body'], array( 
+						'user_name' => $usr['profile']['user_name'],
+						'prd_name' => $ritem['item_title'],
+						'sitename' => $cfg['maintitle'],
+						'link' => COT_ABSOLUTE_URL . $r_url
+					));
+					cot_mail($cfg['adminemail'], $L['market_notif_admin_moderate_mail_subj'], $nbody);
+				}
 				break;
 		}
 		
@@ -136,7 +158,7 @@ $t->assign(array(
 	"PRDADD_FORM_CATTITLE" => (!empty($c)) ? $structure['market'][$c]['title'] : '',
 	"PRDADD_FORM_TITLE" => cot_inputbox('text', 'rtitle', $ritem['item_title'], 'size="56"'),
 	"PRDADD_FORM_ALIAS" => cot_inputbox('text', 'ralias', $ritem['item_alias'], array('size' => '32', 'maxlength' => '255')),
-	"PRDADD_FORM_TEXT" => cot_textarea('rtext', $ritem['item_text'], 10, 60, 'id="formtext"', 'input_textarea_editor'),
+	"PRDADD_FORM_TEXT" => cot_textarea('rtext', $ritem['item_text'], 10, 60, 'id="formtext"', ($prdeditor && $prdeditor != 'disable') ? 'input_textarea_'.$prdeditor : ''),
 	"PRDADD_FORM_COST" => cot_inputbox('text', 'rcost', $ritem['item_cost'], 'size="10"'),
 	"PRDADD_FORM_PARSER" => cot_selectbox($cfg['market']['parser'], 'rparser', $parser_list, $parser_list, false),
 ));

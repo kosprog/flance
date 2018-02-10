@@ -46,19 +46,19 @@ $t_pr->parse("SEARCH.PTYPES");
 
 $t_pr->assign(array(
 	'SEARCH_ACTION_URL' => cot_url('projects', '', '', true),
-	'SEARCH_SQ' => cot_inputbox('text', 'sq', $sq, 'class="schstring"'),
+	'SEARCH_SQ' => cot_inputbox('text', 'sq', htmlspecialchars($sq), 'class="schstring"'),
 	"SEARCH_CAT" => cot_projects_selectcat($c, 'c'),
 	"SEARCH_SORTER" => cot_selectbox($sort, "sort", array('', 'costasc', 'costdesc'), array($L['projects_mostrelevant'], $L['projects_costasc'], $L['projects_costdesc']), false),
 ));
 
 foreach($cot_extrafields[$db_projects] as $exfld)
 {
-	$uname = strtoupper($exfld['field_name']);
+	$fieldname = strtoupper($exfld['field_name']);
 	$exfld_val = cot_build_extrafields($exfld['field_name'], $exfld, '');
 	$exfld_title = isset($L['projects_'.$exfld['field_name'].'_title']) ?  $L['projects_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
 	$t_pr->assign(array(
-		'SEARCH_'.$uname => $exfld_val,
-		'SEARCH_'.$uname.'_TITLE' => $exfld_title,
+		'SEARCH_'.$fieldname => $exfld_val,
+		'SEARCH_'.$fieldname.'_TITLE' => $exfld_title,
 	));
 }
 
@@ -99,7 +99,8 @@ $order = ($order) ? 'ORDER BY ' . implode(', ', $order) : '';
 $totalitems = $db->query("SELECT COUNT(*) FROM $db_projects AS p $join_condition 
 	" . $where . "")->fetchColumn();
 
-$sqllist = $db->query("SELECT * FROM $db_projects AS p $join_condition 
+$sqllist = $db->query("SELECT p.*, u.* $join_columns 
+	FROM $db_projects AS p $join_condition 
 	LEFT JOIN $db_users AS u ON u.user_id=p.item_userid 
 	" . $where . " 
 	" . $order . " 

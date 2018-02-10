@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.edit.tpl start<br>
+
 <div class="breadcrumb">{PHP.L.projects_edit_project_title}</div>
 
 {FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
@@ -75,5 +75,5 @@
 		</table>
 	</form>
 </div>
-<br>projects projects.edit.tpl end<br>
+
 <!-- END: MAIN -->

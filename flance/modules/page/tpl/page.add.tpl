@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>page page.add.tpl start<br>
+
 		<div class="block">
 			<h2 class="page">{PAGEADD_PAGETITLE}</h2>
 			{FILE "{PHP.cfg.themes_dir}/{PHP.usr.theme}/warnings.tpl"}
@@ -94,5 +94,5 @@
 			</form>
 		</div>
 		<div class="help">{PHP.L.page_formhint}</div>
-<br>page page.add.tpl end<br>
+
 <!-- END: MAIN -->

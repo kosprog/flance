@@ -1,5 +1,4 @@
 <!-- BEGIN: MAIN -->
-	<br>system admin.extensions.tpl start<br>
 	{FILE "{PHP.cfg.system_dir}/admin/tpl/warnings.tpl"}
 <!-- BEGIN: DETAILS -->
 	<h2><!-- IF {ADMIN_EXTENSIONS_ICO} -->
@@ -295,5 +294,4 @@
 <!-- END: SECTION -->
 
 <!-- END: DEFAULT -->
-<br>system admin.extensions.tpl end<br>
 <!-- END: MAIN -->

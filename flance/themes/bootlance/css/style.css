@@ -5,7 +5,7 @@
 html	{ padding:0; height:100%; }
 
 body	{ 
-	
+	height:100%;
 	background-color:#FFFFFF;
 }
 
@@ -26,31 +26,12 @@ textarea	{ width: 99%; min-height: 100px; }
 /* 1. Main Navigation
 -------------------------------------------------- */
 
-#nav				{ line-height:1.4em; background:#ddd; overflow:auto; margin:0; padding:0;  }
+#nav				{ line-height:1.4em; background:#ddd; overflow:auto; margin:0; padding:0; }
 #nav li				{ width:159px; border-right:1px solid #f8f8f8; float:left; }
 #nav li a				{ text-shadow:0 1px 0 #fff; padding:10px 20px; display:block; }
 #nav li a:hover		{ color:#fff; text-decoration:none; text-shadow:0 -1px 0 #000; background:#667e72; }
 #nav li a span			{ color:#999; font-size:.9em; text-transform:lowercase; display:block; }
 #nav li a:hover span	{ color:#ccc; }
-
-.breadcrumb{position:relative; height:auto; width:97%;border: solid 1px black; }
-.breadcrumb ul{position:relative; margin:0 5px 0 5px; padding:0; height:30px; background:url('../images/breadcrumbImage.png') 0px -30px repeat-x; }
-.breadcrumb ul li{padding:0; margin:0; list-style:none; float:left; height:30px display:inline;}
-.breadcrumb ul li a{font:15px Arial, Helvetica, sans-serif; color:rgb(0,0,0); text-decoration:none; line-height:30px; display:block; background:url('../images/breadcrumbImage.png') 100% -60px no-repeat; padding:0 17px 0 15px; outline:none;}
-.breadcrumb ul li a:hover {text-decoration:underline; color:rgb(100,100,100);}
-.breadcrumb ul li a.active{background:none; color:rgb(255,255,255);}
-.breadcrumb ul li a.active:hover {text-decoration:none;}
-.breadcrumb .left{position:absolute; top:0px; left:0px; width:10px; height:30px; display:block; z-index:1; background:url('../images/breadcrumbImage.png') 0% 0px no-repeat;}
-.breadcrumb .right{position:absolute; top:0px; right:0px; width:10px; height:30px; display:block; z-index:1; background:url('../images/breadcrumbImage.png') 100% -90px no-repeat; }
-
-.well {border: solid 1px black}
-.opis {border: solid 1px black}
-
-
-
-
-
-
 
 /* 2. Structure
 -------------------------------------------------- */
@@ -59,13 +40,13 @@ textarea	{ width: 99%; min-height: 100px; }
 #main 				{ padding-bottom: 100px; }
 
 #header 				{ margin-top: 40px; height: 140px; }
-#header .logo		{ padding:10px 0px 0px; font-size: 36px; font-weight: bold; }
+#header .logo		{ padding:50px 0 30px; font-size: 36px; font-weight: bold; }
 #header .logo a		{ color:#0065CC; text-decoration: none; }
 #header .auth 		{ margin: 0; text-align: right; }
 
 #footer				{ border-top: #DEDEE6 solid 1px; padding: 10px 0; height: 40px; margin-top: -61px; font-size: 12px; }
-.contacts	{ padding:20px 0px 0px; font:25px Arial, Helvetica, sans-serif; color:rgb(0,0,0); text-decoration:none; border: solid 0px black; float: right; }
-.block				{ margin:0 0 25px;  }
+
+.block				{ margin:0 0 25px; }
 
 /* 3. Headings
 -------------------------------------------------- */
@@ -275,3 +256,37 @@ ol					{ margin-left:20px; list-style-type:decimal; }
 #listprojects {}
 #listprojects .prjtop { background-color: #feefb3; }
 #listprojects .prjbold { background-color: #dff2bf; }
+
+/* Mavatars 
+---------------------------------------------------- */
+
+.upload-link {
+    color: #36c;
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 2px;
+    text-decoration: none;
+}
+.upload-link__txt {
+    z-index: 1;
+    position: relative;
+    border-bottom: 1px dotted #36c;
+}
+.upload-link:hover .upload-link__txt {
+    color: #f00;
+    border-bottom-color: #f00;
+}
+
+.upload-link input {
+    top: -10px;
+    right: -40px;
+    z-index: 2;
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    font-size: 50px;
+}

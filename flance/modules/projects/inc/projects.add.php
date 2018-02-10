@@ -77,26 +77,31 @@ if ($a == 'add')
 		switch ($ritem['item_state'])
 		{
 			case 0:
+				$urlparams = empty($ritem['item_alias']) ?
+					array('c' => $ritem['item_cat'], 'id' => $id) :
+					array('c' => $ritem['item_cat'], 'al' => $ritem['item_alias']);
+				$r_url = cot_url('projects', $urlparams, '', true);
+
 				if (!$usr['isadmin'])
 				{
 					$rbody = cot_rc($L['project_added_mail_body'], array(
 						'user_name' => $usr['profile']['user_name'],
 						'prj_name' => $ritem['item_title'],
 						'sitename' => $cfg['maintitle'],
-						'link' => COT_ABSOLUTE_URL . cot_url('projects', 'id=' . $id, '', true)
+						'link' => COT_ABSOLUTE_URL . $r_url
 					));
 					cot_mail($usr['profile']['user_email'], $L['project_added_mail_subj'], $rbody);
 				}
-
-				$urlparams = empty($ritem['item_alias']) ?
-					array('c' => $ritem['item_cat'], 'id' => $id) :
-					array('c' => $ritem['item_cat'], 'al' => $ritem['item_alias']);
-				$r_url = cot_url('projects', $urlparams, '', true);
 				break;
 			case 1:
 				$r_url = cot_url('projects', 'm=preview&id=' . $id, '', true);
 				break;
 			case 2:
+				$urlparams = empty($ritem['item_alias']) ?
+					array('c' => $ritem['item_cat'], 'id' => $id) :
+					array('c' => $ritem['item_cat'], 'al' => $ritem['item_alias']);
+				$r_url = cot_url('projects', $urlparams, '', true);
+
 				if (!$usr['isadmin'])
 				{
 					$rbody = cot_rc($L['project_senttovalidation_mail_body'], array( 
@@ -108,10 +113,16 @@ if ($a == 'add')
 					cot_mail($usr['profile']['user_email'], $L['project_senttovalidation_mail_subj'], $rbody);
 				}
 
-				$urlparams = empty($ritem['item_alias']) ?
-					array('c' => $ritem['item_cat'], 'id' => $id) :
-					array('c' => $ritem['item_cat'], 'al' => $ritem['item_alias']);
-				$r_url = cot_url('projects', $urlparams, '', true);
+				if ($cfg['projects']['notif_admin_moderate'])
+				{
+					$nbody = cot_rc($L['project_notif_admin_moderate_mail_body'], array( 
+						'user_name' => $usr['profile']['user_name'],
+						'prj_name' => $ritem['item_title'],
+						'sitename' => $cfg['maintitle'],
+						'link' => COT_ABSOLUTE_URL . $r_url
+					));
+					cot_mail($cfg['adminemail'], $L['project_notif_admin_moderate_mail_subj'], $nbody);
+				}				
 				break;
 		}
 		
@@ -161,7 +172,7 @@ $t->assign(array(
 	"PRJADD_FORM_TYPETITLE" => (is_array($projects_types) && !empty($type)) ? $projects_types[$type] : '',
 	"PRJADD_FORM_TITLE" => cot_inputbox('text', 'rtitle', $ritem['item_title'], 'size="56"'),
 	"PRJADD_FORM_ALIAS" => cot_inputbox('text', 'ralias', $ritem['item_alias'], array('size' => '32', 'maxlength' => '255')),
-	"PRJADD_FORM_TEXT" => cot_textarea('rtext', $ritem['item_text'], 10, 60, 'id="formtext"', 'input_textarea_editor'),
+	"PRJADD_FORM_TEXT" => cot_textarea('rtext', $ritem['item_text'], 10, 60, 'id="formtext"', ($prjeditor && $prjeditor != 'disable') ? 'input_textarea_'.$prjeditor : ''),
 	"PRJADD_FORM_COST" => cot_inputbox('text', 'rcost', $ritem['item_cost'], 'size="10"'),
 	"PRJADD_FORM_PARSER" => cot_selectbox($cfg['projects']['parser'], 'rparser', $parser_list, $parser_list, false),
 ));

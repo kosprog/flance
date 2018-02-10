@@ -118,8 +118,7 @@ $L['Hi'] = 'Hi';
 $L['Hidden'] = 'Hidden';
 $L['Hide'] = 'Hide';
 $L['Hits'] = 'Hits';
-//$L['Home'] = 'Home';
-$L['Home'] = 'Main';
+$L['Home'] = 'Home';
 $L['Hook'] = 'Hook';
 $L['Hooks'] = 'Hooks';
 $L['Hours'] = 'Hours';
@@ -494,9 +493,10 @@ $L['foo_sqlaverage'] = 'Average SQL time';
 /**
  * Extra fields
  */
-
-$L['field_pregmatch'] = 'Field value is not true';
+$L['field_extension']  = 'Wrong file extension';
 $L['field_notinarray'] = 'Field value is not true';
+$L['field_pregmatch'] = 'Field value is not true';
+$L['field_range'] = 'Field value is not true';
 $L['field_required'] = 'Field must be filled';
 
 /**

@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>page page.tpl start<br>
+
 		<div class="col3-2 first">
 			<div class="block">
 				<h2 class="page">{PAGE_TITLE}</h2>
@@ -62,5 +62,5 @@
 			</div>
 <!-- END: PAGE_MULTI -->
 		</div>
-<br>page page.tpl end<br>
+
 <!-- END: MAIN -->

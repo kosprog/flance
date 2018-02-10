@@ -1,14 +1,12 @@
 <!-- BEGIN: MAIN -->
-<br>theme index.tpl start<br>
-<div class="row">
 
+<div class="row">
 	<div class="span12">
 		<!-- IF {PHP.cot_plugins_active.paytop} -->
-		<!--{PHP|cot_get_paytop ('top')}-->
+		{PHP|cot_get_paytop ('top')}
 		<!-- ENDIF -->	
 	</div>
 </div>
-
 <div class="row">
 	<div class="span3">
 		<div class="well well-small">{PROJECTS_CATALOG}</div>
@@ -45,5 +43,5 @@
 		{PROJECTS}
 	</div>
 </div>
-<br>theme index.tpl end<br>
+	
 <!-- END: MAIN -->

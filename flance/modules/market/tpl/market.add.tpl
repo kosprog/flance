@@ -13,7 +13,7 @@
 				<td align="right">{PHP.L.Title}:</td>
 				<td>{PRDADD_FORM_TITLE}</td>
 			</tr>
-			<tr>
+			<tr<!-- IF !{PHP.usr.isadmin} --> class="hidden"<!-- ENDIF -->>
 				<td align="right">{PHP.L.Alias}:</td>
 				<td>{PRDADD_FORM_ALIAS}</td>
 			</tr>
@@ -31,8 +31,8 @@
 			</tr>
 			<!-- BEGIN: TAGS -->
 			<tr>
-				<td>{PRDADD_TOP_TAGS}:</td>
-				<td>{PRDADD_FORM_TAGS} ({PRDADD_TOP_TAGS_HINT})</td>
+				<td>{PRDADD_FORM_TAGS_TITLE}:</td>
+				<td>{PRDADD_FORM_TAGS} ({PRDADD_FORM_TAGS_HINT})</td>
 			</tr>
 			<!-- END: TAGS -->
 			<tr>

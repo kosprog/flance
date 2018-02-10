@@ -11,12 +11,6 @@
 
 defined('COT_CODE') or die('Wrong URL.');
 
-if(function_exists("uk_com")){
-    uk_com("uikit");
-    uk_com("modal");
-    uk_com("slideshow");
-    uk_com("slidenav");
-}
 
 cot_rc_add_file($cfg['themes_dir'].'/'.$usr['theme'].'/bootstrap/css/bootstrap.min.css');
 cot_rc_add_file($cfg['themes_dir'].'/'.$usr['theme'].'/bootstrap/css/bootstrap-responsive.css');

@@ -126,6 +126,17 @@ if ($a == 'update')
 					));
 					cot_mail($usr['profile']['user_email'], $L['project_senttovalidation_mail_subj'], $rbody);
 				}
+
+				if ($cfg['projects']['notif_admin_moderate'])
+				{					
+					$nbody = cot_rc($L['project_notif_admin_moderate_mail_body'], array( 
+						'user_name' => $usr['profile']['user_name'],
+						'prj_name' => $ritem['item_title'],
+						'sitename' => $cfg['maintitle'],
+						'link' => COT_ABSOLUTE_URL . $r_url
+					));
+					cot_mail($cfg['adminemail'], $L['project_notif_admin_moderate_mail_subj'], $nbody);
+				}
 				break;
 		}
 		cot_redirect($r_url);
@@ -287,7 +298,7 @@ $t->assign(array(
 	"PRJEDIT_FORM_TYPE" => (is_array($projects_types)) ? cot_selectbox(($item['item_type']) ? $item['item_type'] : $cfg['projects']['default_type'], 'rtype', array_keys($projects_types), array_values($projects_types)) : 'empty',
 	"PRJEDIT_FORM_TITLE" => cot_inputbox('text', 'rtitle', $item['item_title'], 'size="56"'),
 	"PRJEDIT_FORM_ALIAS" => cot_inputbox('text', 'ralias', $item['item_alias'], array('size' => '32', 'maxlength' => '255')),
-	"PRJEDIT_FORM_TEXT" => cot_textarea('rtext', $item['item_text'], 10, 60, 'id="formtext"', 'input_textarea_editor'),
+	"PRJEDIT_FORM_TEXT" => cot_textarea('rtext', $item['item_text'], 10, 60, 'id="formtext"', ($prjeditor && $prjeditor != 'disable') ? 'input_textarea_'.$prjeditor : ''),
 	"PRJEDIT_FORM_COST" => cot_inputbox('text', 'rcost', $item['item_cost'], 'size="10"'),
 	"PRJEDIT_FORM_STATE" => $item['item_state'],
 	"PRJEDIT_FORM_PARSER" => cot_selectbox($item['item_parser'], 'rparser', cot_get_parsers(), cot_get_parsers(), false),

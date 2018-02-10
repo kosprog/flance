@@ -1,5 +1,5 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.admin.default.tpl start<br>
+
 <h3>{PHP.L.projects_projects}</h3>
 
 <div class="nav nav-tabs">
@@ -102,6 +102,6 @@
 	</div>
 	</form>		
 </div>
-<br>projects projects.admin.default.tpl end<br>
+
 
 <!-- END: MAIN -->

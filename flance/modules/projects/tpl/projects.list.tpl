@@ -1,32 +1,170 @@
 <!-- BEGIN: MAIN -->
-<br>projects projects.list.tpl start<br>
-<div class="breadcrumb">{PHP.catpath},{BREADCRUMBS}</div>
+
+<!--div class="breadcrumb">{BREADCRUMBS}</div-->
 
 <h1>
 
 <!-- IF {PHP.c} -->
-	{PHP.c},{CATTITLE}
 	
+	<!-- IF {PHP.i18n_locale} == "en" --> {PHP.c} <!-- ELSE --> {CATTITLE} <!-- ENDIF -->
 <!-- ELSE -->
 	{PHP.L.projects}
 <!-- ENDIF -->
 </h1>
-<!-- IF {PHP.c} == "gravura" -->
-<div class="breadcrumb">Гравюра как вид искусства зародилась еще в VI в. и представляла собой примитивный рисунок
- на различных материалах: дереве, металле и др. Вскоре техника стала совершенствоваться, и простые изображения
- уступили место пейзажам, библейским мотивам, иллюстрациям к книгам и другим сложным композициям.
 
-Хорошая татуировка в стиле гравюра выдержана в лучших традициях этого древнего и сложного искусства.
- Отличительными особенностями тату, выполненных в данной технике, являются:
-
-однотонность (преобладание черного цвета);
-сильная штриховка;
-отсутствие размытых контуров, цветных и серых деталей;
-тонкие аккуратные линии;
-имитация отпечатанного изображения;
-четкие графические элементы;
-линейная штриховка теней.
-Тату в таком стиле напоминает карандашные эскизы и в чем-то перекликается со скетч тату и олдскул. Здесь преобладают лаконичность, строгость и в то же время изящество линий.
+<!-- IF {PHP.c} == "Engraving" -->
+<div class="breadcrumb">
+ {PHP.L.projects_gravura}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Abstraction" -->
+<div class="breadcrumb">
+ {PHP.L.projects_abstract}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Watercolor" -->
+<div class="breadcrumb">
+ {PHP.L.projects_akvarel}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Artbrut" -->
+<div class="breadcrumb">
+ {PHP.L.projects_arbrut}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Baroque" -->
+<div class="breadcrumb">
+ {PHP.L.projects_barocco}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Biomechanics" -->
+<div class="breadcrumb">
+ {PHP.L.projects_biomechanics}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Bioorganics" -->
+<div class="breadcrumb">
+ {PHP.L.projects_bioorganics}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Blackwork" -->
+<div class="breadcrumb">
+ {PHP.L.projects_blekvork}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Geometric" -->
+<div class="breadcrumb">
+ {PHP.L.projects_geometry}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Graphic" -->
+<div class="breadcrumb">
+ {PHP.L.projects_graphic}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Dotwork" -->
+<div class="breadcrumb">
+ {PHP.L.projects_dotwork}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Traditional" -->
+<div class="breadcrumb">
+ {PHP.L.projects_classic}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Linework" -->
+<div class="breadcrumb">
+ {PHP.L.projects_linework}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Minimalism" -->
+<div class="breadcrumb">
+ {PHP.L.projects_minimalizm}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Neotraditional" -->
+<div class="breadcrumb">
+ {PHP.L.projects_neoclassic}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Newschool" -->
+<div class="breadcrumb">
+ {PHP.L.projects_newscool}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Oldschool" -->
+<div class="breadcrumb">
+ {PHP.L.projects_oldscool}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Oriental" -->
+<div class="breadcrumb">
+ {PHP.L.projects_oriental}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Ornamental" -->
+<div class="breadcrumb">
+ {PHP.L.projects_ornamental}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Portrait" -->
+<div class="breadcrumb">
+ {PHP.L.projects_portret}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Realism" -->
+<div class="breadcrumb">
+ {PHP.L.projects_realizm}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Sketch" -->
+<div class="breadcrumb">
+ {PHP.L.projects_sketchstyle}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Surrealistic" -->
+<div class="breadcrumb">
+ {PHP.L.projects_surrealizm}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Traibl" -->
+<div class="breadcrumb">
+ {PHP.L.projects_traibl}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Stencil" -->
+<div class="breadcrumb">
+ {PHP.L.projects_trafaret}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Thrash-polka" -->
+<div class="breadcrumb">
+ {PHP.L.projects_tresh-polka}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Fantasy" -->
+<div class="breadcrumb">
+ {PHP.L.projects_fantasy}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Hendpoke" -->
+<div class="breadcrumb">
+ {PHP.L.projects_handpoke}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Black-white" -->
+<div class="breadcrumb">
+ {PHP.L.projects_black-white}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Chikano" -->
+<div class="breadcrumb">
+ {PHP.L.projects_chikano}
+</div>
+<!-- ENDIF -->
+<!-- IF {PHP.c} == "Ethnic" -->
+<div class="breadcrumb">
+ {PHP.L.projects_etnika}
 </div>
 <!-- ENDIF -->
 <!-- IF {CATDESC} -->
@@ -109,18 +247,16 @@
 					<!-- IF {PRJ_ROW_COST} > 0 --><div class="pull-right">{PRJ_ROW_COST} {PHP.cfg.payments.valuta}</div><!-- ENDIF -->
 					<a href="{PRJ_ROW_URL}">{PRJ_ROW_SHORTTITLE}</a>
 				</h4>
-				<!--style-->
 				<p class="owner small">{PRJ_ROW_OWNER_NAME} <span class="date">[{PRJ_ROW_DATE}]</span>   <span class="region">{PRJ_ROW_COUNTRY} {PRJ_ROW_REGION} {PRJ_ROW_CITY}</span>   {PRJ_ROW_EDIT_URL}</p>
 				<p class="text">{PRJ_ROW_SHORTTEXT}</p>
 				
 				<!-- IF {PHP.cot_plugins_active.tags} AND {PHP.cot_plugins_active.tagslance} AND {PHP.cfg.plugin.tagslance.projects} -->
-				<!--tag-->
 				<p class="small">{PHP.L.Tags}: 
 					<!-- BEGIN: PRJ_ROW_TAGS_ROW --><!-- IF {PHP.tag_i} > 0 -->, <!-- ENDIF --><a href="{PRJ_ROW_TAGS_ROW_URL}" title="{PRJ_ROW_TAGS_ROW_TAG}" rel="nofollow">{PRJ_ROW_TAGS_ROW_TAG}</a><!-- END: PRJ_ROW_TAGS_ROW -->
 					<!-- BEGIN: PRJ_ROW_NO_TAGS -->{PRJ_ROW_NO_TAGS}<!-- END: PRJ_ROW_NO_TAGS -->
 				</p>
 				<!-- ENDIF -->
-				<!--add offer-->
+				
 				<div class="pull-right offers"><a href="{PRJ_ROW_OFFERS_ADDOFFER_URL}">{PHP.L.offers_add_offer}</a> ({PRJ_ROW_OFFERS_COUNT})</div>
 				<div class="type"><!-- IF {PHP.cot_plugins_active.paypro} AND {PRJ_ROW_FORPRO} --><span class="label label-important">{PHP.L.paypro_forpro}</span> <!-- ENDIF --><!-- IF {PRJ_ROW_TYPE} -->{PRJ_ROW_TYPE} / <!-- ENDIF --><a href="{PRJ_ROW_CATURL}">{PRJ_ROW_CATTITLE}</a></div>
 			</div>
@@ -134,5 +270,5 @@
 		<!-- ENDIF -->
 	</div>
 </div>
-<br>projects projects.list.tpl end<br>
+
 <!-- END: MAIN -->

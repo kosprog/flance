@@ -4,7 +4,7 @@
  * User Categories plugin
  *
  * @package usercategories
- * @version 2.5.2
+ * @version 2.6.1
  * @author CMSWorks Team
  * @copyright Copyright (c) CMSWorks.ru, littledev.ru
  * @license BSD
@@ -27,10 +27,12 @@ function cot_cfg_usercategories()
 		$lines = explode("|", $lineset);
 		$lines[0] = trim($lines[0]);
 		$lines[1] = trim($lines[1]);
+		$lines[2] = trim($lines[2]);
 		
-		if ($lines[0] > 0 && $lines[1] > 0)
+		if ($lines[0] > 0 && $lines[1] > 0 && $lines[2] > 0)
 		{	
-			$catslimit[$lines[0]] = $lines[1];
+			$catslimit[$lines[0]]['default'] = $lines[1];
+			$catslimit[$lines[0]]['pro'] = $lines[2];
 		}
 	}
 	return $catslimit;
@@ -45,19 +47,31 @@ function cot_cfg_usercategories()
  */
 function cot_usercategories_sync($cat)
 {
-	global $db, $db_structure, $db_users;
-	$subcats = cot_structure_children('usercategories', $cat);
-	if(count($subcats) > 0){
-		foreach ($subcats as $val) {
-			$cat_query[] = "FIND_IN_SET('".$db->prep($val)."', user_cats)";
+	global $db, $db_structure, $db_users, $cache;
+	
+	$parent = cot_structure_parents('usercategories', $cat, 'first');
+	$cats = cot_structure_children('usercategories', $parent, true, true);
+
+	foreach($cats as $c)
+	{
+		$subcats = cot_structure_children('usercategories', $c, true, true);
+		if(count($subcats) > 0){
+			$cat_query = array();
+			foreach ($subcats as $val) {
+				$cat_query[] = "FIND_IN_SET('".$db->prep($val)."', user_cats)";
+			}
+			$where = implode(' OR ', $cat_query);
+		}else{
+			$where = "FIND_IN_SET('".$db->prep($cat)."', user_cats)";
 		}
-		$where = implode(' OR ', $cat_query);
-	}else{
-		$where = "FIND_IN_SET('".$db->prep($cat)."', user_cats)";
+		$count = $db->query("SELECT COUNT(*) FROM $db_users WHERE ".$where)->fetchColumn();
+		$db->query("UPDATE $db_structure SET structure_count=".(int)$count." WHERE structure_area='usercategories' AND structure_code = ?", $c);
+		if($cat == $c) $catcount = $count;
 	}
-	$sql = $db->query("SELECT COUNT(*) FROM $db_users
-		WHERE ".$where);
-	return (int)$sql->fetchColumn();
+	
+	$cache && $cache->db->remove('structure', 'system');
+	
+	return $catcount;
 }
 
 /**
@@ -70,8 +84,12 @@ function cot_usercategories_sync($cat)
  */
 function cot_usercategories_updatecat($oldcat, $newcat)
 {
-	global $db, $db_structure, $db_users;
+	global $db, $db_structure, $db_users, $db_config, $db_auth;
 	
+	$db->update($db_auth, array('auth_option' => $newcat), "auth_code=? AND auth_option=?", array('usercategories', $oldcat));
+	$db->update($db_config, array('config_subcat' => $newcat),
+		"config_cat=? AND config_subcat=? AND config_owner='plug'", array('usercategories', $oldcat));
+
 	$sql = $db->query("SELECT * FROM $db_users WHERE FIND_IN_SET('".$db->prep($oldcat)."', user_cats)=1");
 	while($item = $sql->fetch()){
 		$cats = explode(',', $item['user_cats']);
@@ -124,7 +142,7 @@ function cot_usercategories_treecheck($chosen, $name, $parent = '', $template = 
 	}
 	else{
 		$i18n_enabled = $i18n_read && cot_i18n_enabled($parent);
-		$children = cot_structure_children('usercategories', $parent, false, false);
+		$children = $structure['usercategories'][$parent]['subcats'];
 	}
 
 	if (count($children) == 0){
@@ -137,7 +155,7 @@ function cot_usercategories_treecheck($chosen, $name, $parent = '', $template = 
 	foreach ($children as $row)
 	{
 		if(cot_auth('usercategories', $row, $userrights)){
-			$subcats = cot_structure_children('usercategories', $row, false, false);
+			$subcats = $structure['usercategories'][$row]['subcats'];
 			$cattitle = htmlspecialchars($structure['usercategories'][$row]['title']);
 			if ($i18n_enabled && $i18n_notmain){
 				$x_i18n = cot_i18n_get_cat($row, $i18n_locale);
@@ -182,9 +200,18 @@ function cot_usercategories_treecheck($chosen, $name, $parent = '', $template = 
 
 function cot_usercategories_tree($chosen = '', $parent = '', $template = '', $level = 0)
 {
-	global $structure, $cfg, $gm, $group;
+	global $structure, $cfg, $gm, $group, $cot_extrafields, $db_structure;
 	global $i18n_notmain, $i18n_locale, $i18n_read;
 	
+	$urlparams = array('gm' => $gm, 'group' => $group);
+
+	/* === Hook === */
+	foreach (cot_getextplugins('usercategories.tree.first') as $pl)
+	{
+		include $pl;
+	}
+	/* ===== */
+
 	if(empty($structure['usercategories'])){
 		return false;
 	}
@@ -204,7 +231,7 @@ function cot_usercategories_tree($chosen = '', $parent = '', $template = '', $le
 	}
 	else{
 		$i18n_enabled = $i18n_read && cot_i18n_enabled($parent);
-		$children = cot_structure_children('usercategories', $parent, false, false);
+		$children = $structure['usercategories'][$parent]['subcats'];
 	}
 
 	if (count($children) == 0){
@@ -212,30 +239,81 @@ function cot_usercategories_tree($chosen = '', $parent = '', $template = '', $le
 	}
 
 	$t1 = new XTemplate(cot_tplfile(array('usercategories', 'cattree', $template), 'plug'));
-	
+
+	/* === Hook === */
+	foreach (cot_getextplugins('usercategories.tree.main') as $pl)
+	{
+		include $pl;
+	}
+	/* ===== */
+
 	$level++;
+
+	if($parent){
+		$t1->assign(array(
+			"CAT_TITLE" => htmlspecialchars($structure['usercategories'][$parent]['title']),
+			"CAT_DESC" => $structure['usercategories'][$parent]['desc'],
+			"CAT_COUNT" => $structure['usercategories'][$parent]['count'],
+			"CAT_ICON" => $structure['usercategories'][$parent]['icon'],
+		));
+	}
+	
+	$t1->assign(array(
+		"CAT_URL" => cot_url("users", $urlparams + array('cat' => $parent)),
+		"CAT_LEVEL" => $level,
+	));
+
 	$jj = 0;
+
+	/* === Hook - Part1 : Set === */
+	$extp = cot_getextplugins('usercategories.tree.loop');
+	/* ===== */
+
 	foreach ($children as $row)
 	{
 		$jj++;
-		$subcats = cot_structure_children('usercategories', $row, false, false);
+		$subcats = $structure['usercategories'][$row]['subcats'];
+		$urlparams['cat'] = $row;
+		
+		if(is_array($subcats))
+		{
+			$parent_selected = (is_array($chosen)) ? (bool)count(array_intersect($subcats, $chosen)) : in_array($chosen, $subcats);
+		}
+		else
+		{
+			$parent_selected = false;
+		}
+
 		$t1->assign(array(
 			"CAT_ROW_CAT" => $row,
 			"CAT_ROW_TITLE" => htmlspecialchars($structure['usercategories'][$row]['title']),
 			"CAT_ROW_DESC" => $structure['usercategories'][$row]['desc'],
 			"CAT_ROW_COUNT" => $structure['usercategories'][$row]['count'],
 			"CAT_ROW_ICON" => $structure['usercategories'][$row]['icon'],
-			"CAT_ROW_URL" => cot_url("users", "gm=" . $gm . "&cat=" . $row . "&group=" . $group),
-			"CAT_ROW_SELECTED" => (is_array($chosen) && in_array($row, $chosen) || !is_array($chosen) && $row == $chosen) ? 1 : 0,
+			"CAT_ROW_URL" => cot_url("users", $urlparams),
+			"CAT_ROW_SELECTED" => (is_array($chosen) && in_array($row, $chosen) || !is_array($chosen) && $row == $chosen || $parent_selected) ? 1 : 0,
 			"CAT_ROW_SUBCAT" => (count($subcats) > 0) ? cot_usercategories_tree($chosen, $row, $template, $level) : '',
 			"CAT_ROW_ODDEVEN" => cot_build_oddeven($jj),
 			"CAT_ROW_JJ" => $jj
 		));
+		
+		// Extra fields for structure
+		foreach ($cot_extrafields[$db_structure] as $exfld)
+		{
+			$uname = strtoupper($exfld['field_name']);
+			$t1->assign(array(
+				'ROW_'.$uname.'_TITLE' => isset($L['structure_'.$exfld['field_name'].'_title']) ?  $L['structure_'.$exfld['field_name'].'_title'] : $exfld['field_description'],
+				'ROW_'.$uname => cot_build_extrafields_data('structure', $exfld, $structure['usercategories'][$row][$exfld['field_name']]),
+				'ROW_'.$uname.'_VALUE' => $structure['usercategories'][$row][$exfld['field_name']],
+			));
+		}
 
 		if ($i18n_enabled && $i18n_notmain){
 			$x_i18n = cot_i18n_get_cat($row, $i18n_locale);
 			if ($x_i18n){
-				$urlparams = (!$cfg['plugin']['i18n']['omitmain'] || $i18n_locale != $cfg['defaultlang']) ? "gm=" . $gm . "&cat=" . $row. "&group=" . $group . "&l=" . $i18n_locale : "gm=" . $gm . "&cat=" . $row. "&group=" . $group;
+				if(!$cfg['plugin']['i18n']['omitmain'] || $i18n_locale != $cfg['defaultlang']){
+					$urlparams['l'] = $i18n_locale;
+				}
 				$t1->assign(array(
 					'CAT_ROW_URL' => cot_url('users', $urlparams),
 					'CAT_ROW_TITLE' => $x_i18n['title'],
@@ -243,21 +321,15 @@ function cot_usercategories_tree($chosen = '', $parent = '', $template = '', $le
 				));
 			}
 		}
-		$t1->parse("MAIN.CAT_ROW");
 
-		if($parent){
-			$t1->assign(array(
-				"CAT_TITLE" => htmlspecialchars($structure['usercategories'][$parent]['title']),
-				"CAT_DESC" => $structure['usercategories'][$parent]['desc'],
-				"CAT_COUNT" => $structure['usercategories'][$parent]['count'],
-				"CAT_ICON" => $structure['usercategories'][$parent]['icon'],
-			));
+		/* === Hook - Part2 : Include === */
+		foreach ($extp as $pl)
+		{
+			include $pl;
 		}
-		
-		$t1->assign(array(
-			"CAT_URL" => cot_url("users", "gm=" . $gm . "&cat=" . $parent . "&group=" . $group),
-			"CAT_LEVEL" => $level,
-		));
+		/* ===== */
+
+		$t1->parse("MAIN.CAT_ROW");
 	}
 	
 	if ($jj == 0)

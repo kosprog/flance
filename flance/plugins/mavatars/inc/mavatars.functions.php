@@ -62,14 +62,16 @@ class mavatar
 	private $required = '';
 	private $allowed_ext = '';
 	private $maxsize = '';
+	private $mode = '';
 
-	public function __construct($extension, $category, $code, $inputdata = array())
+	public function __construct($extension, $category, $code, $mode = '', $inputdata = array())
 	{
 		$this->get_config($extension, $category);
 
 		$this->extension = $extension;
 		$this->category = $category;
 		$this->code = $code;
+		$this->mode = $mode;
 
 		$this->get_mavatars($inputdata);
 	}
@@ -176,9 +178,39 @@ class mavatar
 	 */	
 	private function mavatars_query()
 	{
-		global $db_mavatars, $db;
+		global $db_mavatars, $db, $usr, $sys;
+
+		if($this->mode == 'edit')
+		{
+			if($usr['id'] == 0)
+			{
+				$query_string = " AND mav_sessid='".cot_import('PHPSESSID', 'C', 'TXT')."'";
+			}
+			else
+			{
+				if(!$usr['isadmin'])
+				{
+					$query_string = " AND mav_userid=".$usr['id'];
+				}
+			}
+
+			$oldmavatars = $db->query("SELECT * FROM $db_mavatars 
+				WHERE mav_extension ='".$db->prep($this->extension)."' 
+					AND mav_code = '' $query_string 
+					AND mav_date+86400<".$sys['now'])->fetchAll();
+
+			if(is_array($oldmavatars))
+			{
+				foreach ($oldmavatars as $oldmavatar) 
+				{
+					$mavatar = $this->sqldata_to_array($oldmavatar);
+					$this->delete_mavatar($mavatar);
+				}
+			}
+		}
+
 		return "SELECT * FROM $db_mavatars WHERE mav_extension ='".$db->prep($this->extension)."' AND
-				 mav_code = '".$db->prep($this->code)."' ORDER BY mav_order ASC, mav_item ASC";
+			mav_code = '".$db->prep($this->code)."' $query_string ORDER BY mav_order ASC, mav_item ASC";
 	}
 	private function mavatars_queryid($id)
 	{
@@ -355,10 +387,10 @@ class mavatar
 		global $db_mavatars, $cot_extrafields;
 		$curr_mavatar = array(
 				'MAVATAR' => $this->object_tags($mavatar),
-				'ENABLED' => cot_checkbox(true, $prefix.'enabled['.$mavatar['id'].']', '', 'title="'.$L['Enabled'].'"'),
+				'DELETE' => cot_checkbox(false, $prefix.'delete['.$mavatar['id'].']', '', 'title="'.$L['Enabled'].'"'),
 				'FILEORDER' => cot_inputbox('text', $prefix.'order['.$mavatar['id'].']', $mavatar['order'], 'maxlength="4" size="4"'),
 				'FILEDESC' => cot_inputbox('text', $prefix.'desc['.$mavatar['id'].']', $mavatar['desc']),
-				'FILEDESCTEXT' => cot_textarea($prefix.'desc['.$mavatar['id'].']', $mavatar['desc'], 2, 30),
+				'FILEDESCTEXT' => cot_inputbox('text', $prefix.'desc['.$mavatar['id'].']', $mavatar['desc']),
 				'FILENEW' => cot_inputbox('hidden', $prefix.'new['.$mavatar['id'].']', 0),
 		);
 		foreach($cot_extrafields[$db_mavatars] as $exfld)
@@ -402,6 +434,7 @@ class mavatar
 		if ($cfg['jquery'] && $cfg['plugin']['mavatars']['turnajax'])
 		{
 			$t->assign("FILEUPLOAD_URL", cot_url('plug', 'r=mavatars&m=upload&ext='.$this->extension.'&cat='.$this->category.'&code='.$this->code.'&'.cot_xg(), '', true));
+			$t->assign('MAXFILESIZE', $this->maxsize);
 			$t->parse("MAIN.AJAXUPLOAD");
 		}
 		else
@@ -468,7 +501,8 @@ class mavatar
 		global $cfg;
 
 		list($file_name, $file_extension) = $this->file_info($file_object['name']);
-		if (!empty($file_name) && !in_array($file_extension, $this->suppressed_ext) && in_array($file_extension, $this->allowed_ext))
+		$file_size = (isset($file_object['tmp_name']['size'])) ? $file_object['tmp_name']['size'] : 0;
+		if (!empty($file_name) && !in_array($file_extension, $this->suppressed_ext) && in_array($file_extension, $this->allowed_ext) && $file_size <= $this->maxsize)
 		{
 			$safe_name = $this->safename($file_name, $file_extension, $this->filepath);
 			$file_fullname = $this->file_path($this->filepath, $safe_name, $file_extension);
@@ -497,6 +531,7 @@ class mavatar
 		global $db, $db_mavatars, $sys, $cot_extrafields, $usr;
 		$mavarray = array(
 			'mav_userid' => $usr['id'],
+      		'mav_sessid' => ($usr['id'] > 0) ? '' : cot_import('PHPSESSID', 'C', 'TXT'),
 			'mav_extension' => $this->extension,
 			'mav_category' => $this->category,
 			'mav_code' => $this->code,
@@ -606,12 +641,12 @@ class mavatar
 		if ($this->code != 'new') //TODO: а что происходит с аякс загрузкой?
 		{
 
-			$mavatars['mav_enabled'] = cot_import('mavatar_enabled', 'P', 'ARR');
+			$mavatars['mav_delete'] = cot_import('mavatar_delete', 'P', 'ARR');
 			$mavatars['mav_order'] = cot_import('mavatar_order', 'P', 'ARR');
 			$mavatars['mav_desc'] = cot_import('mavatar_desc', 'P', 'ARR');
 			$mavatars['mav_new'] = cot_import('mavatar_new', 'P', 'ARR');
 
-			$mavatars['mav_enabled'] = (count($mavatars['mav_enabled']) > 0) ? $mavatars['mav_enabled'] : array();
+			$mavatars['mav_delete'] = (count($mavatars['mav_delete']) > 0) ? $mavatars['mav_delete'] : array();
 
 			foreach ($cot_extrafields[$db_mavatars] as $exfld)
 			{
@@ -626,11 +661,11 @@ class mavatar
 				}
 			}
 
-			foreach ($mavatars['mav_enabled'] as $id => $enabled)
+			foreach ($mavatars['mav_delete'] as $id => $delete)
 			{
 				$mavatar_info = $this->get_mavatar_byid($id);
 				$mavatar = array();
-				$enabled = cot_import($enabled, 'D', 'BOL') ? true : false;
+				$delete = cot_import($delete, 'D', 'BOL') ? true : false;
 				$mavatar['mav_order'] = cot_import($mavatars['mav_order'][$id], 'D', 'INT');
 				$mavatar['mav_desc'] = cot_import($mavatars['mav_desc'][$id], 'D', 'TXT');
 
@@ -641,7 +676,7 @@ class mavatar
 
 				$new = cot_import($mavatars['mav_new'][$id], 'D', 'BOL');
 				
-				if ($enabled)
+				if (!$delete)
 				{
 					$mavatar['mav_extension'] = $this->extension;
 					$mavatar['mav_category'] = $this->category;
@@ -857,7 +892,7 @@ class mavatar
 		{
 			if((int)$object['id'] > 0)
 			{
-				delete_mavatar($object);
+				$this->delete_mavatar($object);
 			}
 			return false;
 		}	

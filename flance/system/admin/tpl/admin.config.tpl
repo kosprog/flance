@@ -1,5 +1,4 @@
 <!-- BEGIN: MAIN -->
-		<br>system admin.config.tpl start<br>
 		<h2>{PHP.L.Configuration}</h2>
 		{FILE "{PHP.cfg.system_dir}/admin/tpl/warnings.tpl"}
 		<div class="block">
@@ -28,9 +27,7 @@
 						<div class="adminconfigmore">{ADMIN_CONFIG_ROW_CONFIG_MORE}</div>
 					</td>
 					<td class="centerall">
-						<a href="{ADMIN_CONFIG_ROW_CONFIG_MORE_URL}" class="ajax button">
-							{PHP.L.Reset}
-						</a>
+						<a href="{ADMIN_CONFIG_ROW_CONFIG_MORE_URL}" class="button">{PHP.L.Reset}</a>
 					</td>
 				</tr>
 <!-- END: ADMIN_CONFIG_ROW_OPTION -->
@@ -65,5 +62,4 @@
 </div>
 <!-- END: DEFAULT -->
 		</div>
-		<br>system admin.config.tpl end<br>
 <!-- END: MAIN -->

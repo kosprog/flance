@@ -76,7 +76,7 @@ if ($a == 'edit')
 	exit;	
 }
 
-$t = new XTemplate(cot_tplfile('locationselector.city', 'plug'));
+$t = new XTemplate(cot_tplfile('locationselector.city', 'plug', true));
 
 $totalitems = $db->query("SELECT COUNT(*) FROM $db_ls_cities WHERE city_region=" . $id)->fetchColumn();
 $sql = $db->query("SELECT * FROM $db_ls_cities WHERE city_region=" . $id . " ORDER by city_name ASC LIMIT $d, " . $cfg['maxrowsperpage']);
@@ -120,7 +120,7 @@ $t->assign(array(
 
 $adminpath[] = array(cot_url('admin', 'm=other&p=locationselector&n=region&country=' . $region['region_country']), 
 	$cot_countries[$region['region_country']]);
-$adminpath[] = array(cot_url('admin', 'm=other&p=locationselector&n=city&id=' . $region['region_name']), $region['region_name']);
+$adminpath[] = array(cot_url('admin', 'm=other&p=locationselector&n=city&id=' . $region['region_id']), $region['region_name']);
 $t->parse("MAIN");
 $plugin_body .= $t->text("MAIN");
 ?>
