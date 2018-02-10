@@ -144,7 +144,11 @@ function googleTranslateElementInit() {
 			<a href=""><img src="themes/{PHP.theme}/img/ok.png"/></a>
 		</div>
 		</div>
-
+<!-- IF {HEADER_BANNER} != "" -->
+<div class="breadcrumb">
+{HEADER_BANNER}
+</div>
+<!-- ENDIF -->
 <!-- BEGIN: NOPARSE -->
 		<div class="navbar">
 			<div class="navbar-inner">
@@ -169,7 +173,7 @@ function googleTranslateElementInit() {
 					<li><a href="{PHP|cot_url('page',c='About')}">{PHP.L.projects_about}</a></li>
 					<li><a href="{PHP|cot_url('page',c='Contacts')}">{PHP.L.projects_contacts}</a></li>
 					<li><a href="{PHP|cot_url('forums')}">{PHP.L.Forums}</a></li>
-					
+					<li><a href="{PHP|cot_url('contact')}">{PHP.L.projects_feedback}</a></li>
 					
 				</ul>
 			<span class="right"></span>	
