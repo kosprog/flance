@@ -55,7 +55,9 @@
 			<!-- ENDIF -->
 		</div>
 		<!-- ENDIF -->
+	
 	</div>
+	
 </div>
-
+{PRD_COMMENTS_DISPLAY}
 <!-- END: MAIN -->
