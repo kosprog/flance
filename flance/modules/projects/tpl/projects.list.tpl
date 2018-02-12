@@ -248,6 +248,7 @@
 					<a href="{PRJ_ROW_URL}">{PRJ_ROW_SHORTTITLE}</a>
 				</h4>
 				<p class="owner small">{PRJ_ROW_OWNER_NAME} <span class="date">[{PRJ_ROW_DATE}]</span>   <span class="region">{PRJ_ROW_COUNTRY} {PRJ_ROW_REGION} {PRJ_ROW_CITY}</span>   {PRJ_ROW_EDIT_URL}</p>
+				{PRJ_ROW_OWNER_AVATAR}
 				<p class="text">{PRJ_ROW_SHORTTEXT}</p>
 				
 				<!-- IF {PHP.cot_plugins_active.tags} AND {PHP.cot_plugins_active.tagslance} AND {PHP.cfg.plugin.tagslance.projects} -->
