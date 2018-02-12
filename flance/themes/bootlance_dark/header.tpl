@@ -169,7 +169,7 @@ function googleTranslateElementInit() {
 					<li><a href="">{PHP.L.project_articles}</a></li>
 					<!-- END: NOPARSE -->
 					<li><a href="{PHP|cot_url('page',c='News')}">{PHP.L.projects_news}</a></li>
-					<li><a href="{PHP|cot_url('page',c='Reviews')}">{PHP.L.projects_reviews}</a></li>
+					<li><a href="{PHP|cot_url('page',c='Reviews')}">{PHP.L.projects_teach}</a></li>
 					<li><a href="{PHP|cot_url('page',c='About')}">{PHP.L.projects_about}</a></li>
 					<li><a href="{PHP|cot_url('page',c='Contacts')}">{PHP.L.projects_contacts}</a></li>
 					<li><a href="{PHP|cot_url('forums')}">{PHP.L.Forums}</a></li>
