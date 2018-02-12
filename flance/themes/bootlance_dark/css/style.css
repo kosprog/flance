@@ -70,7 +70,7 @@ textarea	{ width: 99%; min-height: 100px; }
 /* 3. Headings
 -------------------------------------------------- */
 
-.mboxHD	{ color:#000000; font-weight: bold; font-size:16px; margin: 10px 0; }
+.mboxHD	{ color:white; font-weight: bold; font-size:16px; margin: 10px 0; }
 
 .warning	{ background-image:url(../../../images/icons/default/warning.png); }
 
