@@ -39,7 +39,7 @@ $cfg['multihost'] = FALSE;			// Allow multiple host names for this site
 $cfg['defaulttheme'] = 'bootlance_dark';	// Default theme code. Be SURE it's pointing to a valid folder in ./themes/... !!
 $cfg['defaultscheme'] = 'default';	// Default color scheme, only name, not like themename.css. Be SURE it's pointing to a valid folder in ./themes/defaulttheme/... !!
 $cfg['defaulticons'] = 'default';	// Default icon pack
-$cfg['defaultlang'] = 'en';			// Default language code
+$cfg['defaultlang'] = 'ru';			// Default language code
 $cfg['enablecustomhf'] = FALSE;		// To enable header.$location.tpl and footer.$location.tpl
 $cfg['admintheme'] = 'fusion';			// Put custom administration theme name here
 
