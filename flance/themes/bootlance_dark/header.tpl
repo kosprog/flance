@@ -136,7 +136,8 @@ function googleTranslateElementInit() {
 }
 </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 			</div>
-		<div class="contacts">+7(495)233-04-44
+		<div class="contacts">
+		<!-- IF {PHP.usr.id} != 0 -->+7(495)233-04-44<!-- ENDIF -->
 		<br>&nbsp &nbsp &nbsp<a href=""><img src="themes/{PHP.theme}/img/facebook.png"/></a>
 			<a href=""><img src="themes/{PHP.theme}/img/inst.png"/></a>
 			<a href=""><img src="themes/{PHP.theme}/img/twitter.png"/></a>
