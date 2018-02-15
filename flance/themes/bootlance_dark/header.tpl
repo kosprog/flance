@@ -200,8 +200,8 @@ function googleTranslateElementInit() {
 <br>
 <!-- ENDIF -->
 
-<!-- IF {PHP.c} != null -->
-<img src="images/styles/{PHP.c}.jpg" alt="{PHP.c}">
+<!-- IF {PHP.c} != "" -->
+<img src="images/styles/{PHP.c}.jpg">
 <!-- ENDIF -->		
 
 <!-- END: HEADER -->
