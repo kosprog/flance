@@ -137,12 +137,12 @@ function googleTranslateElementInit() {
 </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 			</div>
 		<div class="contacts">
-		<!-- IF {PHP.usr.id} != 0 -->+7(495)233-04-44<!-- ENDIF -->
-		<br>&nbsp &nbsp &nbsp<a href=""><img src="themes/{PHP.theme}/img/facebook.png"/></a>
-			<a href=""><img src="themes/{PHP.theme}/img/inst.png"/></a>
-			<a href=""><img src="themes/{PHP.theme}/img/twitter.png"/></a>
-			<a href=""><img src="themes/{PHP.theme}/img/vk.png"/></a>
-			<a href=""><img src="themes/{PHP.theme}/img/ok.png"/></a>
+		<!-- IF {PHP.usr.id} != 0 -->+7(495)233-02-44<!-- ENDIF -->
+		<br>&nbsp &nbsp &nbsp<a href="https://www.facebook.com/profile.php?id=100024494555198"><img src="themes/{PHP.theme}/img/facebook.png"/></a>
+			<a href="https://www.instagram.com/aleksand.rsankavets"><img src="themes/{PHP.theme}/img/inst.png"/></a>
+			<a href="https://twitter.com/mi_fato"><img src="themes/{PHP.theme}/img/twitter.png"/></a>
+			<a href="https://vk.com/id462757704"><img src="themes/{PHP.theme}/img/vk.png"/></a>
+			<a href="https://www.ok.ru/profile/574816051157"><img src="themes/{PHP.theme}/img/ok.png"/></a>
 		</div>
 		</div>
 <!-- IF {HEADER_BANNER} != "" -->
