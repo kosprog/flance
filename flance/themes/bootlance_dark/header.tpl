@@ -197,14 +197,11 @@ function googleTranslateElementInit() {
     <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideshow-item="previous"></a>
     <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"></a>
 </div>
+<br>
 <!-- ENDIF -->
 
 <!-- IF {PHP.c} != null -->
-<div class="uk-slidenav-position" data-uk-slideshow="{animation: 'swipe'}">
-    <ul class="uk-slideshow">
-        <li><img src="images/styles/{PHP.c}.jpg" alt=""></li>
-      </ul>
-</div>
+<img src="images/styles/{PHP.c}.jpg" alt="{PHP.c}">
 <!-- ENDIF -->		
 
 <!-- END: HEADER -->
